@@ -31,12 +31,26 @@
 .exercise-main{min-width:0}
 .demo-toggle{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:7px 10px;border-radius:9px;border:1px solid var(--border);background:var(--surface3);color:var(--text);font-weight:800;cursor:pointer}
 .exercise-demo{display:none;margin-top:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#0b1017}
-.exercise.show-demo .exercise-demo{display:grid;grid-template-columns:minmax(150px,220px) 1fr}
-.demo-media{min-height:210px;background:#eef1f5;display:grid;place-items:center;position:relative}
-.demo-media img{width:100%;height:100%;max-height:260px;object-fit:contain;display:block}
-.demo-fallback{display:none;place-items:center;text-align:center;padding:20px;color:#17202b;background:linear-gradient(135deg,#dce6f1,#fff);min-height:210px}
-.demo-fallback .motion{width:86px;height:86px;border-radius:50%;border:8px solid #26384c;border-top-color:var(--lime);animation:spinGuide 1.35s linear infinite;margin:0 auto 12px}
-@keyframes spinGuide{to{transform:rotate(360deg)}}
+.exercise.show-demo .exercise-demo{display:grid;grid-template-columns:minmax(190px,260px) 1fr}
+.demo-media{min-height:250px;background:linear-gradient(145deg,#101a28,#0a111b);display:grid;place-items:center;position:relative;padding:12px}
+.local-demo{width:100%;max-width:250px}
+.local-demo svg{display:block;width:100%;height:auto;border-radius:14px;background:#111c2b;border:1px solid #2a3a50}
+.demo-svg .body{stroke:#e8f0fa;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.demo-svg .limb{stroke:#d5e1ee;stroke-width:7;stroke-linecap:round;fill:none}
+.demo-svg .moving{stroke:#b9f55d;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.demo-svg .equipment{stroke:#718399;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.demo-svg .accent{stroke:#5eead4;stroke-width:5;stroke-linecap:round;fill:none}
+.demo-svg .joint{fill:#dce8f4}.demo-svg .weight{fill:#8fa2b8}.demo-svg .accent-fill{fill:#b9f55d}.demo-svg .floor{stroke:#40516a;stroke-width:4}
+.demo-svg text{font-family:system-ui,-apple-system,sans-serif;fill:#93a6bc;font-size:10px;font-weight:800;letter-spacing:.06em}
+.demo-svg .arrow{fill:#b9f55d}
+.demo-legend{display:flex;justify-content:space-between;gap:5px;margin-top:8px;color:#91a3b8;font-size:8px;font-weight:900;letter-spacing:.06em}
+.demo-legend span:nth-child(2){color:#b9f55d}
+.demo-copy{padding:15px}
+.demo-copy h4{margin:0 0 8px}
+.demo-copy ul{padding-left:18px;margin:8px 0;color:var(--muted);font-size:13px;line-height:1.5}
+.demo-credit{font-size:9px;color:var(--muted);margin-top:9px}
+@media(prefers-reduced-motion:reduce){.demo-svg animate,.demo-svg animateTransform{display:none}}
+
 .demo-copy{padding:15px}
 .demo-copy h4{margin:0 0 8px}
 .demo-copy ul{padding-left:18px;margin:8px 0;color:var(--muted);font-size:13px;line-height:1.5}
@@ -362,6 +376,28 @@
 @media(max-width:900px){.challenge-hero,.challenge-dashboard{grid-template-columns:1fr}.challenge-day-orb{width:150px;height:150px}.badge-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.challenge-stats{grid-template-columns:repeat(2,1fr)}.phase-roadmap{grid-template-columns:1fr}.badge-grid{grid-template-columns:repeat(2,1fr)}}
 
+
+/* Sequential unlock system */
+.sequence-note{
+  margin-top:10px;padding:10px 12px;border-radius:12px;
+  border:1px solid rgba(185,245,93,.24);background:rgba(185,245,93,.06);
+  color:#aebdce;font-size:10px;line-height:1.5
+}
+.sequence-note strong{color:#d9ff9d}
+.day.sequence-current{border-color:#b9f55d;box-shadow:inset 0 0 0 1px rgba(185,245,93,.18)}
+.exercise.current-sequence-step{border-color:rgba(185,245,93,.42);background:linear-gradient(145deg,rgba(185,245,93,.06),#111a29)}
+.exercise.review-step{opacity:.82}
+.sequence-progress{
+  display:flex;justify-content:space-between;gap:10px;align-items:center;
+  margin:10px 0 14px;padding:10px 12px;border:1px solid #2b3850;border-radius:12px;background:#0d1623
+}
+.sequence-progress strong{font-size:10px}.sequence-progress span{font-size:9px;color:#8fa0b6}
+.mission-next-lock{
+  margin-top:9px;padding:9px 10px;border:1px dashed #3a4b63;border-radius:10px;
+  color:#8293a9;font-size:9px;text-align:center
+}
+@media(max-width:600px){.sequence-progress{align-items:flex-start;flex-direction:column}}
+
 </style>
 </head>
 <body>
@@ -530,7 +566,7 @@
     <div>
       <p class="eyebrow">ADAPTIVE PROGRAM</p>
       <h2 id="programTitle">Choose your training frequency</h2>
-      <p class="muted">Start with Week 1 · Days 1–3. Days 4–6 remain visible below and unlock when you choose a higher frequency or tap an optional day.</p>
+      <p class="muted">Choose your maximum weekly frequency. Only Day 1 appears at first; each next training day is revealed after the current day is completed.</p>
     </div>
     <span class="chip" id="programStatus">3-day foundation</span>
   </div>
@@ -571,7 +607,7 @@
 </section>
 
 <section class="days-wrap"><div class="section-head"><div><p class="eyebrow">THIS WEEK</p><h2>Choose your training day</h2></div><span id="weekChip" class="chip">Next: Day 1</span></div><div id="days" class="days"></div></section>
-<section class="grid"><div><article class="panel"><div class="section-head"><div><p id="workoutLabel" class="eyebrow">WORKOUT</p><h2 id="workoutName">Workout</h2><p id="workoutDesc" class="muted"></p></div><button id="completeAll" class="btn primary">Complete workout</button></div><div id="rest" class="rest hidden"><h3>Recovery day</h3><p class="muted">Walk, stretch, hydrate, and prepare for your next session.</p></div><div class="rotation-note" id="rotationNote">
+<section class="grid"><div><article class="panel"><div class="section-head"><div><p id="workoutLabel" class="eyebrow">WORKOUT</p><h2 id="workoutName">Workout</h2><p id="workoutDesc" class="muted"></p></div><button id="completeAll" class="btn primary">Complete current exercise</button></div><div id="rest" class="rest hidden"><h3>Recovery day</h3><p class="muted">Walk, stretch, hydrate, and prepare for your next session.</p></div><div class="rotation-note" id="rotationNote">
 Follow the order shown: Week 1 · Day 1, then Week 1 · Day 2, and so on. Optional Days 4–6 remain visible and can be unlocked whenever recovery is good.
 </div><div id="exerciseList" class="list"></div></article></div>
 <aside class="side"><article class="panel"><p class="eyebrow">SESSION SUMMARY</p><div id="ring" class="ring"><div><strong id="kcal">0</strong><span>active kcal</span></div></div><div class="summary"><div><span>Completed</span><strong id="doneCount">0 / 0</strong></div><div><span>Duration</span><strong id="duration">0 min</strong></div><div><span>Volume</span><strong id="volume">0 lb</strong></div></div><p class="muted" style="font-size:10px;margin-top:12px">Estimated with a resistance-training MET model using your saved body weight.</p></article><article class="panel"><p class="eyebrow">QUICK SETTINGS</p><div class="setting"><span>Body weight</span><div class="inline"><button class="mini setting-step" data-key="weight" data-delta="-1">−</button><output id="weightOut">151 lb</output><button class="mini setting-step" data-key="weight" data-delta="1">+</button></div></div><div class="setting"><span>Rest timer</span><div class="inline"><button class="mini setting-step" data-key="rest" data-delta="-15">−</button><output id="restOut">90 sec</output><button class="mini setting-step" data-key="rest" data-delta="15">+</button></div></div></article></aside></section>
@@ -623,8 +659,72 @@ Follow the order shown: Week 1 · Day 1, then Week 1 · Day 2, and so on. Option
 </main></div>
 <script>
 (()=>{"use strict";
-const media=name=>"https://commons.wikimedia.org/wiki/Special:Redirect/file/"+encodeURIComponent(name);
-const ex=(id,name,muscle,sets,reps,min,weight,gif,setup,cues,opts={})=>({id,name,muscle,sets,reps,min,weight,gif:media(gif),setup,cues,repUnit:"reps",hideLoad:false,weightStep:5,...opts});
+const demoKindFor=id=>{
+  if(/warmup-walk|zone2|elliptical/.test(id))return "walk";
+  if(/bike/.test(id))return "bike";
+  if(/warmup-row/.test(id))return "rower";
+  if(/chest-press|incline-machine/.test(id))return "chestpress";
+  if(/incline-press/.test(id))return "benchpress";
+  if(/pulldown|assisted-pullup/.test(id))return "pulldown";
+  if(/cable-row|machine-row/.test(id))return "row";
+  if(/shoulder-press/.test(id))return "overhead";
+  if(/lateral/.test(id))return "lateral";
+  if(/rear-delt/.test(id))return "rearfly";
+  if(/cable-fly/.test(id))return "fly";
+  if(/triceps|pushdown/.test(id))return "triceps";
+  if(/curl/.test(id))return "curl";
+  if(/leg-press|hack-squat/.test(id))return "legpress";
+  if(/goblet/.test(id))return "squat";
+  if(/rdl|romanian/.test(id))return "hinge";
+  if(/leg-curl/.test(id))return "legcurl";
+  if(/leg-extension/.test(id))return "legextension";
+  if(/calf/.test(id))return "calf";
+  if(/plank/.test(id))return "plank";
+  if(/hip-thrust/.test(id))return "hipthrust";
+  if(/dead-bug/.test(id))return "deadbug";
+  if(/bird-dog/.test(id))return "birddog";
+  if(/farmer/.test(id))return "carry";
+  if(/mobility/.test(id))return "mobility";
+  return "basic";
+};
+const ex=(id,name,muscle,sets,reps,min,weight,gif,setup,cues,opts={})=>({id,name,muscle,sets,reps,min,weight,demoKind:demoKindFor(id),setup,cues,repUnit:"reps",hideLoad:false,weightStep:5,...opts});
+
+function localDemoSvg(e){
+  const start='<text x="12" y="18">START</text>', finish='<text x="190" y="18">FINISH</text>', floor='<line class="floor" x1="18" y1="195" x2="222" y2="195"/>';
+  const arrow=(x,y,dir="right")=>dir==="up"?`<path class="arrow" d="M${x} ${y+20} l8 -12 h-5 v-18 h-6 v18 h-5z"/>`:dir==="down"?`<path class="arrow" d="M${x} ${y-20} l8 12 h-5 v18 h-6 v-18 h-5z"/>`:`<path class="arrow" d="M${x-20} ${y} l12 -8 v5 h18 v6 h-18 v5z"/>`;
+  const svgOpen=`<div class="local-demo"><svg class="demo-svg" viewBox="0 0 240 220" role="img" aria-label="Animated movement guide for ${esc(e.name)}">${start}${finish}`;
+  const svgClose=`</svg><div class="demo-legend"><span>SET POSITION</span><span>MOVE SLOWLY</span><span>CONTROL RETURN</span></div></div>`;
+  let art="";
+  switch(e.demoKind){
+    case "walk": art=`${floor}<circle class="joint" cx="108" cy="56" r="13"/><line class="body" x1="108" y1="70" x2="108" y2="126"/><g><line class="moving" x1="108" y1="84" x2="78" y2="118"/><line class="moving" x1="108" y1="84" x2="138" y2="118"/><animateTransform attributeName="transform" type="rotate" values="-18 108 84;18 108 84;-18 108 84" dur="1.3s" repeatCount="indefinite"/></g><g><line class="moving" x1="108" y1="126" x2="83" y2="174"/><line class="moving" x1="108" y1="126" x2="140" y2="174"/><animateTransform attributeName="transform" type="rotate" values="15 108 126;-15 108 126;15 108 126" dur="1.3s" repeatCount="indefinite"/></g>${arrow(184,112)}`;break;
+    case "bike": art=`${floor}<circle class="equipment" cx="70" cy="160" r="28"/><circle class="equipment" cx="166" cy="160" r="28"/><line class="equipment" x1="70" y1="160" x2="112" y2="122"/><line class="equipment" x1="112" y1="122" x2="166" y2="160"/><line class="equipment" x1="112" y1="122" x2="126" y2="160"/><circle class="accent-fill" cx="126" cy="160" r="7"/><circle class="joint" cx="112" cy="67" r="12"/><line class="body" x1="112" y1="80" x2="120" y2="122"/><g><line class="moving" x1="120" y1="122" x2="126" y2="160"/><line class="moving" x1="126" y1="160" x2="148" y2="175"/><animateTransform attributeName="transform" type="rotate" values="0 126 160;360 126 160" dur="1.5s" repeatCount="indefinite"/></g><line class="limb" x1="116" y1="92" x2="145" y2="105"/>${arrow(198,100)}`;break;
+    case "rower": art=`${floor}<line class="equipment" x1="35" y1="174" x2="205" y2="174"/><rect class="weight" x="64" y="142" width="42" height="10" rx="4"/><circle class="joint" cx="112" cy="80" r="12"/><line class="body" x1="112" y1="93" x2="105" y2="137"/><line class="limb" x1="105" y1="137" x2="74" y2="164"/><g><line class="moving" x1="112" y1="101" x2="154" y2="127"/><line class="accent" x1="154" y1="127" x2="193" y2="94"/><animateTransform attributeName="transform" type="translate" values="0 0;-28 -8;0 0" dur="1.8s" repeatCount="indefinite"/></g>${arrow(175,72,"left")}`;break;
+    case "chestpress": art=`${floor}<path class="equipment" d="M62 181 V84 H82 V181 M61 124 H98"/><circle class="joint" cx="90" cy="69" r="12"/><line class="body" x1="90" y1="82" x2="90" y2="137"/><line class="limb" x1="90" y1="137" x2="74" y2="181"/><g><line class="moving" x1="90" y1="94" x2="123" y2="101"/><line class="moving" x1="123" y1="101" x2="154" y2="101"/><circle class="weight" cx="158" cy="101" r="7"/><animateTransform attributeName="transform" type="translate" values="0 0;30 0;0 0" dur="1.6s" repeatCount="indefinite"/></g>${arrow(194,101)}`;break;
+    case "benchpress": art=`${floor}<path class="equipment" d="M45 165 H175 M58 165 L75 112 H160"/><circle class="joint" cx="102" cy="101" r="11"/><line class="body" x1="91" y1="111" x2="142" y2="137"/><g><line class="moving" x1="111" y1="112" x2="125" y2="77"/><line class="moving" x1="125" y1="77" x2="146" y2="54"/><rect class="weight" x="137" y="47" width="20" height="8" rx="3"/><animateTransform attributeName="transform" type="translate" values="0 0;0 -25;0 0" dur="1.6s" repeatCount="indefinite"/></g>${arrow(183,58,"up")}`;break;
+    case "pulldown": art=`${floor}<path class="equipment" d="M45 190 V36 H195 V190 M73 36 H167"/><circle class="joint" cx="120" cy="92" r="12"/><line class="body" x1="120" y1="105" x2="120" y2="156"/><line class="limb" x1="120" y1="156" x2="101" y2="190"/><g><line class="moving" x1="120" y1="110" x2="87" y2="64"/><line class="moving" x1="120" y1="110" x2="153" y2="64"/><line class="accent" x1="70" y1="58" x2="170" y2="58"/><animateTransform attributeName="transform" type="translate" values="0 0;0 38;0 0" dur="1.8s" repeatCount="indefinite"/></g>${arrow(190,90,"down")}`;break;
+    case "row": art=`${floor}<rect class="weight" x="62" y="149" width="52" height="11" rx="4"/><circle class="joint" cx="106" cy="80" r="12"/><line class="body" x1="106" y1="93" x2="106" y2="142"/><line class="limb" x1="106" y1="142" x2="77" y2="181"/><g><line class="moving" x1="106" y1="106" x2="151" y2="111"/><circle class="accent-fill" cx="158" cy="111" r="7"/><animateTransform attributeName="transform" type="translate" values="24 0;-12 0;24 0" dur="1.6s" repeatCount="indefinite"/></g><line class="equipment" x1="194" y1="111" x2="158" y2="111"/>${arrow(137,79,"left")}`;break;
+    case "overhead": art=`${floor}<circle class="joint" cx="120" cy="69" r="12"/><line class="body" x1="120" y1="82" x2="120" y2="142"/><line class="limb" x1="120" y1="142" x2="94" y2="188"/><line class="limb" x1="120" y1="142" x2="146" y2="188"/><g><line class="moving" x1="120" y1="96" x2="92" y2="77"/><line class="moving" x1="120" y1="96" x2="148" y2="77"/><circle class="weight" cx="89" cy="73" r="7"/><circle class="weight" cx="151" cy="73" r="7"/><animateTransform attributeName="transform" type="translate" values="0 16;0 -34;0 16" dur="1.6s" repeatCount="indefinite"/></g>${arrow(190,65,"up")}`;break;
+    case "lateral": art=`${floor}<circle class="joint" cx="120" cy="65" r="12"/><line class="body" x1="120" y1="78" x2="120" y2="140"/><line class="limb" x1="120" y1="140" x2="94" y2="190"/><line class="limb" x1="120" y1="140" x2="146" y2="190"/><g><line class="moving" x1="120" y1="92" x2="87" y2="128"/><circle class="weight" cx="82" cy="133" r="7"/><animateTransform attributeName="transform" type="rotate" values="0 120 92;-70 120 92;0 120 92" dur="1.8s" repeatCount="indefinite"/></g><g><line class="moving" x1="120" y1="92" x2="153" y2="128"/><circle class="weight" cx="158" cy="133" r="7"/><animateTransform attributeName="transform" type="rotate" values="0 120 92;70 120 92;0 120 92" dur="1.8s" repeatCount="indefinite"/></g>${arrow(193,93,"up")}`;break;
+    case "fly": art=`${floor}<circle class="joint" cx="120" cy="64" r="12"/><line class="body" x1="120" y1="77" x2="120" y2="143"/><line class="limb" x1="120" y1="143" x2="96" y2="191"/><line class="limb" x1="120" y1="143" x2="144" y2="191"/><g><line class="moving" x1="120" y1="94" x2="76" y2="99"/><line class="moving" x1="120" y1="94" x2="164" y2="99"/><animateTransform attributeName="transform" type="scale" values="1 1;.45 1;1 1" additive="sum" dur="1.8s" repeatCount="indefinite"/></g>${arrow(120,46,"right")}`;break;
+    case "rearfly": art=`${floor}<circle class="joint" cx="120" cy="70" r="12"/><line class="body" x1="120" y1="83" x2="118" y2="139"/><line class="limb" x1="118" y1="139" x2="92" y2="188"/><line class="limb" x1="118" y1="139" x2="145" y2="188"/><g><line class="moving" x1="118" y1="98" x2="91" y2="126"/><line class="moving" x1="118" y1="98" x2="145" y2="126"/><animateTransform attributeName="transform" type="rotate" values="0 118 98;55 118 98;0 118 98" dur="1.8s" repeatCount="indefinite"/></g>${arrow(190,105,"left")}`;break;
+    case "curl": art=`${floor}<circle class="joint" cx="120" cy="61" r="12"/><line class="body" x1="120" y1="74" x2="120" y2="139"/><line class="limb" x1="120" y1="139" x2="96" y2="190"/><line class="limb" x1="120" y1="139" x2="144" y2="190"/><line class="limb" x1="120" y1="93" x2="151" y2="119"/><g><line class="moving" x1="151" y1="119" x2="151" y2="157"/><circle class="weight" cx="151" cy="164" r="8"/><animateTransform attributeName="transform" type="rotate" values="0 151 119;-82 151 119;0 151 119" dur="1.6s" repeatCount="indefinite"/></g>${arrow(191,110,"up")}`;break;
+    case "triceps": art=`${floor}<circle class="joint" cx="120" cy="61" r="12"/><line class="body" x1="120" y1="74" x2="120" y2="141"/><line class="limb" x1="120" y1="141" x2="96" y2="190"/><line class="limb" x1="120" y1="141" x2="144" y2="190"/><line class="limb" x1="120" y1="94" x2="150" y2="105"/><g><line class="moving" x1="150" y1="105" x2="132" y2="136"/><circle class="accent-fill" cx="128" cy="142" r="6"/><animateTransform attributeName="transform" type="rotate" values="-55 150 105;18 150 105;-55 150 105" dur="1.6s" repeatCount="indefinite"/></g>${arrow(189,132,"down")}`;break;
+    case "legpress": art=`${floor}<path class="equipment" d="M45 180 L82 105 H145 M177 68 L202 104 L169 127"/><circle class="joint" cx="92" cy="91" r="11"/><line class="body" x1="92" y1="103" x2="118" y2="137"/><g><line class="moving" x1="118" y1="137" x2="155" y2="119"/><line class="moving" x1="155" y1="119" x2="179" y2="101"/><animateTransform attributeName="transform" type="translate" values="-12 14;18 -10;-12 14" dur="1.8s" repeatCount="indefinite"/></g>${arrow(201,73,"up")}`;break;
+    case "squat": art=`${floor}<g><circle class="joint" cx="120" cy="56" r="12"/><line class="body" x1="120" y1="69" x2="120" y2="126"/><line class="limb" x1="120" y1="126" x2="90" y2="180"/><line class="limb" x1="120" y1="126" x2="150" y2="180"/><line class="moving" x1="120" y1="86" x2="91" y2="109"/><line class="moving" x1="120" y1="86" x2="149" y2="109"/><circle class="weight" cx="120" cy="101" r="10"/><animateTransform attributeName="transform" type="translate" values="0 0;0 38;0 0" dur="1.8s" repeatCount="indefinite"/></g>${arrow(194,119,"down")}`;break;
+    case "hinge": art=`${floor}<circle class="joint" cx="120" cy="59" r="12"/><g><line class="body" x1="120" y1="72" x2="120" y2="128"/><line class="moving" x1="120" y1="94" x2="95" y2="142"/><circle class="weight" cx="91" cy="149" r="8"/><animateTransform attributeName="transform" type="rotate" values="0 120 128;48 120 128;0 120 128" dur="1.9s" repeatCount="indefinite"/></g><line class="limb" x1="120" y1="128" x2="94" y2="188"/><line class="limb" x1="120" y1="128" x2="146" y2="188"/>${arrow(184,95,"down")}`;break;
+    case "legcurl": art=`${floor}<path class="equipment" d="M54 164 H151 M66 164 V120 H142"/><circle class="joint" cx="94" cy="92" r="11"/><line class="body" x1="94" y1="104" x2="117" y2="137"/><line class="limb" x1="117" y1="137" x2="151" y2="148"/><g><line class="moving" x1="151" y1="148" x2="182" y2="168"/><animateTransform attributeName="transform" type="rotate" values="0 151 148;-75 151 148;0 151 148" dur="1.7s" repeatCount="indefinite"/></g>${arrow(190,126,"up")}`;break;
+    case "legextension": art=`${floor}<path class="equipment" d="M54 166 H143 M69 166 V111 H140"/><circle class="joint" cx="98" cy="84" r="11"/><line class="body" x1="98" y1="96" x2="117" y2="134"/><line class="limb" x1="117" y1="134" x2="151" y2="146"/><g><line class="moving" x1="151" y1="146" x2="153" y2="181"/><animateTransform attributeName="transform" type="rotate" values="0 151 146;-75 151 146;0 151 146" dur="1.7s" repeatCount="indefinite"/></g>${arrow(188,131,"up")}`;break;
+    case "calf": art=`${floor}<rect class="equipment" x="83" y="188" width="74" height="7"/><g><circle class="joint" cx="120" cy="61" r="12"/><line class="body" x1="120" y1="74" x2="120" y2="137"/><line class="limb" x1="120" y1="137" x2="101" y2="188"/><line class="limb" x1="120" y1="137" x2="139" y2="188"/><animateTransform attributeName="transform" type="translate" values="0 0;0 -18;0 0" dur="1.4s" repeatCount="indefinite"/></g>${arrow(187,102,"up")}`;break;
+    case "plank": art=`${floor}<circle class="joint" cx="66" cy="116" r="10"/><line class="body" x1="77" y1="119" x2="151" y2="136"/><line class="limb" x1="77" y1="121" x2="57" y2="157"/><line class="limb" x1="151" y1="136" x2="190" y2="164"/><line class="accent" x1="101" y1="126" x2="137" y2="134"><animate attributeName="stroke-width" values="5;10;5" dur="1.4s" repeatCount="indefinite"/></line><text x="88" y="99">KEEP HIPS LEVEL</text>`;break;
+    case "hipthrust": art=`${floor}<path class="equipment" d="M45 150 H100 V178"/><circle class="joint" cx="75" cy="132" r="10"/><line class="body" x1="84" y1="137" x2="132" y2="153"/><line class="limb" x1="132" y1="153" x2="173" y2="184"/><g><circle class="accent-fill" cx="130" cy="153" r="8"/><animateTransform attributeName="transform" type="translate" values="0 18;0 -24;0 18" dur="1.7s" repeatCount="indefinite"/></g>${arrow(190,112,"up")}`;break;
+    case "deadbug": art=`${floor}<circle class="joint" cx="83" cy="137" r="10"/><line class="body" x1="94" y1="139" x2="143" y2="139"/><g><line class="moving" x1="104" y1="137" x2="82" y2="86"/><line class="moving" x1="138" y1="140" x2="177" y2="179"/><animateTransform attributeName="transform" type="rotate" values="0 120 140;18 120 140;0 120 140" dur="1.8s" repeatCount="indefinite"/></g><g><line class="limb" x1="110" y1="139" x2="88" y2="180"/><line class="limb" x1="136" y1="139" x2="157" y2="91"/></g><text x="72" y="61">OPPOSITE ARM + LEG</text>`;break;
+    case "birddog": art=`${floor}<circle class="joint" cx="74" cy="101" r="10"/><line class="body" x1="84" y1="106" x2="145" y2="123"/><line class="limb" x1="100" y1="112" x2="80" y2="169"/><line class="limb" x1="134" y1="121" x2="124" y2="172"/><g><line class="moving" x1="96" y1="110" x2="55" y2="78"/><line class="moving" x1="145" y1="123" x2="194" y2="100"/><animateTransform attributeName="transform" type="translate" values="0 8;0 -8;0 8" dur="1.8s" repeatCount="indefinite"/></g><text x="68" y="61">KEEP HIPS SQUARE</text>`;break;
+    case "carry": art=`${floor}<g><circle class="joint" cx="120" cy="54" r="12"/><line class="body" x1="120" y1="67" x2="120" y2="128"/><line class="moving" x1="120" y1="91" x2="92" y2="141"/><line class="moving" x1="120" y1="91" x2="148" y2="141"/><rect class="weight" x="83" y="139" width="18" height="13" rx="3"/><rect class="weight" x="139" y="139" width="18" height="13" rx="3"/><line class="limb" x1="120" y1="128" x2="95" y2="184"/><line class="limb" x1="120" y1="128" x2="145" y2="184"/><animateTransform attributeName="transform" type="translate" values="-12 0;12 0;-12 0" dur="1.6s" repeatCount="indefinite"/></g>${arrow(195,106)}`;break;
+    case "mobility": art=`${floor}<circle class="joint" cx="120" cy="64" r="12"/><line class="body" x1="120" y1="77" x2="120" y2="141"/><line class="limb" x1="120" y1="141" x2="96" y2="190"/><line class="limb" x1="120" y1="141" x2="144" y2="190"/><g><line class="moving" x1="120" y1="91" x2="82" y2="122"/><line class="moving" x1="120" y1="91" x2="158" y2="122"/><animateTransform attributeName="transform" type="rotate" values="0 120 91;175 120 91;0 120 91" dur="2.6s" repeatCount="indefinite"/></g><text x="69" y="39">PAIN-FREE RANGE</text>`;break;
+    default: art=`${floor}<circle class="joint" cx="120" cy="60" r="12"/><line class="body" x1="120" y1="73" x2="120" y2="139"/><line class="moving" x1="120" y1="92" x2="83" y2="125"/><line class="moving" x1="120" y1="92" x2="157" y2="125"/><line class="limb" x1="120" y1="139" x2="94" y2="190"/><line class="limb" x1="120" y1="139" x2="146" y2="190"/>${arrow(194,105,"up")}`;
+  }
+  return svgOpen+art+svgClose;
+}
 
 
 const PLAN={
@@ -814,18 +914,27 @@ const activeDays=()=>ALL_DAYS.slice(0,state.frequency);
 const trainingWeek=()=>Math.max(1,Number(state.cycle)||1);
 const dayNumber=d=>Math.max(1,ALL_DAYS.indexOf(d)+1);
 const dayLabel=d=>`Week ${trainingWeek()} · Day ${dayNumber(d)}`;
+const unlockedDayIndex=()=>{
+  const days=activeDays(),idx=days.indexOf(state.nextDay);
+  return idx<0?0:idx;
+};
+const visibleDays=()=>activeDays().slice(0,unlockedDayIndex()+1);
+const isDayUnlocked=d=>visibleDays().includes(d);
 function normalizeRotation(){
   const days=activeDays();
-  if(!days.includes(state.selected)) state.selected=days[0];
   if(!days.includes(state.nextDay)) state.nextDay=days[0];
+  if(!isDayUnlocked(state.selected)) state.selected=state.nextDay;
 }
 normalizeRotation();
 
 const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
 const dayState=d=>state.days[d]||(state.days[d]={});
 const machineExercises=()=>{
-  const map=new Map();
-  activeDays().forEach(day=>PLAN[day].exercises.forEach(e=>{if(!e.hideLoad&&!map.has(e.id))map.set(e.id,e)}));
+  const map=new Map(),revealed=new Set(visibleDays());
+  ALL_DAYS.forEach(day=>PLAN[day].exercises.forEach(e=>{
+    const previouslyUsed=!!state.baselines[e.id]||state.history.some(h=>h.exerciseId===e.id||(!h.exerciseId&&h.exercise===e.name));
+    if(!e.hideLoad&&(revealed.has(day)||previouslyUsed)&&!map.has(e.id))map.set(e.id,e);
+  }));
   return [...map.values()];
 };
 const historyFor=e=>state.history.filter(h=>(h.exerciseId===e.id||(!h.exerciseId&&h.exercise===e.name))&&Number(h.weight)>0);
@@ -983,24 +1092,38 @@ function finishDay(d){
 }
 
 function completeExercise(d,e,s){
-  s.completed=!s.completed;
-  if(s.completed){
-    state.last[e.id]={weight:s.weight,reps:s.reps,sets:s.sets};
-    state.history.unshift({date:new Date().toISOString(),day:d,name:PLAN[d].name,exerciseId:e.id,exercise:e.name,weight:s.weight,reps:s.reps,sets:s.sets});
-    state.history=state.history.slice(0,500);
+  if(d!==state.nextDay||s.completed){
+    if(typeof showFuelToast==="function")showFuelToast("Complete the current unlocked exercise first.");
+    return;
   }
-  const all=PLAN[d].exercises.every(x=>exState(d,x).completed);
-  if(all && state.nextDay===d) finishDay(d);
+  const p=PLAN[d],firstPending=p.exercises.find(x=>!exState(d,x).completed);
+  if(!firstPending||firstPending.id!==e.id){
+    if(typeof showFuelToast==="function")showFuelToast("Finish the exercise shown as the current step first.");
+    return;
+  }
+  s.completed=true;
+  state.last[e.id]={weight:s.weight,reps:s.reps,sets:s.sets};
+  state.history.unshift({date:new Date().toISOString(),day:d,name:PLAN[d].name,exerciseId:e.id,exercise:e.name,weight:e.hideLoad?0:s.weight,reps:s.reps,sets:s.sets});
+  state.history=state.history.slice(0,500);
+  const all=p.exercises.every(x=>exState(d,x).completed);
+  if(all&&state.nextDay===d)finishDay(d);
   save();render();
-  if(all && s.completed){
-    if(typeof window.startPostWorkoutCascade==="function") window.startPostWorkoutCascade();
-    if(typeof window.challengeWorkoutCompleted==="function") window.challengeWorkoutCompleted(d);
+  if(all){
+    if(typeof window.startPostWorkoutCascade==="function")window.startPostWorkoutCascade();
+    if(typeof window.challengeWorkoutCompleted==="function")window.challengeWorkoutCompleted(d);
+  }else if(typeof showFuelToast==="function"){
+    const next=p.exercises.find(x=>!exState(d,x).completed);
+    showFuelToast(`${next.name} unlocked.`);
   }
 }
 
 function render(){
  try{
-  const d=state.selected,p=PLAN[d],c=calc(d);
+  normalizeRotation();
+  const d=state.selected,p=PLAN[d],c=calc(d),reviewMode=d!==state.nextDay;
+  const firstPendingIndex=p.exercises.findIndex(e=>!exState(d,e).completed);
+  const revealedExercises=reviewMode||firstPendingIndex<0?p.exercises:p.exercises.slice(0,firstPendingIndex+1);
+  const currentExercise=!reviewMode&&firstPendingIndex>=0?p.exercises[firstPendingIndex]:null;
   document.getElementById("heroTitle").textContent=`Week ${trainingWeek()} · ${p.short}: ${p.name}`;
   document.getElementById("heroSub").textContent=p.desc;
   document.getElementById("heroMins").textContent=p.exercises.reduce((a,e)=>a+e.min,0);
@@ -1016,11 +1139,11 @@ function render(){
   document.getElementById("duration").textContent=c.mins+" min";
   document.getElementById("volume").textContent=Math.round(c.volume).toLocaleString()+" lb";
   document.getElementById("ring").style.setProperty("--p",Math.min(100,c.done.length/p.exercises.length*100)+"%");
-  document.getElementById("weekChip").textContent=`Week ${trainingWeek()} · Next: Day ${dayNumber(state.nextDay)} of ${state.frequency}`;
+  document.getElementById("weekChip").textContent=`Week ${trainingWeek()} · Required now: Day ${dayNumber(state.nextDay)}`;
   document.getElementById("autoProgressionToggle").textContent=state.autoProgression?"AUTO ON":"AUTO OFF";
   document.getElementById("autoProgressionToggle").classList.toggle("off",!state.autoProgression);
   document.getElementById("progressionWeekLabel").textContent=`Week of ${new Date(mondayOf()).toLocaleDateString([], {month:"short",day:"numeric"})}: targets use last week's completed performance.`;
-  document.getElementById("programStatus").textContent=`${state.frequency}-day ${state.frequency===3?"foundation":"adaptive plan"}`;
+  document.getElementById("programStatus").textContent=`Sequential ${state.frequency}-day plan`;
   const advice={
     3:"Recommended for beginners: three complete sessions, with recovery days between workouts whenever possible.",
     4:"Day 4 adds upper-body volume. Use it only when soreness is manageable and performance on Days 1–3 remains stable.",
@@ -1029,44 +1152,46 @@ function render(){
   };
   document.getElementById("frequencyAdvice").textContent=advice[state.frequency];
   document.querySelectorAll("[data-frequency]").forEach(btn=>btn.classList.toggle("active",Number(btn.dataset.frequency)===state.frequency));
-  const active=activeDays();
-  document.getElementById("days").style.setProperty("--day-count",6);
-  document.getElementById("days").innerHTML=ALL_DAYS.map((x,index)=>{
-    const q=PLAN[x],unlocked=index<state.frequency;
-    const all=unlocked&&q.exercises.every(e=>exState(x,e).completed),current=x===state.nextDay;
+  const active=activeDays(),revealedDays=visibleDays();
+  document.getElementById("days").style.setProperty("--day-count",revealedDays.length);
+  document.getElementById("days").innerHTML=revealedDays.map((x,index)=>{
+    const q=PLAN[x],all=q.exercises.every(e=>exState(x,e).completed),current=x===state.nextDay;
     const tierClass=q.tier==="Bonus"?"bonus optional":q.tier==="Recovery"?"recovery optional":"core";
-    return `<button class="day ${tierClass} ${unlocked?"":"locked"} ${x===d?"active":""} ${all?"done":""}" data-day="${x}" data-required-frequency="${index+1}">
-      <small class="week-day-label">W${trainingWeek()} · D${index+1}</small>
-      <span>Day ${index+1}${current&&unlocked?'<em class="current-badge">NEXT</em>':""}</span>
+    return `<button class="day ${tierClass} ${current?"sequence-current":""} ${x===d?"active":""} ${all?"done":""}" data-day="${x}">
+      <small class="week-day-label">W${trainingWeek()} · D${dayNumber(x)}</small>
+      <span>Day ${dayNumber(x)}${current?'<em class="current-badge">NOW</em>':""}</span>
       <small>${q.name} ${all?"✓":""}</small>
-      <small class="day-tier">${unlocked?q.tier:"Optional"}</small>
+      <small class="day-tier">${all?"Completed":current?"Current step":"Review"}</small>
     </button>`;
   }).join("");
 
   document.getElementById("currentWeekNumber").textContent=trainingWeek();
-  document.getElementById("weekRoadmapTitle").textContent=`Week ${trainingWeek()} · Day ${dayNumber(d)}`;
+  document.getElementById("weekRoadmapTitle").textContent=`Week ${trainingWeek()} · Day ${dayNumber(state.nextDay)}`;
   document.getElementById("weekRoadmapSubtitle").textContent=
-    d===state.nextDay
-      ?`This is your next scheduled workout: ${p.name}.`
-      :`You manually selected ${p.short}: ${p.name}.`;
-  document.getElementById("weekPath").innerHTML=ALL_DAYS.map((x,index)=>{
-    const q=PLAN[x],unlocked=index<state.frequency,completed=unlocked&&q.exercises.every(e=>exState(x,e).completed);
-    const status=completed?"Complete":x===state.nextDay&&unlocked?"Next":unlocked?"Available":"Optional · Locked";
-    return `<div class="week-path-step ${completed?"complete":""} ${x===state.nextDay&&unlocked?"current":""} ${index>=3?"optional":""} ${unlocked?"":"locked"}">
-      <strong>Week ${trainingWeek()} · Day ${index+1}</strong>
-      <small>${q.name}<br>${status}</small>
+    `Complete ${PLAN[state.nextDay].name} to reveal the next training day.`;
+  document.getElementById("weekPath").innerHTML=revealedDays.map(x=>{
+    const q=PLAN[x],completed=q.exercises.every(e=>exState(x,e).completed),current=x===state.nextDay;
+    return `<div class="week-path-step ${completed?"complete":""} ${current?"current":""}">
+      <strong>Week ${trainingWeek()} · Day ${dayNumber(x)}</strong>
+      <small>${q.name}<br>${completed?"Complete":current?"Current step":"Review"}</small>
     </div>`;
   }).join("");
-  document.getElementById("weekExplanation").textContent=
-    state.frequency===3
-      ?"Your current plan is Week "+trainingWeek()+" with Days 1–3. Days 4–6 are visible below as optional sessions; tap one to unlock it."
-      :"Your current Week "+trainingWeek()+" plan includes Days 1–"+state.frequency+". Complete them in order, or manually choose a different available day.";
-  document.getElementById("completeAll").classList.remove("hidden");
+  const nextIndex=active.indexOf(state.nextDay);
+  const futureText=nextIndex===active.length-1
+    ?`Finish Day ${dayNumber(state.nextDay)} to complete Week ${trainingWeek()} and reveal Week ${trainingWeek()+1} · Day 1.`
+    :`Finish Day ${dayNumber(state.nextDay)} to reveal Day ${dayNumber(active[nextIndex+1])}.`;
+  document.getElementById("weekExplanation").innerHTML=`<strong>Sequential unlock:</strong> ${futureText}`;
+  const completeButton=document.getElementById("completeAll");
+  completeButton.classList.toggle("hidden",reviewMode||!currentExercise);
+  completeButton.textContent=currentExercise?`Complete ${currentExercise.name}`:"Workout complete";
   document.getElementById("rest").classList.add("hidden");
+  document.getElementById("rotationNote").innerHTML=reviewMode
+    ?`<strong>Review mode:</strong> this completed day is read-only. Return to Day ${dayNumber(state.nextDay)} to continue.`
+    :`<strong>Exercise ${Math.max(1,firstPendingIndex+1)} of ${p.exercises.length}:</strong> complete ${currentExercise?currentExercise.name:"the current step"} to reveal the next exercise.`;
 
-  document.getElementById("exerciseList").innerHTML=p.exercises.map(e=>{
+  document.getElementById("exerciseList").innerHTML=revealedExercises.map(e=>{
     const s=exState(d,e),last=state.last[e.id];
-    return `<article class="exercise ${s.completed?"completed":""} ${s.editing?"editing":""} ${s.showDemo?"show-demo":""}" data-id="${e.id}">
+    return `<article class="exercise ${s.completed?"completed review-step":e.id===currentExercise?.id?"current-sequence-step":""} ${s.editing?"editing":""} ${s.showDemo?"show-demo":""}" data-id="${e.id}">
       <button class="complete" data-action="complete" aria-label="Mark ${esc(e.name)} complete">✓</button>
       <div class="exercise-main">
         <div class="row-head"><div><p class="muscle">${esc(e.muscle)}</p><h3>${esc(e.name)}</h3></div><button class="text-btn" data-action="edit">${s.editing?"Done":"Edit"}</button></div>
@@ -1101,15 +1226,11 @@ function render(){
             ?"First session: use an easy, controlled effort."
             :"First session: start light and keep 2–3 clean reps in reserve.")}</p>
         <div class="exercise-demo">
-          <div class="demo-media">
-            <img src="${e.gif}" alt="Animated demonstration of ${esc(e.name)}" loading="lazy"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
-            <div class="demo-fallback"><div><div class="motion"></div><strong>Demo unavailable</strong><p>Use the setup and coaching cues beside this guide.</p></div></div>
-          </div>
+          <div class="demo-media">${localDemoSvg(e)}</div>
           <div class="demo-copy">
             <h4>Beginner setup</h4><p class="muted">${esc(e.setup)}</p>
             <h4>Form cues</h4><ul>${e.cues.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
-            <p class="demo-credit">Demo media: Wikimedia Commons. Always follow the machine instructions and ask gym staff for help when uncertain.</p>
+            <p class="demo-credit">Built-in simplified movement guide. Match the machine's printed instructions and ask gym staff for help when uncertain.</p>
           </div>
         </div>
       </div>
@@ -1140,35 +1261,38 @@ document.getElementById("autoProgressionToggle").addEventListener("click",()=>{
 });
 
 document.getElementById("frequencyOptions").addEventListener("click",e=>{
-  const btn=e.target.closest("[data-frequency]");
-  if(!btn)return;
-  state.frequency=Number(btn.dataset.frequency);
-  normalizeRotation();
-  save();
-  render();
+  const btn=e.target.closest("[data-frequency]");if(!btn)return;
+  const requested=Number(btn.dataset.frequency);
+  const minimum=Math.max(3,dayNumber(state.nextDay));
+  state.frequency=Math.max(requested,minimum);
+  normalizeRotation();save();render();
   if(typeof showFuelToast==="function"){
-    showFuelToast(state.frequency===6
-      ?"6-day mode uses Day 6 for recovery conditioning—not another hard lifting day."
-      :`${state.frequency}-day training plan selected.`);
+    showFuelToast(requested<minimum
+      ?`Finish Day ${dayNumber(state.nextDay)} before reducing this week's plan.`
+      :`${state.frequency}-day maximum selected. Days still unlock one at a time.`);
   }
 });
 
 document.getElementById("days").addEventListener("click",e=>{
   const b=e.target.closest("[data-day]");if(!b)return;
-  const required=Number(b.dataset.requiredFrequency)||3;
-  if(required>state.frequency){
-    state.frequency=required;
-    normalizeRotation();
-    if(typeof showFuelToast==="function")showFuelToast(`Day ${required} unlocked. Your plan now includes Days 1–${required}.`);
+  const requested=b.dataset.day;
+  if(!isDayUnlocked(requested)){
+    if(typeof showFuelToast==="function")showFuelToast("Complete the current day to unlock that workout.");
+    return;
   }
-  state.selected=b.dataset.day;save();render();
+  state.selected=requested;save();render();
 });
 document.getElementById("exerciseList").addEventListener("click",e=>{
  const card=e.target.closest(".exercise");if(!card)return;
  const ex=PLAN[state.selected].exercises.find(x=>x.id===card.dataset.id),s=exState(state.selected,ex),a=e.target.closest("[data-action]");if(!a)return;
+ if(a.dataset.action==="demo"){s.showDemo=!s.showDemo;save();render();return}
+ const current=state.selected===state.nextDay&&!s.completed&&PLAN[state.selected].exercises.find(x=>!exState(state.selected,x).completed)?.id===ex.id;
+ if(!current){
+   if(typeof showFuelToast==="function")showFuelToast("Completed steps are read-only. Continue with the current unlocked exercise.");
+   return;
+ }
  if(a.dataset.action==="complete")return completeExercise(state.selected,ex,s);
  if(a.dataset.action==="edit"){s.editing=!s.editing;save();render()}
- if(a.dataset.action==="demo"){s.showDemo=!s.showDemo;save();render()}
  if(a.dataset.action==="baseline"){
    state.baselines[ex.id]={weight:s.weight,date:new Date().toISOString()};
    state.progression[ex.id]={week:weekKey(),target:s.weight,repBonus:0,note:"Day 1 baseline saved. Hold this target until performance supports an increase.",trend:"hold",successStreak:0,missStreak:0};
@@ -1185,26 +1309,22 @@ document.getElementById("exerciseList").addEventListener("click",e=>{
  if(a.dataset.action==="step"){const f=a.dataset.field,delta=Number(a.dataset.delta),mins={weight:0,reps:1,sets:1};s[f]=Math.max(mins[f],s[f]+delta);save();render()}
 });
 document.getElementById("completeAll").onclick=()=>{
- const d=state.selected,p=PLAN[d],all=p.exercises.every(e=>exState(d,e).completed);
- p.exercises.forEach(e=>{
-   const s=exState(d,e);s.completed=!all;
-   if(!all){
-     state.last[e.id]={weight:s.weight,reps:s.reps,sets:s.sets};
-     state.history.unshift({date:new Date().toISOString(),day:d,name:p.name,exerciseId:e.id,exercise:e.name,weight:e.hideLoad?0:s.weight,reps:s.reps,sets:s.sets});
-   }
- });
- if(!all){
-   state.history=state.history.slice(0,500);
-   if(state.nextDay===d) finishDay(d);
- }
- save();render();
- if(!all){
-   if(typeof window.startPostWorkoutCascade==="function") window.startPostWorkoutCascade();
-   if(typeof window.challengeWorkoutCompleted==="function") window.challengeWorkoutCompleted(d);
- }
+  const d=state.selected;
+  if(d!==state.nextDay){
+    if(typeof showFuelToast==="function")showFuelToast(`Return to Day ${dayNumber(state.nextDay)} to continue.`);
+    return;
+  }
+  const ex=PLAN[d].exercises.find(x=>!exState(d,x).completed);
+  if(ex)completeExercise(d,ex,exState(d,ex));
 };
 document.querySelectorAll(".setting-step").forEach(b=>b.onclick=()=>{const k=b.dataset.key,delta=Number(b.dataset.delta);state[k]=Math.max(k==="weight"?80:30,Math.min(k==="weight"?500:300,state[k]+delta));save();render()});
-document.getElementById("resetBtn").onclick=()=>{state.days[state.selected]={};save();render()};
+document.getElementById("resetBtn").onclick=()=>{
+  if(state.selected!==state.nextDay){
+    if(typeof showFuelToast==="function")showFuelToast("Completed days are read-only.");
+    return;
+  }
+  if(confirm("Reset progress for the current unlocked day?")){state.days[state.selected]={};save();render()}
+};
 document.getElementById("clearHistory").onclick=()=>{if(confirm("Clear all session history?")){state.history=[];save();render()}};
 document.getElementById("exportBtn").onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="banglamuscle-export-"+new Date().toISOString().slice(0,10)+".json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),100)};
 state.selected=state.selected||state.nextDay||"day1";render();
@@ -1343,7 +1463,9 @@ function renderCascade(){
    {id:"post",title:"Post-workout protein",body:`Automatic ${coachState.targets.postLow}–${coachState.targets.postHigh} g reminder.`,status:t.postDone?"done":scheduled.postProtein?.status||"waiting",when:scheduled.postProtein?.when},
    {id:"rest",title:"Recovery",body:"Water, normal calories, light movement, and sleep.",status:(scheduled.postRest||scheduled.restMove)?.status||"waiting",when:(scheduled.postRest||scheduled.restMove)?.when}
  ];
- cascadeList.innerHTML=rows.map((x,i)=>`<div class="cascade-step ${x.status}"><span class="cascade-icon">${x.status==="done"?"✓":x.status==="active"?"●":i+1}</span><div><strong>${x.title}</strong><small>${x.body}${x.when?` · ${new Date(x.when).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"})}`:""}</small></div><span class="cascade-state">${x.status}</span></div>`).join("");
+ const firstOpen=rows.findIndex(x=>x.status!=="done"),visibleRows=firstOpen<0?rows:rows.slice(0,firstOpen+1);
+ cascadeList.innerHTML=visibleRows.map((x,i)=>`<div class="cascade-step ${x.status}"><span class="cascade-icon">${x.status==="done"?"✓":x.status==="active"?"●":i+1}</span><div><strong>${x.title}</strong><small>${x.body}${x.when?` · ${new Date(x.when).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"})}`:""}</small></div><span class="cascade-state">${x.status}</span></div>`).join("");
+ if(visibleRows.length<rows.length)cascadeList.insertAdjacentHTML("beforeend",`<div class="mission-next-lock">Complete the current reminder step to reveal the next one.</div>`);
 }
 function renderCoach(){
  const t=todayCoach();gymPromptTime.value=coachState.settings.gymPromptTime;plannedWorkoutTime.value=coachState.settings.plannedWorkoutTime;
@@ -1607,12 +1729,12 @@ function unlockChallengeBadges(){
     day60:day>=60,
     day90:day>=90
   };
-  BADGES.forEach(b=>{
-    if(conditions[b.id]&&!challengeState.badges[b.id]){
-      challengeState.badges[b.id]={date:new Date().toISOString()};
-      challengeAwardOnce(`badge:${b.id}`,25,`Badge unlocked: ${b.name}`);
-    }
-  });
+  for(const b of BADGES){
+    if(challengeState.badges[b.id])continue;
+    if(!conditions[b.id])break;
+    challengeState.badges[b.id]={date:new Date().toISOString()};
+    challengeAwardOnce(`badge:${b.id}`,25,`Badge unlocked: ${b.name}`);
+  }
   saveChallenge();
 }
 function syncChallengeMissions(){
@@ -1642,7 +1764,7 @@ window.challengeSyncFromApp=syncChallengeMissions;
 
 window.challengeWorkoutCompleted=function(day){
   const key=challengeDateKey(),rec=dayChallengeRecord(key),plan=PLAN[day];
-  rec.missions.workout=true;rec.gymDecision="yes";
+  rec.missions.workout=true;rec.gymDecision="yes";rec.completedWorkoutDay=day;
   const unique=`${key}:${day}`;
   if(!challengeState.workouts.some(w=>`${w.date}:${w.day}`===unique)){
     challengeState.workouts.push({date:key,day,challengeDay:challengeDayNumber(),name:plan.name});
@@ -1653,7 +1775,7 @@ window.challengeWorkoutCompleted=function(day){
 };
 
 function missionDefinitions(){
-  const rec=dayChallengeRecord(),rest=rec.gymDecision==="rest";
+  const rec=dayChallengeRecord(),rest=rec.gymDecision==="rest",missionWorkoutDay=rec.missions.workout&&rec.completedWorkoutDay?rec.completedWorkoutDay:state.nextDay;
   if(rest){
     return [
       {id:"checkin",title:"Confirm recovery day",desc:"Choose Rest Day in Daily Coach.",xp:10,auto:true},
@@ -1666,7 +1788,7 @@ function missionDefinitions(){
   return [
     {id:"checkin",title:"Confirm gym attendance",desc:"Choose Yes, gym today.",xp:10,auto:true},
     {id:"pre",title:"Pre-workout fuel",desc:"Mark your food or shake complete.",xp:10,auto:true},
-    {id:"workout",title:`Complete ${PLAN[state.nextDay]?.short||"today's workout"}`,desc:"Finish all exercises in the selected session.",xp:100,auto:true},
+    {id:"workout",title:`Complete ${PLAN[missionWorkoutDay]?.short||"today\'s workout"}`,desc:"Finish all exercises in order.",xp:100,auto:true},
     {id:"water",title:"Hydrate during training",desc:"Mark water complete.",xp:15,auto:true},
     {id:"post",title:"Post-workout protein",desc:"Have 25–40 g protein and mark it complete.",xp:25,auto:true},
     {id:"protein",title:"Reach daily protein",desc:"Log the 120 g working target.",xp:40,auto:true}
@@ -1696,7 +1818,9 @@ function renderChallenge(){
   missionIntro.textContent=rec.gymDecision==="rest"
     ?"Rest days preserve your challenge when recovery actions are completed."
     :"Complete the controllable actions below. You do not need a perfect day.";
-  missionList.innerHTML=defs.map(m=>{
+  const firstMissionOpen=defs.findIndex(m=>!rec.missions[m.id]);
+  const visibleMissions=firstMissionOpen<0?defs:defs.slice(0,firstMissionOpen+1);
+  missionList.innerHTML=visibleMissions.map(m=>{
     const done=!!rec.missions[m.id],clickable=!!m.manual;
     return `<div class="mission ${done?"done":""} ${clickable?"":"disabled"}" data-mission="${m.id}" data-manual="${clickable}">
       <span class="mission-check">${done?"✓":"○"}</span>
@@ -1704,14 +1828,18 @@ function renderChallenge(){
       <span class="mission-xp">+${m.xp} XP</span>
     </div>`;
   }).join("");
+  if(visibleMissions.length<defs.length)missionList.insertAdjacentHTML("beforeend",`<div class="mission-next-lock">Complete the current mission to reveal the next mission.</div>`);
 
   const phases=[
     {name:"Foundation",range:"Days 1–30",active:day<=30,complete:day>30},
     {name:"Build",range:"Days 31–60",active:day>30&&day<=60,complete:day>60},
     {name:"Transform",range:"Days 61–90",active:day>60,complete:day>=90}
   ];
-  phaseRoadmap.innerHTML=phases.map(p=>`<div class="phase ${p.active?"active":""} ${p.complete?"complete":""}"><small>${p.range}</small><strong>${p.complete?"✓ ":p.active?"● ":""}${p.name}</strong></div>`).join("");
-  badgeGrid.innerHTML=BADGES.map(b=>`<div class="badge ${challengeState.badges[b.id]?"unlocked":""}"><div class="badge-icon">${b.icon}</div><strong>${b.name}</strong><small>${challengeState.badges[b.id]?"Unlocked":b.desc}</small></div>`).join("");
+  const visiblePhases=phases.filter(p=>p.complete||p.active);
+  phaseRoadmap.innerHTML=visiblePhases.map(p=>`<div class="phase ${p.active?"active":""} ${p.complete?"complete":""}"><small>${p.range}</small><strong>${p.complete?"✓ ":p.active?"● ":""}${p.name}</strong></div>`).join("");
+  const nextBadgeIndex=BADGES.findIndex(b=>!challengeState.badges[b.id]);
+  const visibleBadges=BADGES.filter((b,i)=>!!challengeState.badges[b.id]||i===nextBadgeIndex);
+  badgeGrid.innerHTML=visibleBadges.map(b=>`<div class="badge ${challengeState.badges[b.id]?"unlocked":""}"><div class="badge-icon">${b.icon}</div><strong>${b.name}</strong><small>${challengeState.badges[b.id]?"Unlocked":`Next: ${b.desc}`}</small></div>`).join("");
 }
 function toggleManualMission(id){
   const rec=dayChallengeRecord(),amount=id==="recovery"?50:id==="sleep"?20:0;
