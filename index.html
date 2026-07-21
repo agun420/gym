@@ -503,11 +503,154 @@ body{
   .effort-options{grid-template-columns:1fr}
 }
 
+
+/* Phone-light gym mode */
+.phone-light-card{
+  border:1px solid rgba(185,245,93,.24);border-radius:16px;padding:15px;
+  background:linear-gradient(145deg,rgba(185,245,93,.07),rgba(94,234,212,.035))
+}
+.phone-light-card h3{margin:0 0 6px}
+.phone-light-card p{margin:0;color:#91a2b8;font-size:10px;line-height:1.55}
+.phone-light-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.phone-light-step{padding:10px;border:1px solid #2d3b50;border-radius:12px;background:#0c1522}
+.phone-light-step small{display:block;color:#8294aa;font-size:8px;text-transform:uppercase;font-weight:900}
+.phone-light-step strong{display:block;margin-top:4px;font-size:10px}
+.low-interaction-banner{
+  margin:12px 0;padding:12px 13px;border-radius:13px;border:1px solid rgba(94,234,212,.24);
+  background:rgba(94,234,212,.045);display:flex;justify-content:space-between;gap:12px;align-items:center
+}
+.low-interaction-banner strong{display:block;font-size:11px}
+.low-interaction-banner small{display:block;color:#8da0b6;font-size:9px;line-height:1.45;margin-top:3px}
+.low-interaction-banner span{white-space:nowrap;color:#8fe9df;font-size:9px;font-weight:950}
+.compact-load{
+  margin:11px 0;padding:12px;border:1px solid #2f3f55;border-radius:14px;background:#0b1522
+}
+.compact-load-top{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.compact-load-label small{display:block;color:#8496ac;font-size:8px;text-transform:uppercase;font-weight:900}
+.compact-load-label strong{display:block;font-size:24px;margin-top:3px}
+.compact-load-label span{display:block;color:#8fa0b5;font-size:8px;margin-top:3px}
+.weight-entry{
+  display:flex;align-items:center;gap:7px;border:1px solid rgba(185,245,93,.30);
+  border-radius:12px;padding:7px 9px;background:rgba(185,245,93,.055)
+}
+.weight-entry input{
+  width:72px;border:0;background:transparent;color:#eaffca;font-size:20px;font-weight:950;
+  text-align:right;outline:none
+}
+.weight-entry b{font-size:10px;color:#9db0c5}
+.weight-entry-note{margin-top:8px;color:#8a9cb2;font-size:8px;line-height:1.4}
+.adjust-target-btn{
+  border:1px solid #364860;background:#142034;color:#b8c7da;border-radius:9px;
+  padding:8px 10px;font-size:8px;font-weight:900;cursor:pointer
+}
+.adjust-target-btn.active{border-color:#b9f55d;color:#d9ff9d}
+.goal-explanation{
+  margin-top:8px;padding-top:8px;border-top:1px solid #253247;color:#8294aa;font-size:8px;line-height:1.45
+}
+.exercise .complete,.effort-panel,.load-coach,.load-actions{display:none!important}
+.exercise-main>.controls{display:none!important}
+.exercise{padding:16px}
+.exercise.completed{opacity:.88}
+.finish-workout-btn{
+  position:sticky;bottom:12px;z-index:50;width:100%;min-height:52px;font-size:12px;
+  box-shadow:0 18px 40px rgba(0,0,0,.35)
+}
+#completeAll{min-width:190px}
+#completeAll.hidden{display:none!important}
+.readiness-hidden{display:none!important}
+@media(max-width:650px){
+  .phone-light-steps{grid-template-columns:1fr}
+  .compact-load-top{align-items:flex-start;flex-direction:column}
+  .weight-entry{width:100%;justify-content:flex-end}
+}
+
+
+/* Focused Today / Progress navigation */
+.view-switch{
+  display:flex;gap:3px;padding:3px;border:1px solid rgba(148,163,184,.18);
+  border-radius:999px;background:rgba(11,20,33,.82)
+}
+.view-switch button{
+  border:0;background:transparent;color:#7f91a8;border-radius:999px;
+  padding:8px 13px;font-size:9px;font-weight:900;cursor:pointer
+}
+.view-switch button.active{background:#e8f5ff;color:#0b1421}
+body[data-app-view="workout"] main>#proCommand,
+body[data-app-view="workout"] main>#challenge90,
+body[data-app-view="workout"] main>#dailyCoach,
+body[data-app-view="workout"] main>#fuelPanel,
+body[data-app-view="workout"] main>#strengthProgress,
+body[data-app-view="workout"] main>.history{display:none!important}
+body[data-app-view="progress"] main>.hero,
+body[data-app-view="progress"] main>.program-picker,
+body[data-app-view="progress"] main>#weekRoadmap,
+body[data-app-view="progress"] main>.days-wrap,
+body[data-app-view="progress"] main>.grid{display:none!important}
+body[data-app-view="progress"] main>#proCommand{margin-top:18px}
+.topbar .actions .btn.secondary{font-size:0;width:38px;padding:0}
+.topbar .actions .btn.secondary::after{content:"⇩";font-size:16px}
+
+/* Swipe-to-complete */
+.swipe-complete{
+  --swipe-x:0px;
+  position:relative;width:min(320px,100%);height:54px;flex:0 0 min(320px,100%);
+  padding:4px;border-radius:999px;border:1px solid rgba(185,245,93,.34);
+  background:#111c2b;overflow:hidden;touch-action:none;user-select:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.025);
+  cursor:grab;outline:none
+}
+.swipe-complete:focus-visible{box-shadow:0 0 0 3px rgba(185,245,93,.25)}
+.swipe-complete.dragging{cursor:grabbing}
+.swipe-complete.hidden{display:none!important}
+.swipe-progress{
+  position:absolute;left:4px;top:4px;bottom:4px;width:46px;border-radius:999px;
+  background:linear-gradient(90deg,rgba(185,245,93,.30),rgba(94,234,212,.24));
+  transition:width .12s ease
+}
+.swipe-label{
+  position:absolute;inset:0;display:grid;place-items:center;padding-left:45px;
+  color:#c9d7e8;font-size:10px;font-weight:950;letter-spacing:.035em;
+  pointer-events:none;transition:opacity .15s
+}
+.swipe-thumb{
+  position:absolute;left:4px;top:4px;width:46px;height:46px;border:0;border-radius:50%;
+  display:grid;place-items:center;background:#dfffad;color:#09120b;font-size:19px;
+  font-weight:950;transform:translateX(var(--swipe-x));
+  box-shadow:0 8px 20px rgba(0,0,0,.26);pointer-events:none;
+  transition:transform .18s cubic-bezier(.2,.8,.2,1),background .18s
+}
+.swipe-complete.dragging .swipe-thumb{transition:none}
+.swipe-complete.confirmed{border-color:#43d58a;background:rgba(32,167,101,.10)}
+.swipe-complete.confirmed .swipe-thumb{background:#43d58a;color:#fff}
+.swipe-complete.confirmed .swipe-label{color:#9df2c4}
+.swipe-hint{
+  margin:7px 0 0;text-align:right;color:#71839a;font-size:8px;
+  letter-spacing:.04em
+}
+.workout-completion-wrap{display:flex;flex-direction:column;align-items:flex-end;min-width:min(320px,100%)}
+.finish-workout-btn{position:relative!important;bottom:auto!important;width:min(320px,100%)!important;min-height:54px!important;box-shadow:none!important}
+@media(max-width:760px){
+  .topbar{gap:8px;flex-wrap:wrap}.view-switch{order:3;width:100%}
+  .view-switch button{flex:1}.workout-completion-wrap{width:100%;align-items:stretch}
+  .swipe-complete{width:100%;flex-basis:100%}.swipe-hint{text-align:center}
+  .section-head:has(.workout-completion-wrap){align-items:flex-start;flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){
+  .swipe-thumb,.swipe-progress,.view-switch button{transition:none!important}
+}
+
 </style>
 </head>
-<body>
+<body data-app-view="workout">
 <div class="shell">
-<header class="topbar"><div class="brand"><span class="mark">BM</span><span><strong>BanglaMuscle Pro</strong><small>90-Day Evidence Edition</small></span></div><div class="actions"><button id="resetBtn" class="icon" title="Reset selected day">↺</button><button id="exportBtn" class="btn secondary">Export</button></div></header>
+<header class="topbar">
+  <div class="brand"><span class="mark">BM</span><span><strong>BanglaMuscle Pro</strong><small>90-Day Phone-Light Edition</small></span></div>
+  <nav class="view-switch" aria-label="App view">
+    <button type="button" class="active" data-view="workout">Workout</button>
+    <button type="button" data-view="progress">Progress</button>
+  </nav>
+  <div class="actions"><button id="resetBtn" class="icon" title="Reset current workout">↺</button><button id="exportBtn" class="btn secondary" title="Export data">Export</button></div>
+</header>
 <div id="errorBox" class="error"></div>
 <main>
 
@@ -519,7 +662,7 @@ body{
     <div>
       <p class="eyebrow">EVIDENCE-GUIDED COACHING SYSTEM</p>
       <h1>BanglaMuscle <em>Pro</em></h1>
-      <p class="muted">One next action. Personalized load. Clear reasons. No fitness noise.</p>
+      <p class="muted">Set Week 1 once. Follow the plan. Let the goals progress quietly.</p>
     </div>
     <span class="pro-edition">● 2026 EVIDENCE EDITION</span>
   </div>
@@ -538,34 +681,29 @@ body{
       </div>
     </article>
 
-    <article class="pro-subcard">
-      <h3>Today’s readiness</h3>
-      <p>The weekly target stays stable. Today’s load can adjust slightly when recovery is poor.</p>
-      <div class="readiness-grid">
-        <label class="readiness-field"><span>Sleep</span><select id="readinessSleep">
-          <option value="1">1 · Very poor</option><option value="2">2 · Poor</option><option value="3">3 · Okay</option><option value="4">4 · Good</option><option value="5">5 · Excellent</option>
-        </select></label>
-        <label class="readiness-field"><span>Energy</span><select id="readinessEnergy">
-          <option value="1">1 · Very low</option><option value="2">2 · Low</option><option value="3">3 · Normal</option><option value="4">4 · Good</option><option value="5">5 · High</option>
-        </select></label>
-        <label class="readiness-field"><span>Soreness</span><select id="readinessSoreness">
-          <option value="1">1 · None</option><option value="2">2 · Mild</option><option value="3">3 · Moderate</option><option value="4">4 · High</option><option value="5">5 · Severe</option>
-        </select></label>
+    <article class="pro-subcard phone-light-card">
+      <h3>Phone-light coaching</h3>
+      <p>Week 1 is the only setup period. Enter a comfortable starting weight for each exercise. After that, the app quietly raises the goal on a conservative schedule.</p>
+      <div class="phone-light-steps">
+        <div class="phone-light-step"><small>Week 1</small><strong>Set each starting weight once</strong></div>
+        <div class="phone-light-step"><small>At the gym</small><strong>View routine, lift, swipe once</strong></div>
+        <div class="phone-light-step"><small>Later weeks</small><strong>Goals increase slowly and automatically</strong></div>
       </div>
-      <div class="readiness-result">
-        <div class="readiness-score" id="readinessScore">73</div>
-        <div><strong id="readinessTitle">Ready to train</strong><small id="readinessMessage">Use the planned target with clean technique.</small></div>
-        <div class="readiness-adjust" id="readinessAdjustment">100% load</div>
+      <div class="readiness-hidden" aria-hidden="true">
+        <select id="readinessSleep"><option value="3">3</option></select>
+        <select id="readinessEnergy"><option value="3">3</option></select>
+        <select id="readinessSoreness"><option value="2">2</option></select>
+        <span id="readinessScore">73</span><span id="readinessTitle"></span>
+        <span id="readinessMessage"></span><span id="readinessAdjustment"></span>
       </div>
-      <p class="safety-line"><strong>Safety boundary:</strong> sharp pain, chest pain, faintness, severe shortness of breath or new neurological symptoms are not normal training discomfort. Stop and seek appropriate professional care.</p>
     </article>
   </div>
 
   <div class="science-strip">
     <div class="science-pill"><small>Priority</small><strong>High-skill and high-value work first</strong></div>
-    <div class="science-pill"><small>Effort</small><strong>Usually finish with 2–3 reps in reserve</strong></div>
+    <div class="science-pill"><small>Interaction</small><strong>One deliberate completion swipe</strong></div>
     <div class="science-pill"><small>Rest</small><strong>Long enough to preserve quality</strong></div>
-    <div class="science-pill"><small>Progression</small><strong>Earned by performance, never calendar hype</strong></div>
+    <div class="science-pill"><small>Progression</small><strong>Small scheduled increases from Week 1</strong></div>
   </div>
 </section>
 
@@ -768,10 +906,17 @@ body{
 </section>
 
 <section class="days-wrap"><div class="section-head"><div><p class="eyebrow">THIS WEEK</p><h2>Choose your training day</h2></div><span id="weekChip" class="chip">Next: Day 1</span></div><div id="days" class="days"></div></section>
-<section class="grid"><div><article class="panel"><div class="section-head"><div><p id="workoutLabel" class="eyebrow">WORKOUT</p><h2 id="workoutName">Workout</h2><p id="workoutDesc" class="muted"></p></div><button id="completeAll" class="btn primary">Complete current exercise</button></div><div id="rest" class="rest hidden"><h3>Recovery day</h3><p class="muted">Walk, stretch, hydrate, and prepare for your next session.</p></div><div class="rotation-note" id="rotationNote">
+<section class="grid"><div><article class="panel"><div class="section-head"><div><p id="workoutLabel" class="eyebrow">WORKOUT</p><h2 id="workoutName">Workout</h2><p id="workoutDesc" class="muted"></p></div><div class="workout-completion-wrap">
+  <div id="completeAll" class="swipe-complete" role="slider" tabindex="0" aria-label="Swipe right to finish workout" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="swipe-progress"></div>
+    <span class="swipe-label">Swipe to finish workout</span>
+    <span class="swipe-thumb" aria-hidden="true">→</span>
+  </div>
+  <p class="swipe-hint">Deliberate confirmation · partial swipes reset</p>
+</div></div><div id="rest" class="rest hidden"><h3>Recovery day</h3><p class="muted">Walk, stretch, hydrate, and prepare for your next session.</p></div><div class="rotation-note" id="rotationNote">
 Follow the order shown: Week 1 · Day 1, then Week 1 · Day 2, and so on. Optional Days 4–6 remain visible and can be unlocked whenever recovery is good.
 </div><div id="exerciseList" class="list"></div></article></div>
-<aside class="side"><article class="panel"><p class="eyebrow">SESSION SUMMARY</p><div id="ring" class="ring"><div><strong id="kcal">0</strong><span>active kcal</span></div></div><div class="summary"><div><span>Completed</span><strong id="doneCount">0 / 0</strong></div><div><span>Duration</span><strong id="duration">0 min</strong></div><div><span>Volume</span><strong id="volume">0 lb</strong></div></div><p class="muted" style="font-size:10px;margin-top:12px">Estimated with a resistance-training MET model using your saved body weight.</p></article><article class="panel"><p class="eyebrow">QUICK SETTINGS</p><div class="setting"><span>Body weight</span><div class="inline"><button class="mini setting-step" data-key="weight" data-delta="-1">−</button><output id="weightOut">151 lb</output><button class="mini setting-step" data-key="weight" data-delta="1">+</button></div></div><div class="setting"><span>Rest timer</span><div class="inline"><button class="mini setting-step" data-key="rest" data-delta="-15">−</button><output id="restOut">90 sec</output><button class="mini setting-step" data-key="rest" data-delta="15">+</button></div></div></article></aside></section>
+<aside class="side"><article class="panel"><p class="eyebrow">SESSION SUMMARY</p><div id="ring" class="ring"><div><strong id="kcal">0</strong><span>active kcal</span></div></div><div class="summary"><div><span>Completed</span><strong id="doneCount">0 / 0</strong></div><div><span>Duration</span><strong id="duration">0 min</strong></div><div><span>Planned volume</span><strong id="volume">0 lb</strong></div></div><p class="muted" style="font-size:10px;margin-top:12px">Estimated with a resistance-training MET model using your saved body weight.</p></article><article class="panel"><p class="eyebrow">QUICK SETTINGS</p><div class="setting"><span>Body weight</span><div class="inline"><button class="mini setting-step" data-key="weight" data-delta="-1">−</button><output id="weightOut">151 lb</output><button class="mini setting-step" data-key="weight" data-delta="1">+</button></div></div><div class="setting"><span>Rest timer</span><div class="inline"><button class="mini setting-step" data-key="rest" data-delta="-15">−</button><output id="restOut">90 sec</output><button class="mini setting-step" data-key="rest" data-delta="15">+</button></div></div></article></aside></section>
 
 <section class="panel strength-progress" id="strengthProgress">
   <div class="section-head">
@@ -808,7 +953,7 @@ Follow the order shown: Week 1 · Day 1, then Week 1 · Day 2, and so on. Option
     <table class="machine-table">
       <thead><tr>
         <th>Exercise / machine</th><th>Coach start</th><th>Day 1 actual</th><th>Ideal today</th>
-        <th>Best weight</th><th>Today volume</th><th>Week volume</th><th>From baseline</th>
+        <th>Best weight</th><th>Today planned volume</th><th>Week planned volume</th><th>From baseline</th>
       </tr></thead>
       <tbody id="machineProgressBody"></tbody>
     </table>
@@ -1208,86 +1353,48 @@ const readinessStatus=()=>{
   if(score>=52)return {title:"Train with a small adjustment",message:"Use about 95% of the weekly target and avoid grinding repetitions.",tone:"amber"};
   return {title:"Recovery-biased session",message:"Use about 90% of the target, keep more reps in reserve, or choose recovery work.",tone:"orange"};
 };
-const sessionTargetFor=e=>{
-  if(e.hideLoad)return 0;
-  return stackRound(Math.max(e.weightStep||5,idealFor(e)*readinessModifier()),e.weightStep||5);
-};
+const sessionTargetFor=e=>idealFor(e);
 
 const successfulRecord=(h,e,extra=0)=>Number(h.sets)>=e.sets&&Number(h.reps)>=e.reps+extra&&h.effort!=="hard";
 const clearlyHeavyRecord=(h,e)=>Number(h.sets)<Math.max(1,e.sets-1)||Number(h.reps)<Math.ceil(e.reps*.8);
 
+const slowIntervalFor=e=>isSmallMuscle(e)?4:isLowerCompound(e)?2:3;
+const slowLimitFor=e=>isSmallMuscle(e)?.12:isLowerCompound(e)?.20:.15;
+const slowStepFor=e=>{
+  const base=Number(state.baselines[e.id]?.weight??e.weight);
+  if(base<15)return 1;
+  if(isSmallMuscle(e))return 2.5;
+  return Math.min(5,e.weightStep||5);
+};
+const slowRound=value=>Math.round(value*2)/2;
 function ensureWeeklyProgression(e){
-  if(e.hideLoad)return {week:weekKey(),target:0,repBonus:0,note:"Timed movement",trend:"hold",successStreak:0,missStreak:0};
-  const currentWeek=weekKey(),step=e.weightStep||5,base=state.baselines[e.id]?.weight??e.weight;
-  let p=state.progression[e.id]||{
-    week:currentWeek,target:stackRound(base,step),repBonus:0,
-    note:"Starting target from your Day 1 baseline.",trend:"hold",successStreak:0,missStreak:0
-  };
-  if(!state.autoProgression){
-    p.week=currentWeek;p.note="Automatic progression is paused.";p.trend="hold";
-    return state.progression[e.id]=p;
-  }
-  if(p.week!==currentWeek){
-    const start=mondayOf(),priorStart=new Date(start);priorStart.setDate(start.getDate()-7);
-    const prior=historyFor(e).filter(h=>{const t=new Date(h.date);return t>=priorStart&&t<start});
-    const easy=prior.filter(h=>successfulRecord(h,e,p.repBonus)&&h.effort==="easy");
-    const quality=prior.filter(h=>successfulRecord(h,e,p.repBonus)&&h.effort!=="easy");
-    const hard=prior.filter(h=>h.effort==="hard"||clearlyHeavyRecord(h,e));
-    const latest=prior.slice().sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
-    const actual=latest?Number(latest.weight):p.target;
-    const raiseTarget=()=>{
-      const candidate=stackRound(Math.max(actual,p.target)+step,step);
-      const jump=(candidate-Math.max(actual,p.target))/Math.max(actual,p.target,1);
-      if(jump<=progressionCap(e)){
-        p.target=candidate;p.repBonus=0;p.successStreak=0;p.trend="up";
-        p.note=`Performance earned one machine step: ${candidate} lb.`;
-      }else{
-        p.repBonus=Math.min(2,(p.repBonus||0)+1);p.trend="hold";
-        p.note=`The next stack step is large. Hold ${p.target} lb and earn ${e.reps+p.repBonus} clean reps first.`;
-      }
-    };
-    if(easy.length){
-      p.missStreak=0;p.successStreak=0;raiseTarget();
-    }else if(quality.length){
-      p.missStreak=0;p.successStreak=(p.successStreak||0)+1;
-      if(p.successStreak>=2)raiseTarget();
-      else{
-        p.trend="hold";
-        p.note=`Good training quality. Repeat ${p.target} lb once more before increasing.`;
-      }
-    }else if(hard.length){
-      p.missStreak=(p.missStreak||0)+1;p.successStreak=0;
-      if(p.missStreak>=2){
-        p.target=stackRound(Math.max(step,Math.min(actual,p.target)-step),step);
-        p.repBonus=0;p.missStreak=0;p.trend="down";
-        p.note=`Two difficult exposures: reduced to ${p.target} lb to restore clean technique.`;
-      }else{
-        p.trend="hold";p.note=`This load was near the limit. Hold ${p.target} lb and leave more reps in reserve.`;
-      }
-    }else{
-      p.trend="hold";
-      p.note=prior.length?`The target was not fully earned. Keep ${p.target} lb.`:`No completed exposure last week. Keep ${p.target} lb.`;
-    }
-    p.week=currentWeek;
-  }
-  state.progression[e.id]=p;return p;
+  if(e.hideLoad)return {week:trainingWeek(),target:0,note:"No load target",trend:"hold"};
+  const week=trainingWeek(),base=Number(state.baselines[e.id]?.weight??e.weight),
+    interval=slowIntervalFor(e),step=slowStepFor(e),
+    earnedSteps=Math.max(0,Math.floor((week-1)/interval)),
+    capped=base*(1+slowLimitFor(e)),
+    target=slowRound(Math.min(base+earnedSteps*step,capped)),
+    previous=slowRound(Math.min(base+Math.max(0,earnedSteps-1)*step,capped));
+  let note;
+  if(week===1)note="Week 1 setup: enter the comfortable weight you will use. It saves automatically.";
+  else if(target>previous)note=`Slow progression week: goal increased by ${slowRound(target-previous)} lb.`;
+  else if(target>base)note=`Hold ${target} lb and let technique become easier before the next scheduled increase.`;
+  else note=`Foundation hold: remain at the Week 1 weight of ${base} lb.`;
+  return {week,target,note,trend:target>previous?"up":"hold",base,interval,step};
 }
 const idealFor=e=>ensureWeeklyProgression(e).target;
-const targetRepsFor=e=>e.reps+(ensureWeeklyProgression(e).repBonus||0);
+const targetRepsFor=e=>e.reps;
 const exState=(d,e)=>{
-  const ds=dayState(d),wk=weekKey();
+  const ds=dayState(d),week=trainingWeek();
   if(!ds[e.id]){
-    const last=state.last[e.id]||{};
+    const baseline=state.baselines[e.id]?.weight;
     ds[e.id]={
-      completed:false,editing:false,showDemo:false,targetWeek:wk,effort:null,weightTouched:false,
-      weight:state.autoProgression?sessionTargetFor(e):(last.weight??e.weight),
-      reps:state.autoProgression?targetRepsFor(e):(last.reps??e.reps),sets:last.sets??e.sets
+      completed:false,editing:false,showDemo:false,targetWeek:week,weightTouched:false,
+      weight:baseline??idealFor(e),reps:e.reps,sets:e.sets
     };
-  }else if(ds[e.id].targetWeek!==wk&&!ds[e.id].completed){
-    ds[e.id].targetWeek=wk;ds[e.id].effort=null;ds[e.id].weightTouched=false;
-    if(state.autoProgression){
-      ds[e.id].weight=sessionTargetFor(e);ds[e.id].reps=targetRepsFor(e);ds[e.id].sets=e.sets;
-    }
+  }else if(ds[e.id].targetWeek!==week&&!ds[e.id].completed){
+    ds[e.id].targetWeek=week;ds[e.id].weightTouched=false;
+    ds[e.id].weight=idealFor(e);ds[e.id].reps=e.reps;ds[e.id].sets=e.sets;
   }
   return ds[e.id];
 };
@@ -1358,49 +1465,23 @@ function finishDay(d){
   const nextState=dayState(next);
   PLAN[next].exercises.forEach(e=>{
     const s=nextState[e.id]||{};
-    s.completed=false;s.editing=false;s.targetWeek=weekKey();s.effort=null;s.weightTouched=false;
-    if(state.autoProgression){s.weight=sessionTargetFor(e);s.reps=targetRepsFor(e);s.sets=e.sets}
+    s.completed=false;s.editing=false;s.targetWeek=trainingWeek();s.weightTouched=false;
+    s.weight=idealFor(e);s.reps=e.reps;s.sets=e.sets
     nextState[e.id]=s;
   });
 }
 
-function completeExercise(d,e,s){
-  if(d!==state.nextDay||s.completed){
-    if(typeof showFuelToast==="function")showFuelToast("Complete the current unlocked exercise first.");
-    return;
-  }
-  const p=PLAN[d],firstPending=p.exercises.find(x=>!exState(d,x).completed);
-  if(!firstPending||firstPending.id!==e.id){
-    if(typeof showFuelToast==="function")showFuelToast("Finish the exercise shown as the current step first.");
-    return;
-  }
-  if(!e.hideLoad&&!s.effort){
-    if(typeof showFuelToast==="function")showFuelToast("Choose how many clean reps you had left before completing this exercise.");
-    return;
-  }
-  s.completed=true;
-  state.last[e.id]={weight:s.weight,reps:s.reps,sets:s.sets,effort:s.effort||"comfortable"};
-  state.history.unshift({date:new Date().toISOString(),day:d,name:PLAN[d].name,exerciseId:e.id,exercise:e.name,weight:e.hideLoad?0:s.weight,reps:s.reps,sets:s.sets,effort:s.effort||"comfortable"});
-  state.history=state.history.slice(0,500);
-  const all=p.exercises.every(x=>exState(d,x).completed);
-  if(all&&state.nextDay===d)finishDay(d);
-  save();render();
-  if(all){
-    if(typeof window.startPostWorkoutCascade==="function")window.startPostWorkoutCascade();
-    if(typeof window.challengeWorkoutCompleted==="function")window.challengeWorkoutCompleted(d);
-  }else if(typeof showFuelToast==="function"){
-    const next=p.exercises.find(x=>!exState(d,x).completed);
-    showFuelToast(`${next.name} unlocked.`);
-  }
+function completeExercise(){
+  // Phone-light mode completes the entire workout with one action.
+  return;
 }
 
 function render(){
  try{
   normalizeRotation();
   const d=state.selected,p=PLAN[d],c=calc(d),reviewMode=d!==state.nextDay;
-  const firstPendingIndex=p.exercises.findIndex(e=>!exState(d,e).completed);
-  const revealedExercises=reviewMode||firstPendingIndex<0?p.exercises:p.exercises.slice(0,firstPendingIndex+1);
-  const currentExercise=!reviewMode&&firstPendingIndex>=0?p.exercises[firstPendingIndex]:null;
+  const revealedExercises=p.exercises;
+  const currentExercise=null;
   const ready=todayReadiness(),readyScore=readinessScoreValue(),readyStatus=readinessStatus();
   document.getElementById("readinessSleep").value=String(ready.sleep);
   document.getElementById("readinessEnergy").value=String(ready.energy);
@@ -1468,79 +1549,66 @@ function render(){
     :`Finish Day ${dayNumber(state.nextDay)} to reveal Day ${dayNumber(active[nextIndex+1])}.`;
   document.getElementById("weekExplanation").innerHTML=`<strong>Sequential unlock:</strong> ${futureText}`;
   const completeButton=document.getElementById("completeAll");
-  completeButton.classList.toggle("hidden",reviewMode||!currentExercise);
-  completeButton.textContent=currentExercise?`Complete ${currentExercise.name}`:"Workout complete";
+  completeButton.classList.toggle("hidden",reviewMode);
+  completeButton.classList.add("finish-workout-btn");
+  completeButton.querySelector(".swipe-label").textContent=`Swipe to finish ${p.short}`;
+  completeButton.setAttribute("aria-label",`Swipe right to finish ${p.short}`);
+  if(typeof resetWorkoutSwipe==="function")resetWorkoutSwipe(false);
   document.getElementById("rest").classList.add("hidden");
   document.getElementById("rotationNote").innerHTML=reviewMode
-    ?`<strong>Review mode:</strong> this completed day is read-only. Return to Day ${dayNumber(state.nextDay)} to continue.`
-    :`<strong>Exercise ${Math.max(1,firstPendingIndex+1)} of ${p.exercises.length}:</strong> complete ${currentExercise?currentExercise.name:"the current step"} to reveal the next exercise.`;
+    ?`<strong>Completed workout:</strong> review the plan and saved weights.`
+    :trainingWeek()===1
+      ?`<strong>Week 1 setup:</strong> set comfortable starting weights, complete the routine, then swipe once to finish ${p.short}.`
+      :`<strong>Workout mode:</strong> follow the listed goals, open a form guide only when needed, then swipe once to finish ${p.short}.`;
 
-  document.getElementById("exerciseList").innerHTML=revealedExercises.map(e=>{
-    const s=exState(d,e),last=state.last[e.id];
-    return `<article class="exercise ${s.completed?"completed review-step":e.id===currentExercise?.id?"current-sequence-step":""} ${s.editing?"editing":""} ${s.showDemo?"show-demo":""}" data-id="${e.id}">
-      <button class="complete" data-action="complete" aria-label="Mark ${esc(e.name)} complete">✓</button>
+  document.getElementById("exerciseList").innerHTML=revealedExercises.map((e,index)=>{
+    const s=exState(d,e),last=state.last[e.id],weekOne=trainingWeek()===1&&!reviewMode,
+      canAdjust=!reviewMode&&(weekOne||s.editing),goal=idealFor(e),progress=ensureWeeklyProgression(e);
+    return `<article class="exercise ${s.completed?"completed review-step":""} ${s.editing?"editing":""} ${s.showDemo?"show-demo":""}" data-id="${e.id}">
       <div class="exercise-main">
-        <div class="row-head"><div><p class="muscle">${esc(e.muscle)}</p><h3>${esc(e.name)}</h3></div><button class="text-btn" data-action="edit">${s.editing?"Done":"Edit"}</button></div>
+        <div class="row-head"><div><p class="muscle">${esc(e.muscle)} · ${index+1} OF ${p.exercises.length}</p><h3>${esc(e.name)}</h3></div></div>
         <div class="targets">
           <span>${e.sets} ${e.sets===1?"set":"sets"}</span>
           <span>${e.reps} ${e.repUnit||"reps"}</span>
-          <span>${e.min} min</span>
-        </div>
-        <div class="exercise-science-meta">
-          <span>${exerciseRole(e,p.exercises.indexOf(e))}</span>
-          <span>${restFor(e,p.exercises.indexOf(e))?`Rest ${restFor(e,p.exercises.indexOf(e))} sec`:"Continuous"}</span>
-          <span>${rirTarget(e)}</span>
+          <span>${restFor(e,index)?`Rest ${restFor(e,index)} sec`:"Continuous"}</span>
         </div>
         <div class="sequence-intelligence">
-          <div class="sequence-intelligence-top"><strong>Why this comes now</strong><span>ORDER ${p.exercises.indexOf(e)+1} / ${p.exercises.length}</span></div>
-          <p>${esc(ORDER_RATIONALE[d][p.exercises.indexOf(e)]||"This position protects movement quality and manages fatigue.")}${p.exercises[p.exercises.indexOf(e)+1]?` Next: ${esc(p.exercises[p.exercises.indexOf(e)+1].name)}.`:" This completes the session."}</p>
+          <div class="sequence-intelligence-top"><strong>Why this comes now</strong><span>${exerciseRole(e,index)}</span></div>
+          <p>${esc(ORDER_RATIONALE[d][index]||"This position protects movement quality and manages fatigue.")}</p>
         </div>
-        <button class="demo-toggle" data-action="demo">${s.showDemo?"Hide demo":"▶ Show demo"}</button>
-        ${e.hideLoad?"":`<div class="load-coach">
-          <div class="load-metric"><small>Coach start</small><strong>${e.weight} lb</strong></div>
-          <div class="load-metric"><small>Day 1 actual</small><strong>${state.baselines[e.id]?.weight?state.baselines[e.id].weight+" lb":"Not set"}</strong></div>
-          <div class="load-metric"><small>Weekly target</small><strong>${idealFor(e)} lb</strong></div>
-          <div class="load-metric ideal"><small>Today’s target</small><strong>${sessionTargetFor(e)} lb</strong></div>
-        </div>
-        <div class="load-actions">
-          <button class="primary-mini" data-action="baseline">Save current as Day 1 weight</button>
-          <button class="too-heavy" data-action="tooHeavy">Target is too heavy</button>
-          <button data-action="useIdeal">Load weekly ${idealFor(e)} lb</button><button data-action="useToday">Load today ${sessionTargetFor(e)} lb</button>
-        </div>
-        <div class="week-target-note ${ensureWeeklyProgression(e).trend}">${esc(ensureWeeklyProgression(e).note)}</div>
-        <p class="load-note">The weekly target changes from completed performance—not just because a new week started. Good form and 2–3 clean reps in reserve come first.</p>`}
-        <div class="controls">
-          ${e.hideLoad?"":step("weight",s.weight,"lb",e.weightStep||5)}
-          ${step("reps",s.reps,e.repUnit||"reps",1)}
-          ${step("sets",s.sets,"sets",1)}
-        </div>
-        ${!e.hideLoad&&e.id===currentExercise?.id?`<div class="effort-panel">
-          <strong>Set quality · how many clean reps were left?</strong>
-          <small>This prevents the app from increasing weight just because the numbers were entered.</small>
-          <div class="effort-options">
-            <button class="effort-option ${s.effort==="easy"?"selected":""}" data-action="effort" data-effort="easy">Easy · 4+<em>Ready to progress</em></button>
-            <button class="effort-option ${s.effort==="right"?"selected":""}" data-action="effort" data-effort="right">Right · 2–3<em>Ideal training zone</em></button>
-            <button class="effort-option ${s.effort==="hard"?"selected":""}" data-action="effort" data-effort="hard">Hard · 0–1<em>Hold or reduce</em></button>
+        ${e.hideLoad?"":`<div class="compact-load">
+          <div class="compact-load-top">
+            <div class="compact-load-label">
+              <small>${weekOne?"Choose Week 1 starting weight":`Week ${trainingWeek()} goal`}</small>
+              <strong>${canAdjust?`${s.weight} lb`:`${goal} lb`}</strong>
+              <span>${e.sets} × ${e.reps} · ${rirTarget(e)}</span>
+            </div>
+            ${canAdjust
+              ?`<label class="weight-entry"><input type="number" min="0" step="${slowStepFor(e)}" value="${s.weight}" data-weight-input="${e.id}" aria-label="${esc(e.name)} starting weight"><b>lb</b></label>`
+              :`<button class="adjust-target-btn" data-action="adjust">${s.editing?"Done":"Adjust"}</button>`}
           </div>
-        </div>`:""}
+          <div class="goal-explanation">${esc(progress.note)}${weekOne?" This becomes the baseline for future automatic goals.":" Use the nearest weight your gym provides."}</div>
+        </div>`}
+        <button class="demo-toggle" data-action="demo">${s.showDemo?"Hide form guide":"View form guide"}</button>
         <p class="last">${last
           ?(e.hideLoad
-            ?`Last completed: ${last.sets} × ${last.reps} ${e.repUnit||"reps"}`
-            :`Last completed: ${last.sets} × ${last.reps} at ${last.weight} lb`)
+            ?`Previous plan: ${last.sets} × ${last.reps} ${e.repUnit||"reps"}`
+            :`Previous goal: ${last.weight} lb`)
           :(e.hideLoad
-            ?"First session: use an easy, controlled effort."
-            :"First session: start light and keep 2–3 clean reps in reserve.")}</p>
+            ?"Move at a comfortable, controlled pace."
+            :"Start conservatively. The first week is for finding a clean, repeatable weight.")}</p>
         <div class="exercise-demo">
           <div class="demo-media">${localDemoSvg(e)}</div>
           <div class="demo-copy">
-            <h4>Beginner setup</h4><p class="muted">${esc(e.setup)}</p>
+            <h4>Setup</h4><p class="muted">${esc(e.setup)}</p>
             <h4>Form cues</h4><ul>${e.cues.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
-            <p class="demo-credit">Built-in simplified movement guide. Match the machine's printed instructions and ask gym staff for help when uncertain.</p>
+            <p class="demo-credit">Simplified built-in guide. Match the machine’s printed instructions and ask gym staff when uncertain.</p>
           </div>
         </div>
       </div>
     </article>`;
   }).join("");
+
   renderHistory();
   renderStrengthProgress();
   document.getElementById("errorBox").classList.remove("show");
@@ -1555,20 +1623,7 @@ function renderHistory(){const h=document.getElementById("history");h.innerHTML=
 
 
 
-["readinessSleep","readinessEnergy","readinessSoreness"].forEach(id=>{
-  document.getElementById(id).addEventListener("change",e=>{
-    const r=todayReadiness();
-    if(id==="readinessSleep")r.sleep=Number(e.target.value);
-    if(id==="readinessEnergy")r.energy=Number(e.target.value);
-    if(id==="readinessSoreness")r.soreness=Number(e.target.value);
-    PLAN[state.nextDay].exercises.forEach(exercise=>{
-      const s=exState(state.nextDay,exercise);
-      if(!s.completed&&!s.weightTouched&&state.autoProgression)s.weight=sessionTargetFor(exercise);
-    });
-    save();render();
-    if(typeof showFuelToast==="function")showFuelToast(`${readinessStatus().title}: today’s loads set near ${Math.round(readinessModifier()*100)}%.`);
-  });
-});
+
 
 document.getElementById("autoProgressionToggle").addEventListener("click",()=>{
   state.autoProgression=!state.autoProgression;
@@ -1604,42 +1659,137 @@ document.getElementById("days").addEventListener("click",e=>{
   state.selected=requested;save();render();
 });
 document.getElementById("exerciseList").addEventListener("click",e=>{
- const card=e.target.closest(".exercise");if(!card)return;
- const ex=PLAN[state.selected].exercises.find(x=>x.id===card.dataset.id),s=exState(state.selected,ex),a=e.target.closest("[data-action]");if(!a)return;
- if(a.dataset.action==="demo"){s.showDemo=!s.showDemo;save();render();return}
- const current=state.selected===state.nextDay&&!s.completed&&PLAN[state.selected].exercises.find(x=>!exState(state.selected,x).completed)?.id===ex.id;
- if(!current){
-   if(typeof showFuelToast==="function")showFuelToast("Completed steps are read-only. Continue with the current unlocked exercise.");
-   return;
- }
- if(a.dataset.action==="complete")return completeExercise(state.selected,ex,s);
- if(a.dataset.action==="edit"){s.editing=!s.editing;save();render()}
- if(a.dataset.action==="baseline"){
-   state.baselines[ex.id]={weight:s.weight,date:new Date().toISOString()};
-   state.progression[ex.id]={week:weekKey(),target:s.weight,repBonus:0,note:"Day 1 baseline saved. Hold this target until performance supports an increase.",trend:"hold",successStreak:0,missStreak:0};
-   save();render();if(typeof showFuelToast==="function")showFuelToast(`${ex.name}: Day 1 baseline saved at ${s.weight} lb`);
-   if(typeof window.challengeSyncFromApp==="function")window.challengeSyncFromApp();
- }
- if(a.dataset.action==="tooHeavy"){
-   s.weight=Math.max(ex.weightStep||5,s.weight-(ex.weightStep||5));
-   if(!state.baselines[ex.id])state.baselines[ex.id]={weight:s.weight,date:new Date().toISOString()};
-   state.progression[ex.id]={week:weekKey(),target:s.weight,repBonus:0,note:`User marked the prior target too heavy. Reduced to ${s.weight} lb.`,trend:"down",successStreak:0,missStreak:0};
-   save();render();if(typeof showFuelToast==="function")showFuelToast(`${ex.name}: target lowered to ${s.weight} lb`);
- }
- if(a.dataset.action==="useIdeal"){s.weight=idealFor(ex);s.weightTouched=true;save();render()}
- if(a.dataset.action==="useToday"){s.weight=sessionTargetFor(ex);s.weightTouched=true;save();render()}
- if(a.dataset.action==="effort"){s.effort=a.dataset.effort;save();render()}
- if(a.dataset.action==="step"){const f=a.dataset.field,delta=Number(a.dataset.delta),mins={weight:0,reps:1,sets:1};s[f]=Math.max(mins[f],s[f]+delta);if(f==="weight")s.weightTouched=true;save();render()}
+  const card=e.target.closest(".exercise");if(!card)return;
+  const ex=PLAN[state.selected].exercises.find(x=>x.id===card.dataset.id),s=exState(state.selected,ex),
+    action=e.target.closest("[data-action]")?.dataset.action;
+  if(!action)return;
+  if(action==="demo"){s.showDemo=!s.showDemo;save();render();return}
+  if(action==="adjust"){s.editing=!s.editing;save();render();return}
 });
-document.getElementById("completeAll").onclick=()=>{
-  const d=state.selected;
+document.getElementById("exerciseList").addEventListener("change",e=>{
+  const input=e.target.closest("[data-weight-input]");if(!input)return;
+  const ex=PLAN[state.selected].exercises.find(x=>x.id===input.dataset.weightInput),s=exState(state.selected,ex),
+    value=Math.max(0,Number(input.value)||0);
+  s.weight=value;s.weightTouched=true;
+  if(trainingWeek()===1){
+    state.baselines[ex.id]={weight:value,date:new Date().toISOString()};
+  }else{
+    state.baselines[ex.id]={weight:value,date:new Date().toISOString(),manuallyAdjustedWeek:trainingWeek()};
+  }
+  save();render();
+  if(typeof showFuelToast==="function")showFuelToast(`${ex.name}: ${value} lb saved.`);
+  if(typeof window.challengeSyncFromApp==="function")window.challengeSyncFromApp();
+});
+
+const APP_VIEW_KEY="banglamuscleAppViewV1";
+function setAppView(view){
+  const safe=view==="progress"?"progress":"workout";
+  document.body.dataset.appView=safe;
+  document.querySelectorAll("[data-view]").forEach(btn=>btn.classList.toggle("active",btn.dataset.view===safe));
+  localStorage.setItem(APP_VIEW_KEY,safe);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelector(".view-switch")?.addEventListener("click",e=>{
+  const button=e.target.closest("[data-view]");
+  if(button)setAppView(button.dataset.view);
+});
+setAppView(localStorage.getItem(APP_VIEW_KEY)||"workout");
+
+const workoutSwipe=document.getElementById("completeAll");
+let swipeDragging=false,swipeStartX=0,swipeX=0,swipeMax=0,swipeCompleting=false;
+function measureWorkoutSwipe(){
+  const thumb=workoutSwipe?.querySelector(".swipe-thumb");
+  swipeMax=workoutSwipe&&thumb?Math.max(0,workoutSwipe.clientWidth-thumb.offsetWidth-8):0;
+  return swipeMax;
+}
+function paintWorkoutSwipe(value,animate=true){
+  if(!workoutSwipe)return;
+  swipeX=Math.max(0,Math.min(measureWorkoutSwipe(),value));
+  workoutSwipe.classList.toggle("dragging",!animate&&swipeDragging);
+  workoutSwipe.style.setProperty("--swipe-x",`${swipeX}px`);
+  const progress=workoutSwipe.querySelector(".swipe-progress");
+  if(progress)progress.style.width=`${Math.min(workoutSwipe.clientWidth-8,swipeX+46)}px`;
+  const pct=swipeMax?Math.round(swipeX/swipeMax*100):0;
+  workoutSwipe.setAttribute("aria-valuenow",String(pct));
+}
+function resetWorkoutSwipe(animate=true){
+  if(!workoutSwipe)return;
+  swipeDragging=false;swipeCompleting=false;
+  workoutSwipe.classList.remove("dragging","confirmed");
+  const thumb=workoutSwipe.querySelector(".swipe-thumb");
+  const label=workoutSwipe.querySelector(".swipe-label");
+  if(thumb)thumb.textContent="→";
+  if(label&&!label.textContent.startsWith("Swipe"))label.textContent=`Swipe to finish ${PLAN[state?.selected]?.short||"workout"}`;
+  paintWorkoutSwipe(0,animate);
+}
+function confirmWorkoutSwipe(){
+  if(swipeCompleting||workoutSwipe.classList.contains("hidden"))return;
+  swipeCompleting=true;swipeDragging=false;
+  paintWorkoutSwipe(measureWorkoutSwipe(),false);
+  workoutSwipe.classList.add("confirmed");
+  const thumb=workoutSwipe.querySelector(".swipe-thumb");
+  const label=workoutSwipe.querySelector(".swipe-label");
+  if(thumb)thumb.textContent="✓";
+  if(label)label.textContent="Workout complete";
+  if(navigator.vibrate)navigator.vibrate(80);
+  setTimeout(finishCurrentWorkout,220);
+}
+workoutSwipe?.addEventListener("pointerdown",e=>{
+  if(swipeCompleting||workoutSwipe.classList.contains("hidden"))return;
+  swipeDragging=true;workoutSwipe.classList.add("dragging");
+  swipeStartX=e.clientX-swipeX;
+  workoutSwipe.setPointerCapture?.(e.pointerId);
+  e.preventDefault();
+});
+workoutSwipe?.addEventListener("pointermove",e=>{
+  if(!swipeDragging)return;
+  paintWorkoutSwipe(e.clientX-swipeStartX,false);
+  e.preventDefault();
+});
+function releaseWorkoutSwipe(e){
+  if(!swipeDragging)return;
+  swipeDragging=false;workoutSwipe.classList.remove("dragging");
+  try{workoutSwipe.releasePointerCapture?.(e.pointerId)}catch(_){}
+  if(swipeX>=measureWorkoutSwipe()*.78)confirmWorkoutSwipe();
+  else resetWorkoutSwipe();
+}
+workoutSwipe?.addEventListener("pointerup",releaseWorkoutSwipe);
+workoutSwipe?.addEventListener("pointercancel",releaseWorkoutSwipe);
+workoutSwipe?.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"){paintWorkoutSwipe(swipeX+measureWorkoutSwipe()*.2);e.preventDefault()}
+  else if(e.key==="ArrowLeft"){paintWorkoutSwipe(swipeX-measureWorkoutSwipe()*.2);e.preventDefault()}
+  else if(e.key==="Home"){resetWorkoutSwipe();e.preventDefault()}
+  else if(e.key==="End"){paintWorkoutSwipe(measureWorkoutSwipe());e.preventDefault()}
+  else if((e.key==="Enter"||e.key===" ")&&swipeX>=measureWorkoutSwipe()*.78){confirmWorkoutSwipe();e.preventDefault()}
+});
+window.addEventListener("resize",()=>resetWorkoutSwipe(false));
+
+function finishCurrentWorkout(){
+  const d=state.selected,p=PLAN[d];
   if(d!==state.nextDay){
     if(typeof showFuelToast==="function")showFuelToast(`Return to Day ${dayNumber(state.nextDay)} to continue.`);
+    resetWorkoutSwipe();
     return;
   }
-  const ex=PLAN[d].exercises.find(x=>!exState(d,x).completed);
-  if(ex)completeExercise(d,ex,exState(d,ex));
-};
+  const completedAt=new Date().toISOString();
+  p.exercises.forEach(e=>{
+    const s=exState(d,e);
+    s.completed=true;
+    if(!e.hideLoad&&trainingWeek()===1&&!state.baselines[e.id]){
+      state.baselines[e.id]={weight:s.weight,date:completedAt};
+    }
+    state.last[e.id]={weight:e.hideLoad?0:s.weight,reps:e.reps,sets:e.sets};
+    state.history.unshift({
+      date:completedAt,day:d,name:p.name,exerciseId:e.id,exercise:e.name,
+      weight:e.hideLoad?0:s.weight,reps:e.reps,sets:e.sets,source:"planned-workout"
+    });
+  });
+  state.history=state.history.slice(0,500);
+  finishDay(d);save();render();
+  if(typeof window.startPostWorkoutCascade==="function")window.startPostWorkoutCascade();
+  if(typeof window.challengeWorkoutCompleted==="function")window.challengeWorkoutCompleted(d);
+  if(typeof showFuelToast==="function")showFuelToast(`${p.short} complete. ${PLAN[state.nextDay].short} unlocked.`);
+}
 document.querySelectorAll(".setting-step").forEach(b=>b.onclick=()=>{const k=b.dataset.key,delta=Number(b.dataset.delta);state[k]=Math.max(k==="weight"?80:30,Math.min(k==="weight"?500:300,state[k]+delta));save();render()});
 document.getElementById("resetBtn").onclick=()=>{
   if(state.selected!==state.nextDay){
