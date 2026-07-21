@@ -1,0 +1,1750 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#080b10" />
+<title>BanglaMuscle | Workout Dashboard</title>
+<style>
+:root{color-scheme:dark;--bg:#080b10;--surface:#11161e;--surface2:#171e28;--surface3:#202a36;--border:#263241;--text:#f3f7fb;--muted:#8b9aac;--lime:#b9f55d;--danger:#ff6b6b;--radius:20px}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0%,#17202b 0,transparent 34%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}button{font:inherit;-webkit-tap-highlight-color:transparent}.shell{width:min(1180px,calc(100% - 20px));margin:auto;padding-bottom:60px}.topbar{height:76px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:11px}.mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:var(--lime);color:#101808;font-weight:900}.brand strong{display:block}.brand small,.muted{color:var(--muted)}.actions{display:flex;gap:8px}.btn,.icon{border:1px solid var(--border);border-radius:12px;cursor:pointer;font-weight:800;transition:.18s}.btn:active,.icon:active,.complete:active{transform:scale(.96)}.btn{padding:11px 15px}.btn.primary{background:var(--lime);color:#101808;border-color:var(--lime)}.btn.secondary,.icon{background:var(--surface2);color:var(--text)}.icon{width:43px;height:43px}.hero,.panel{background:rgba(17,22,30,.97);border:1px solid var(--border);border-radius:var(--radius)}.hero{padding:28px;display:flex;justify-content:space-between;gap:22px;background:linear-gradient(120deg,rgba(185,245,93,.12),transparent 42%),var(--surface)}.eyebrow{margin:0 0 7px;color:var(--lime);font-size:11px;font-weight:900;letter-spacing:.13em}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(30px,5vw,52px);line-height:1;margin-bottom:10px}.metrics{display:grid;grid-template-columns:repeat(3,minmax(78px,1fr));gap:10px}.metrics div{background:rgba(8,11,16,.64);border:1px solid var(--border);padding:13px;border-radius:15px;text-align:center}.metrics strong{display:block;font-size:24px}.metrics small{color:var(--muted);font-size:10px}.days-wrap{margin:25px 0 15px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.section-head h2{margin-bottom:0}.chip{padding:7px 10px;border-radius:999px;background:rgba(185,245,93,.1);color:var(--lime);font-size:12px;font-weight:800}.days{display:grid;grid-template-columns:repeat(7,1fr);gap:9px;overflow:auto;padding-bottom:4px}.day{min-width:85px;padding:13px 7px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text);cursor:pointer}.day.active{background:var(--lime);color:#101808;border-color:var(--lime)}.day.done:not(.active){border-color:var(--lime)}.day span,.day small{display:block}.day span{font-weight:800}.day small{opacity:.67;margin-top:3px;font-size:10px}.grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.72fr);gap:17px;align-items:start}.panel{padding:21px}.side{display:grid;gap:17px;position:sticky;top:12px}.list{display:grid;gap:11px}.exercise{display:grid;grid-template-columns:48px 1fr;gap:13px;padding:16px;border:1px solid var(--border);border-radius:17px;background:var(--surface2);transition:.2s}.exercise.completed{border-color:rgba(185,245,93,.6);background:linear-gradient(90deg,rgba(185,245,93,.13),var(--surface2));animation:pulse .35s ease}@keyframes pulse{50%{transform:scale(1.012)}}.complete{width:43px;height:43px;border-radius:13px;border:2px solid #3b4b5f;background:transparent;color:transparent;cursor:pointer;font-size:19px;font-weight:900}.completed .complete{background:var(--lime);border-color:var(--lime);color:#101808}.row-head{display:flex;justify-content:space-between;gap:10px}.muscle{color:var(--lime);font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}.exercise h3{font-size:18px;margin-bottom:7px}.text-btn{border:0;background:transparent;color:var(--lime);font-weight:800;cursor:pointer}.targets{display:flex;gap:6px;flex-wrap:wrap}.targets span{background:var(--surface3);color:var(--muted);padding:5px 8px;border-radius:8px;font-size:11px}.controls{display:none;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:13px}.exercise.editing .controls{display:grid}.label{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}.stepper{display:grid;grid-template-columns:37px 1fr 37px;border:1px solid var(--border);border-radius:11px;overflow:hidden;background:var(--bg);min-height:41px}.stepper button{border:0;background:var(--surface3);color:var(--text);font-size:20px;cursor:pointer}.stepper output{display:grid;place-items:center;font-size:12px;font-weight:900}.last{font-size:11px;color:var(--muted);margin:10px 0 0}.ring{--p:0%;width:175px;aspect-ratio:1;border-radius:50%;margin:18px auto;display:grid;place-items:center;background:conic-gradient(var(--lime) var(--p),var(--surface3) 0);position:relative}.ring:after{content:"";position:absolute;width:137px;aspect-ratio:1;border-radius:50%;background:var(--surface)}.ring div{z-index:1;text-align:center}.ring strong{display:block;font-size:36px}.ring span{color:var(--muted);font-size:10px}.summary div,.setting{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border)}.summary span,.setting>span{color:var(--muted);font-size:13px}.inline{display:flex;align-items:center;gap:7px}.mini{width:31px;height:31px;border:1px solid var(--border);border-radius:9px;background:var(--surface3);color:var(--text)}.inline output{min-width:58px;text-align:center;font-size:12px;font-weight:900}.rest{text-align:center;padding:50px 20px;border:1px dashed var(--border);border-radius:17px}.hidden{display:none!important}.history{margin-top:17px}.history-item{display:grid;grid-template-columns:1fr 100px 125px;gap:10px;padding:13px;border:1px solid var(--border);border-radius:13px;background:var(--surface2);margin-top:9px}.history-item span{display:block;color:var(--muted);font-size:11px;margin-top:3px}.empty{text-align:center;color:var(--muted);padding:25px;border:1px dashed var(--border);border-radius:13px}.error{display:none;margin:12px 0;padding:12px;border:1px solid #713d3d;background:#30191d;color:#ffd7d7;border-radius:12px}.error.show{display:block}@media(max-width:880px){.grid{grid-template-columns:1fr}.side{position:static;grid-template-columns:1fr 1fr}.hero{flex-direction:column}}@media(max-width:620px){.shell{width:calc(100% - 12px)}.hero,.panel{padding:16px;border-radius:17px}.metrics div{padding:9px 4px}.metrics strong{font-size:20px}.days{grid-template-columns:repeat(7,80px)}.section-head{align-items:flex-start}.exercise{grid-template-columns:40px 1fr;padding:13px 11px;gap:9px}.complete{width:38px;height:38px}.controls{grid-template-columns:1fr}.side{grid-template-columns:1fr}.history-item{grid-template-columns:1fr 78px}.history-item>div:last-child{display:none}}
+
+    .fuel-panel{margin:18px 0;padding:18px;border:1px solid #273249;border-radius:18px;background:linear-gradient(180deg,#111827,#0d1320)}
+    .fuel-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .fuel-header h3{margin:0}
+    .fuel-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .fuel-card{padding:14px;border:1px solid #2b3850;border-radius:14px;background:#121b2b;transition:.2s ease}
+    .fuel-card.done{border-color:#2fc978;background:rgba(47,201,120,.1);transform:scale(.99)}
+    .fuel-card strong{display:block;margin-bottom:4px}
+    .fuel-card small{color:#94a3b8;display:block;line-height:1.4}
+    .fuel-actions{display:flex;gap:8px;margin-top:12px}
+    .fuel-actions button{flex:1}
+    .fuel-time{margin-top:8px;width:100%;padding:10px;border-radius:10px;border:1px solid #334155;background:#0b1220;color:#f8fafc}
+    .notify-btn{background:#18253a;color:#dce7f7;border:1px solid #334155}
+    .notify-btn.enabled{border-color:#2fc978;color:#8ef0ba}
+    .reminder-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(120px);opacity:0;z-index:9999;background:#172236;color:#fff;border:1px solid #41516c;border-radius:14px;padding:13px 16px;box-shadow:0 16px 50px rgba(0,0,0,.45);transition:.25s ease;max-width:92vw}
+    .reminder-toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+    @media(max-width:720px){.fuel-grid{grid-template-columns:1fr}.fuel-header{align-items:flex-start;flex-direction:column}}
+
+
+.days{grid-template-columns:repeat(3,minmax(105px,1fr));}
+.day{min-width:0}
+.exercise-main{min-width:0}
+.demo-toggle{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:7px 10px;border-radius:9px;border:1px solid var(--border);background:var(--surface3);color:var(--text);font-weight:800;cursor:pointer}
+.exercise-demo{display:none;margin-top:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#0b1017}
+.exercise.show-demo .exercise-demo{display:grid;grid-template-columns:minmax(150px,220px) 1fr}
+.demo-media{min-height:210px;background:#eef1f5;display:grid;place-items:center;position:relative}
+.demo-media img{width:100%;height:100%;max-height:260px;object-fit:contain;display:block}
+.demo-fallback{display:none;place-items:center;text-align:center;padding:20px;color:#17202b;background:linear-gradient(135deg,#dce6f1,#fff);min-height:210px}
+.demo-fallback .motion{width:86px;height:86px;border-radius:50%;border:8px solid #26384c;border-top-color:var(--lime);animation:spinGuide 1.35s linear infinite;margin:0 auto 12px}
+@keyframes spinGuide{to{transform:rotate(360deg)}}
+.demo-copy{padding:15px}
+.demo-copy h4{margin:0 0 8px}
+.demo-copy ul{padding-left:18px;margin:8px 0;color:var(--muted);font-size:13px;line-height:1.5}
+.demo-credit{font-size:9px;color:var(--muted);margin-top:9px}
+.rotation-note{padding:12px 14px;border-radius:13px;background:rgba(185,245,93,.08);border:1px solid rgba(185,245,93,.25);margin-bottom:14px;color:var(--muted);font-size:12px;line-height:1.5}
+.current-badge{display:inline-block;margin-left:6px;padding:3px 7px;border-radius:999px;background:#101808;color:var(--lime);font-size:9px;font-weight:900}
+@media(max-width:620px){
+  .days{grid-template-columns:repeat(3,1fr)}
+  .day{padding:12px 5px}
+  .exercise.show-demo .exercise-demo{grid-template-columns:1fr}
+  .demo-media{min-height:190px}
+}
+
+
+/* Elite adaptive program selector */
+.program-picker{
+  margin:18px 0;
+  background:
+    radial-gradient(circle at 0 0,rgba(185,245,93,.11),transparent 38%),
+    rgba(17,22,30,.98);
+}
+.program-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.program-top h2{margin-bottom:6px}
+.frequency-options{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
+  margin-top:15px;
+}
+.frequency-btn{
+  position:relative;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:var(--surface2);
+  color:var(--text);
+  padding:14px 10px;
+  cursor:pointer;
+  text-align:left;
+  transition:.2s ease;
+}
+.frequency-btn:hover{border-color:#51637a;transform:translateY(-1px)}
+.frequency-btn.active{
+  border-color:var(--lime);
+  background:linear-gradient(145deg,rgba(185,245,93,.19),rgba(185,245,93,.06));
+  box-shadow:0 0 0 1px rgba(185,245,93,.12) inset;
+}
+.frequency-btn strong{display:block;font-size:18px}
+.frequency-btn span{display:block;color:var(--muted);font-size:10px;margin-top:3px;line-height:1.35}
+.frequency-btn em{
+  position:absolute;right:8px;top:8px;
+  background:var(--lime);color:#101808;
+  border-radius:999px;padding:3px 6px;
+  font-size:8px;font-style:normal;font-weight:900;
+}
+.coach-note{
+  margin-top:13px;
+  padding:12px 14px;
+  border:1px solid rgba(185,245,93,.22);
+  background:rgba(185,245,93,.07);
+  border-radius:13px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+.day-tier{
+  display:inline-flex;
+  margin-top:5px;
+  padding:3px 6px;
+  border-radius:999px;
+  border:1px solid currentColor;
+  font-size:8px!important;
+  font-weight:900;
+  opacity:.82!important;
+}
+.day.bonus:not(.active){border-style:dashed}
+.day.recovery:not(.active){border-color:#5f7898}
+.day.active .day-tier{color:#101808}
+.days{grid-template-columns:repeat(var(--day-count,3),minmax(96px,1fr))}
+.session-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:10px;padding:6px 9px;border-radius:999px;
+  background:rgba(185,245,93,.09);color:var(--lime);
+  border:1px solid rgba(185,245,93,.2);font-size:10px;font-weight:900;
+}
+.guardrail{
+  margin-top:8px;color:var(--muted);font-size:11px;line-height:1.45
+}
+@media(max-width:720px){
+  .program-top{display:block}
+  .frequency-options{grid-template-columns:repeat(2,1fr)}
+  .days{grid-template-columns:repeat(var(--day-count,3),92px)}
+}
+
+
+/* Daily coach + cascade */
+.daily-coach{margin:18px 0;background:radial-gradient(circle at 100% 0,rgba(94,234,212,.10),transparent 36%),linear-gradient(180deg,#101824,#0c131f)}
+.coach-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+.coach-question,.nutrition-targets,.cascade-panel{border:1px solid #29364a;border-radius:16px;background:#111a29;padding:16px}
+.coach-question h3,.nutrition-targets h3,.cascade-panel h3{margin:0 0 7px}
+.gym-answer-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
+.gym-answer{border:1px solid #334155;background:#172236;color:#f8fafc;border-radius:12px;padding:12px 8px;font-weight:850;cursor:pointer;transition:.18s}
+.gym-answer:hover{transform:translateY(-1px);border-color:#6b7d96}
+.gym-answer.yes{background:linear-gradient(145deg,#b9f55d,#82da37);color:#101808;border-color:#b9f55d}
+.gym-answer.selected{box-shadow:0 0 0 2px rgba(185,245,93,.35)}
+.schedule-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.schedule-row label{display:grid;gap:5px;color:#94a3b8;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.schedule-row input{width:100%;padding:11px;border-radius:11px;border:1px solid #334155;background:#0b1220;color:#f8fafc}
+.target-ring-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}
+.target-ring{min-height:126px;border:1px solid #2b3850;border-radius:16px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(145deg,#152033,#101827)}
+.target-ring strong{font-size:28px;line-height:1}
+.target-ring small{color:#94a3b8;line-height:1.35}
+.target-progress{height:8px;background:#263247;border-radius:999px;overflow:hidden;margin-top:10px}
+.target-progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#b9f55d,#5eead4);transition:.25s}
+.target-stepper{display:grid;grid-template-columns:40px 1fr 40px;gap:6px;align-items:center;margin-top:10px}
+.target-stepper button{height:38px;border:1px solid #334155;background:#18253a;color:#fff;border-radius:10px;font-size:18px}
+.target-stepper span{text-align:center;color:#d9e3f0;font-weight:850;font-size:11px}
+.remaining-callout{margin-top:12px;padding:11px 12px;border-radius:12px;background:rgba(94,234,212,.07);border:1px solid rgba(94,234,212,.18);color:#b9d8dd;font-size:11px;line-height:1.45}
+.cascade-panel{margin-top:14px}
+.cascade-list{display:grid;gap:8px;margin-top:12px}
+.cascade-step{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:10px;padding:10px;border:1px solid #29364a;border-radius:12px;background:#0e1725}
+.cascade-step.done{border-color:#2fc978;background:rgba(47,201,120,.08)}
+.cascade-step.active{border-color:#b9f55d;background:rgba(185,245,93,.07)}
+.cascade-icon{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#1d2a3f;font-size:13px}
+.cascade-step strong{display:block;font-size:11px}.cascade-step small{display:block;color:#8191a8;font-size:9px;margin-top:2px}
+.cascade-state{font-size:8px;font-weight:900;color:#94a3b8;text-transform:uppercase}
+.auto-badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 7px;background:rgba(47,201,120,.10);color:#72e4a5;border:1px solid rgba(47,201,120,.25);font-size:8px;font-weight:900}
+.post-target-box{margin-top:10px;padding:10px;border-radius:11px;background:#0b1421;border:1px solid #2b3850}
+.post-target-box strong{font-size:18px}.post-target-box small{display:block;color:#94a3b8;margin-top:3px}
+@media(max-width:820px){.coach-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.gym-answer-row,.schedule-row,.target-ring-grid{grid-template-columns:1fr}}
+
+/* Adaptive machine weights + strength volume analytics */
+.load-coach{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+  margin:12px 0 2px
+}
+.load-metric{
+  border:1px solid #2b3850;border-radius:12px;padding:10px;
+  background:linear-gradient(145deg,#111b2b,#0d1522)
+}
+.load-metric small{display:block;color:#8292a8;font-size:8px;text-transform:uppercase;letter-spacing:.08em;font-weight:850}
+.load-metric strong{display:block;margin-top:4px;font-size:18px}
+.load-metric.ideal{border-color:rgba(185,245,93,.35);background:rgba(185,245,93,.07)}
+.load-actions{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0 2px}
+.load-actions button{
+  border:1px solid #334155;background:#172236;color:#dce7f7;border-radius:10px;
+  padding:9px 11px;font-size:9px;font-weight:850;cursor:pointer
+}
+.load-actions button.primary-mini{border-color:rgba(185,245,93,.45);color:#cffa8c}
+.load-actions button.too-heavy{border-color:rgba(251,146,60,.35);color:#fdba74}
+.load-note{font-size:9px!important;line-height:1.45!important;color:#8191a8!important;margin-top:7px!important}
+.strength-progress{margin-top:18px}
+.strength-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:15px 0}
+.strength-stat{border:1px solid #2b3850;border-radius:14px;padding:13px;background:#111a29}
+.strength-stat small{display:block;color:#8393aa;font-size:9px;text-transform:uppercase;font-weight:850}
+.strength-stat strong{display:block;font-size:22px;margin-top:5px}
+.machine-table-wrap{overflow:auto;border:1px solid #283449;border-radius:14px}
+.machine-table{width:100%;border-collapse:collapse;min-width:860px}
+.machine-table th,.machine-table td{padding:11px 10px;border-bottom:1px solid #263247;text-align:left;font-size:10px}
+.machine-table th{color:#8fa0b6;text-transform:uppercase;letter-spacing:.06em;background:#101827;position:sticky;top:0}
+.machine-table tr:last-child td{border-bottom:0}
+.machine-name strong{display:block;font-size:11px}.machine-name small{display:block;color:#7f90a6;margin-top:2px}
+.trend-up{color:#8eea78}.trend-flat{color:#b8c3d3}.trend-down{color:#fdba74}
+.empty-strength{padding:20px;color:#8191a8;text-align:center}
+.baseline-badge{display:inline-flex;padding:3px 6px;border-radius:999px;background:rgba(94,234,212,.08);color:#83e7db;border:1px solid rgba(94,234,212,.18);font-size:8px;font-weight:850}
+@media(max-width:760px){
+  .load-coach{grid-template-columns:1fr 1fr 1fr}
+  .strength-summary{grid-template-columns:1fr 1fr}
+}
+@media(max-width:430px){
+  .load-coach{grid-template-columns:1fr}
+  .strength-summary{grid-template-columns:1fr 1fr}
+}
+
+
+/* Coach auto-progression */
+.progression-policy{
+  margin:14px 0;padding:14px;border:1px solid rgba(185,245,93,.24);
+  border-radius:15px;background:linear-gradient(145deg,rgba(185,245,93,.09),rgba(94,234,212,.04))
+}
+.progression-policy-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.progression-policy h3{margin:0;font-size:14px}.progression-policy p{margin:5px 0 0;color:#91a1b7;font-size:10px;line-height:1.5}
+.auto-switch{border:1px solid #53683d;background:#18251c;color:#cffa8c;border-radius:999px;padding:8px 11px;font-size:9px;font-weight:900;cursor:pointer}
+.auto-switch.off{border-color:#425066;background:#172033;color:#a9b5c5}
+.progression-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.progression-rule{border:1px solid #2d3a4d;border-radius:11px;padding:10px;background:#0f1825}
+.progression-rule strong{display:block;font-size:10px}.progression-rule small{display:block;color:#8191a8;margin-top:3px;font-size:8px;line-height:1.4}
+.week-target-note{
+  margin:8px 0 2px;padding:8px 10px;border-radius:10px;border:1px solid #2b3850;
+  background:#0c1522;color:#93a5ba;font-size:9px;line-height:1.45
+}
+.week-target-note.up{border-color:rgba(142,234,120,.28);color:#9be98c}
+.week-target-note.hold{border-color:rgba(250,204,21,.18);color:#d7ca8b}
+.week-target-note.down{border-color:rgba(251,146,60,.25);color:#fdba74}
+@media(max-width:650px){.progression-rules{grid-template-columns:1fr}}
+
+
+/* Clear Week → Day navigation */
+.week-roadmap{
+  margin:18px 0;
+  border:1px solid #2b3850;
+  background:linear-gradient(160deg,#111b2a,#0d1521);
+}
+.week-roadmap-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.week-roadmap-top h2{margin:2px 0 5px}
+.week-number{
+  min-width:92px;text-align:center;padding:12px;border-radius:16px;
+  background:linear-gradient(145deg,rgba(185,245,93,.18),rgba(94,234,212,.07));
+  border:1px solid rgba(185,245,93,.28)
+}
+.week-number small{display:block;color:#9dafc1;font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.1em}
+.week-number strong{display:block;font-size:31px;line-height:1.05;color:#d9ff9d}
+.week-path{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:14px}
+.week-path-step{
+  border:1px solid #2e3b50;border-radius:13px;padding:10px;background:#101927;min-height:78px
+}
+.week-path-step strong{display:block;font-size:10px}
+.week-path-step small{display:block;color:#8091a8;font-size:8px;line-height:1.35;margin-top:4px}
+.week-path-step.current{border-color:#b9f55d;background:rgba(185,245,93,.08)}
+.week-path-step.complete{border-color:#2fc978;background:rgba(47,201,120,.07)}
+.week-path-step.optional{border-style:dashed}
+.week-path-step.locked{opacity:.62}
+.day.locked{opacity:.68;border-style:dashed;position:relative}
+.day.locked::after{
+  content:"UNLOCK";position:absolute;right:7px;bottom:7px;font-size:7px;font-weight:950;
+  color:#a9b7ca;border:1px solid #40506a;border-radius:999px;padding:2px 5px
+}
+.day .week-day-label{font-size:8px!important;color:#9aaac0!important;margin-bottom:3px}
+.day.active .week-day-label{color:#18210f!important}
+.day.optional:not(.active){border-style:dashed}
+.days{grid-template-columns:repeat(6,minmax(96px,1fr))!important}
+.week-explanation{
+  margin-top:11px;padding:10px 12px;border:1px solid #2c394d;border-radius:12px;
+  background:#0d1623;color:#8fa0b6;font-size:10px;line-height:1.5
+}
+@media(max-width:900px){
+  .week-path{grid-template-columns:repeat(3,1fr)}
+  .days{grid-template-columns:repeat(6,96px)!important}
+}
+@media(max-width:520px){
+  .week-roadmap-top{display:block}
+  .week-number{margin-top:12px;width:100%}
+  .week-path{grid-template-columns:repeat(2,1fr)}
+}
+
+
+/* BanglaMuscle 90 gamification */
+.challenge-shell{
+  margin:18px 0;
+  overflow:hidden;
+  border:1px solid rgba(185,245,93,.28);
+  background:
+    radial-gradient(circle at 92% 5%,rgba(185,245,93,.18),transparent 32%),
+    radial-gradient(circle at 0 100%,rgba(94,234,212,.10),transparent 40%),
+    linear-gradient(150deg,#111a29,#0b121d);
+}
+.challenge-hero{
+  display:grid;grid-template-columns:1.25fr .75fr;gap:18px;align-items:center
+}
+.challenge-kicker{display:flex;align-items:center;gap:8px;color:#cffa8c;font-size:10px;font-weight:950;letter-spacing:.12em}
+.challenge-kicker span{width:8px;height:8px;border-radius:50%;background:#b9f55d;box-shadow:0 0 18px rgba(185,245,93,.8)}
+.challenge-title{margin:8px 0 6px;font-size:clamp(28px,5vw,50px);line-height:.98;letter-spacing:-.04em}
+.challenge-title em{font-style:normal;color:#b9f55d}
+.challenge-progress-wrap{margin-top:16px}
+.challenge-progress-track{height:13px;background:#263247;border-radius:999px;overflow:hidden}
+.challenge-progress-fill{height:100%;width:1%;background:linear-gradient(90deg,#b9f55d,#5eead4);transition:.35s ease;position:relative}
+.challenge-progress-fill::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:challengeShine 2.2s linear infinite}
+@keyframes challengeShine{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.challenge-progress-labels{display:flex;justify-content:space-between;margin-top:7px;color:#8798ae;font-size:9px}
+.challenge-day-orb{
+  width:180px;height:180px;margin:auto;border-radius:50%;display:grid;place-items:center;text-align:center;
+  background:conic-gradient(#b9f55d var(--challenge-p,1%),#263247 0);
+  position:relative;box-shadow:0 18px 50px rgba(0,0,0,.26)
+}
+.challenge-day-orb::before{content:"";position:absolute;inset:11px;border-radius:50%;background:#101927}
+.challenge-day-orb>div{position:relative;z-index:1}.challenge-day-orb small{display:block;color:#8fa0b6;font-size:9px;font-weight:900;letter-spacing:.1em}
+.challenge-day-orb strong{display:block;font-size:43px;line-height:1;color:#e8f5ff;margin:4px 0}
+.challenge-day-orb span{display:block;color:#b9f55d;font-size:10px;font-weight:900}
+.challenge-dashboard{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:16px}
+.challenge-card{border:1px solid #2b3850;border-radius:16px;background:rgba(15,24,38,.9);padding:15px}
+.challenge-card h3{margin:0 0 5px}.challenge-card>p{margin:0;color:#8495aa;font-size:10px;line-height:1.45}
+.challenge-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:13px}
+.challenge-stat{border:1px solid #2a374b;border-radius:12px;padding:10px;background:#0d1623}
+.challenge-stat small{display:block;color:#7f90a6;font-size:8px;text-transform:uppercase;font-weight:900;letter-spacing:.07em}
+.challenge-stat strong{display:block;margin-top:4px;font-size:20px}
+.xp-track{margin-top:10px;height:8px;border-radius:999px;background:#263247;overflow:hidden}
+.xp-fill{height:100%;background:linear-gradient(90deg,#60a5fa,#c084fc);width:0;transition:.3s}
+.mission-list{display:grid;gap:8px;margin-top:13px}
+.mission{
+  display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;
+  padding:10px;border:1px solid #2a374b;border-radius:12px;background:#0c1522;
+  cursor:pointer;transition:.18s ease
+}
+.mission:hover{transform:translateY(-1px);border-color:#465a76}
+.mission.done{border-color:#2fc978;background:rgba(47,201,120,.08)}
+.mission.disabled{cursor:default;opacity:.72}.mission.disabled:hover{transform:none}
+.mission-check{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:#1b293d;color:#7f90a6;font-weight:950}
+.mission.done .mission-check{background:#2fc978;color:#07160d}
+.mission strong{display:block;font-size:11px}.mission small{display:block;color:#8191a8;font-size:8px;margin-top:2px}
+.mission-xp{color:#b9f55d;font-size:9px;font-weight:900;white-space:nowrap}
+.phase-roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
+.phase{padding:11px;border:1px solid #2b3850;border-radius:12px;background:#0d1623}
+.phase.active{border-color:#b9f55d;background:rgba(185,245,93,.07)}
+.phase.complete{border-color:#2fc978}.phase small{display:block;color:#8293a8;font-size:8px}.phase strong{display:block;margin-top:3px;font-size:11px}
+.badge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:13px}
+.badge{
+  min-height:94px;border:1px solid #2b3850;border-radius:13px;padding:10px;text-align:center;background:#0d1623;
+  opacity:.42;filter:grayscale(1);transition:.2s
+}
+.badge.unlocked{opacity:1;filter:none;border-color:rgba(185,245,93,.35);background:rgba(185,245,93,.06)}
+.badge-icon{font-size:25px}.badge strong{display:block;font-size:9px;margin-top:5px}.badge small{display:block;color:#8191a8;font-size:7px;margin-top:3px;line-height:1.3}
+.challenge-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.challenge-actions button{border:1px solid #35455c;background:#172236;color:#dce7f7;border-radius:10px;padding:9px 11px;font-size:9px;font-weight:850;cursor:pointer}
+.challenge-actions .token-btn{border-color:rgba(94,234,212,.35);color:#91eee2}
+.level-chip{display:inline-flex;align-items:center;gap:6px;margin-top:9px;padding:5px 8px;border-radius:999px;background:rgba(192,132,252,.09);border:1px solid rgba(192,132,252,.24);color:#d8b4fe;font-size:9px;font-weight:900}
+.challenge-toast{
+  position:fixed;right:18px;top:18px;z-index:10000;max-width:320px;padding:14px 16px;
+  background:#121d2d;color:#fff;border:1px solid #4a5f7b;border-radius:14px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);transform:translateY(-130%);opacity:0;transition:.25s
+}
+.challenge-toast.show{transform:translateY(0);opacity:1}
+.challenge-toast strong{display:block;color:#cffa8c}.challenge-toast small{display:block;color:#9aabc0;margin-top:4px;line-height:1.4}
+@media(max-width:900px){.challenge-hero,.challenge-dashboard{grid-template-columns:1fr}.challenge-day-orb{width:150px;height:150px}.badge-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.challenge-stats{grid-template-columns:repeat(2,1fr)}.phase-roadmap{grid-template-columns:1fr}.badge-grid{grid-template-columns:repeat(2,1fr)}}
+
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar"><div class="brand"><span class="mark">BM</span><span><strong>BanglaMuscle</strong><small>Case Study #001</small></span></div><div class="actions"><button id="resetBtn" class="icon" title="Reset selected day">↺</button><button id="exportBtn" class="btn secondary">Export</button></div></header>
+<div id="errorBox" class="error"></div>
+<main>
+
+
+
+<section class="panel challenge-shell" id="challenge90">
+  <div class="challenge-hero">
+    <div>
+      <div class="challenge-kicker"><span></span> BANGLAMUSCLE 90</div>
+      <h1 class="challenge-title">Your 90-Day <em>Muscle Mission</em></h1>
+      <p class="muted" id="challengeHeroText">Build strength, improve consistency, and complete the mission without turning recovery into failure.</p>
+      <span class="level-chip" id="levelChip">LEVEL 1 · RECRUIT</span>
+      <div class="challenge-progress-wrap">
+        <div class="challenge-progress-track"><div class="challenge-progress-fill" id="challengeProgressFill"></div></div>
+        <div class="challenge-progress-labels"><span id="challengeStartLabel">Day 1</span><span id="challengeEndLabel">Day 90</span></div>
+      </div>
+    </div>
+    <div class="challenge-day-orb" id="challengeDayOrb"><div><small>CHALLENGE DAY</small><strong id="challengeDay">1</strong><span id="challengePhase">FOUNDATION</span></div></div>
+  </div>
+
+  <div class="challenge-dashboard">
+    <article class="challenge-card">
+      <h3>Today’s Mission</h3>
+      <p id="missionIntro">Complete today’s controllable actions. Rest days count when recovery is completed.</p>
+      <div class="mission-list" id="missionList"></div>
+    </article>
+
+    <article class="challenge-card">
+      <h3>Player Progress</h3>
+      <p>XP rewards consistency—not perfection.</p>
+      <div class="challenge-stats">
+        <div class="challenge-stat"><small>Total XP</small><strong id="challengeXP">0</strong></div>
+        <div class="challenge-stat"><small>Consistency streak</small><strong id="challengeStreak">0</strong></div>
+        <div class="challenge-stat"><small>Workouts</small><strong id="challengeWorkouts">0</strong></div>
+        <div class="challenge-stat"><small>Recovery tokens</small><strong id="recoveryTokens">3</strong></div>
+      </div>
+      <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
+      <p class="muted" id="xpNextLevel" style="margin-top:7px">300 XP to next level</p>
+      <div class="challenge-actions">
+        <button type="button" class="token-btn" id="useRecoveryToken">Use recovery token</button>
+        <button type="button" id="restartChallenge">Restart challenge</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="challenge-dashboard">
+    <article class="challenge-card">
+      <h3>Three Transformation Phases</h3>
+      <p>Technique first, then progression, then measurable transformation.</p>
+      <div class="phase-roadmap" id="phaseRoadmap"></div>
+    </article>
+
+    <article class="challenge-card">
+      <h3>Achievement Badges</h3>
+      <p>Badges unlock from real behaviors and progress.</p>
+      <div class="badge-grid" id="badgeGrid"></div>
+    </article>
+  </div>
+</section>
+<div class="challenge-toast" id="challengeToast" role="status" aria-live="polite"><strong id="challengeToastTitle"></strong><small id="challengeToastBody"></small></div>
+
+<section class="panel daily-coach" id="dailyCoach">
+  <div class="section-head">
+    <div><p class="eyebrow">DAILY COACH</p><h2>Today’s plan</h2><p class="muted">One decision starts the right reminder waterfall.</p></div>
+    <span class="chip" id="todayCoachStatus">Waiting for check-in</span>
+  </div>
+  <div class="coach-grid">
+    <article class="coach-question">
+      <h3>Are you going to the gym today?</h3>
+      <p class="muted">Your answer controls the next reminders.</p>
+      <div class="schedule-row">
+        <label>Daily check-in time<input type="time" id="gymPromptTime" value="09:00"></label>
+        <label>Planned workout time<input type="time" id="plannedWorkoutTime" value="18:00"></label>
+      </div>
+      <div class="gym-answer-row">
+        <button class="gym-answer yes" type="button" data-gym-answer="yes">Yes, gym today</button>
+        <button class="gym-answer" type="button" data-gym-answer="later">Ask me later</button>
+        <button class="gym-answer" type="button" data-gym-answer="rest">Rest day</button>
+      </div>
+      <div class="remaining-callout" id="gymDecisionMessage">Choose once. The app handles the reminders that follow.</div>
+    </article>
+
+    <article class="nutrition-targets">
+      <h3>Daily fuel targets</h3>
+      <p class="muted">Starting targets for Case Study #001.</p>
+      <div class="target-ring-grid">
+        <div class="target-ring">
+          <div><small>Calories remaining</small><strong id="calorieRemaining">2,400</strong><small>kcal</small><div class="target-progress"><span id="calorieTargetBar"></span></div></div>
+          <div class="target-stepper"><button type="button" data-nutrition="calories" data-delta="-100">−</button><span id="calorieConsumed">0 kcal logged</span><button type="button" data-nutrition="calories" data-delta="100">+</button></div>
+        </div>
+        <div class="target-ring">
+          <div><small>Protein remaining</small><strong id="proteinRemaining">120 g</strong><small>working target</small><div class="target-progress"><span id="proteinTargetBar"></span></div></div>
+          <div class="target-stepper"><button type="button" data-nutrition="protein" data-delta="-5">−</button><span id="proteinConsumed">0 g logged</span><button type="button" data-nutrition="protein" data-delta="5">+</button></div>
+        </div>
+      </div>
+      <div class="remaining-callout" id="nutritionCoachText"></div>
+    </article>
+  </div>
+  <article class="cascade-panel">
+    <div class="fuel-header"><div><h3>Reminder waterfall</h3><p class="muted">Completing one step activates the next relevant reminder.</p></div><span class="auto-badge">● AUTOMATIC</span></div>
+    <div class="cascade-list" id="cascadeList"></div>
+  </article>
+</section>
+
+<section class="fuel-panel" id="fuelPanel">
+  <div class="fuel-header">
+    <div>
+      <h3>Fuel & Hydration</h3>
+      <p class="muted" style="margin:5px 0 0">Simple reminders built around your workout—not rigid supplement rules.</p>
+    </div>
+    <button class="notify-btn" id="enableNotificationsBtn" type="button">Enable notifications</button>
+  </div>
+
+  <div class="fuel-grid">
+    <article class="fuel-card" data-fuel-id="pre">
+      <strong>🥤 Pre-workout fuel</strong>
+      <small>About 60–90 minutes before: a normal meal or light option such as banana + yogurt, eggs + toast, rice + fish/chicken, or a shake if food is inconvenient.</small>
+      <input class="fuel-time" id="preReminderTime" type="time" aria-label="Pre-workout reminder time">
+      <div class="fuel-actions">
+        <button type="button" data-fuel-action="schedule" data-fuel-id="pre">Set reminder</button>
+        <button type="button" data-fuel-action="done" data-fuel-id="pre">Done</button>
+      </div>
+    </article>
+
+    <article class="fuel-card" data-fuel-id="water">
+      <strong>💧 Water</strong>
+      <small>Drink before training, then take small sips during the workout. The app will also remind you 25 minutes after the session starts.</small>
+      <div class="fuel-actions">
+        <button type="button" data-fuel-action="startWater" data-fuel-id="water">Start 25-min reminder</button>
+        <button type="button" data-fuel-action="done" data-fuel-id="water">Done</button>
+      </div>
+    </article>
+
+    <article class="fuel-card" data-fuel-id="post">
+      <strong>🍽 Post-workout protein <span class="auto-badge">AUTO</span></strong>
+      <small>This reminder starts automatically when the workout is completed.</small>
+      <div class="post-target-box"><strong>25–40 g protein</strong><small>Use a normal meal or shake. Daily total remains the priority.</small></div>
+      <div class="fuel-actions">
+        <button type="button" data-fuel-action="testPost" data-fuel-id="post">Test reminder</button>
+        <button type="button" data-fuel-action="done" data-fuel-id="post">Done</button>
+      </div>
+    </article>
+
+    <article class="fuel-card" data-fuel-id="creatine">
+      <strong>⚡ Daily creatine</strong>
+      <small>Optional: 3–5 g creatine monohydrate daily if you choose to use it. Timing is flexible; consistency matters most.</small>
+      <input class="fuel-time" id="creatineReminderTime" type="time" aria-label="Creatine reminder time">
+      <div class="fuel-actions">
+        <button type="button" data-fuel-action="schedule" data-fuel-id="creatine">Set reminder</button>
+        <button type="button" data-fuel-action="done" data-fuel-id="creatine">Done</button>
+      </div>
+    </article>
+  </div>
+</section>
+<div class="reminder-toast" id="reminderToast" role="status" aria-live="polite"></div>
+
+<section class="hero"><div><p class="eyebrow">SELECTED TRAINING DAY</p><h1 id="heroTitle">Loading…</h1><p id="heroSub" class="muted"></p><span class="session-badge">AUTO-ROTATING · BEGINNER-SAFE PROGRESSION</span></div><div class="metrics"><div><strong id="heroMins">0</strong><small>minutes</small></div><div><strong id="heroCount">0</strong><small>exercises</small></div><div><strong id="heroKcal">0</strong><small>active kcal</small></div></div></section>
+
+<section class="panel program-picker" aria-labelledby="programTitle">
+  <div class="program-top">
+    <div>
+      <p class="eyebrow">ADAPTIVE PROGRAM</p>
+      <h2 id="programTitle">Choose your training frequency</h2>
+      <p class="muted">Start with Week 1 · Days 1–3. Days 4–6 remain visible below and unlock when you choose a higher frequency or tap an optional day.</p>
+    </div>
+    <span class="chip" id="programStatus">3-day foundation</span>
+  </div>
+  <div class="frequency-options" id="frequencyOptions">
+    <button class="frequency-btn" data-frequency="3">
+      <strong>3 days</strong><span>Best starting point</span><em>RECOMMENDED</em>
+    </button>
+    <button class="frequency-btn" data-frequency="4">
+      <strong>4 days</strong><span>Add upper-body volume</span>
+    </button>
+    <button class="frequency-btn" data-frequency="5">
+      <strong>5 days</strong><span>Add lower-body volume</span>
+    </button>
+    <button class="frequency-btn" data-frequency="6">
+      <strong>6 days</strong><span>Recovery conditioning—not six hard lifts</span>
+    </button>
+  </div>
+  <div class="coach-note" id="frequencyAdvice"></div>
+</section>
+
+
+<section class="panel week-roadmap" id="weekRoadmap">
+  <div class="week-roadmap-top">
+    <div>
+      <p class="eyebrow">12-WEEK TRAINING JOURNEY</p>
+      <h2 id="weekRoadmapTitle">Week 1 · Day 1</h2>
+      <p class="muted" id="weekRoadmapSubtitle">Start with Day 1. The app advances one training day at a time.</p>
+    </div>
+    <div class="week-number">
+      <small>Current week</small>
+      <strong id="currentWeekNumber">1</strong>
+    </div>
+  </div>
+  <div class="week-path" id="weekPath"></div>
+  <div class="week-explanation" id="weekExplanation">
+    Days 1–3 are the complete foundation. Days 4–6 stay visible as optional sessions and can be unlocked at any time.
+  </div>
+</section>
+
+<section class="days-wrap"><div class="section-head"><div><p class="eyebrow">THIS WEEK</p><h2>Choose your training day</h2></div><span id="weekChip" class="chip">Next: Day 1</span></div><div id="days" class="days"></div></section>
+<section class="grid"><div><article class="panel"><div class="section-head"><div><p id="workoutLabel" class="eyebrow">WORKOUT</p><h2 id="workoutName">Workout</h2><p id="workoutDesc" class="muted"></p></div><button id="completeAll" class="btn primary">Complete workout</button></div><div id="rest" class="rest hidden"><h3>Recovery day</h3><p class="muted">Walk, stretch, hydrate, and prepare for your next session.</p></div><div class="rotation-note" id="rotationNote">
+Follow the order shown: Week 1 · Day 1, then Week 1 · Day 2, and so on. Optional Days 4–6 remain visible and can be unlocked whenever recovery is good.
+</div><div id="exerciseList" class="list"></div></article></div>
+<aside class="side"><article class="panel"><p class="eyebrow">SESSION SUMMARY</p><div id="ring" class="ring"><div><strong id="kcal">0</strong><span>active kcal</span></div></div><div class="summary"><div><span>Completed</span><strong id="doneCount">0 / 0</strong></div><div><span>Duration</span><strong id="duration">0 min</strong></div><div><span>Volume</span><strong id="volume">0 lb</strong></div></div><p class="muted" style="font-size:10px;margin-top:12px">Estimated with a resistance-training MET model using your saved body weight.</p></article><article class="panel"><p class="eyebrow">QUICK SETTINGS</p><div class="setting"><span>Body weight</span><div class="inline"><button class="mini setting-step" data-key="weight" data-delta="-1">−</button><output id="weightOut">151 lb</output><button class="mini setting-step" data-key="weight" data-delta="1">+</button></div></div><div class="setting"><span>Rest timer</span><div class="inline"><button class="mini setting-step" data-key="rest" data-delta="-15">−</button><output id="restOut">90 sec</output><button class="mini setting-step" data-key="rest" data-delta="15">+</button></div></div></article></aside></section>
+
+<section class="panel strength-progress" id="strengthProgress">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">STRENGTH PROGRESS</p>
+      <h2>Machine load & weekly volume</h2>
+      <p class="muted">The weekly load updates automatically from your Day 1 baseline and the previous week’s completed performance.</p>
+    </div>
+    <span class="chip">Sets × reps × weight</span>
+  </div>
+  
+<div class="progression-policy">
+  <div class="progression-policy-head">
+    <div>
+      <h3>Coach Auto Progression</h3>
+      <p id="progressionWeekLabel">Weekly targets update every Monday from your previous week’s performance.</p>
+    </div>
+    <button type="button" class="auto-switch" id="autoProgressionToggle">AUTO ON</button>
+  </div>
+  <div class="progression-rules">
+    <div class="progression-rule"><strong>Successful week</strong><small>Move up one smallest machine step. Large percentage jumps require two successful weeks.</small></div>
+    <div class="progression-rule"><strong>Almost there</strong><small>Keep the same load and build reps before adding weight.</small></div>
+    <div class="progression-rule"><strong>Repeated misses</strong><small>After two clearly difficult weeks, reduce one step and rebuild technique.</small></div>
+  </div>
+</div>
+
+<div class="strength-summary">
+    <div class="strength-stat"><small>Lifted today</small><strong id="todayLifted">0 lb</strong></div>
+    <div class="strength-stat"><small>Lifted this week</small><strong id="weekLifted">0 lb</strong></div>
+    <div class="strength-stat"><small>Machines tracked</small><strong id="machinesTracked">0</strong></div>
+    <div class="strength-stat"><small>Baseline improvements</small><strong id="baselineWins">0</strong></div>
+  </div>
+  <div class="machine-table-wrap">
+    <table class="machine-table">
+      <thead><tr>
+        <th>Exercise / machine</th><th>Coach start</th><th>Day 1 actual</th><th>Ideal today</th>
+        <th>Best weight</th><th>Today volume</th><th>Week volume</th><th>From baseline</th>
+      </tr></thead>
+      <tbody id="machineProgressBody"></tbody>
+    </table>
+  </div>
+  <p class="load-note">Machine stacks and pulley ratios differ by gym. Treat the coach number as a starting suggestion; your saved Day 1 weight is the personal reference.</p>
+</section>
+
+<section class="panel history"><div class="section-head"><div><p class="eyebrow">PROGRESS</p><h2>Recent sessions</h2></div><button id="clearHistory" class="text-btn">Clear history</button></div><div id="history"></div></section>
+</main></div>
+<script>
+(()=>{"use strict";
+const media=name=>"https://commons.wikimedia.org/wiki/Special:Redirect/file/"+encodeURIComponent(name);
+const ex=(id,name,muscle,sets,reps,min,weight,gif,setup,cues,opts={})=>({id,name,muscle,sets,reps,min,weight,gif:media(gif),setup,cues,repUnit:"reps",hideLoad:false,weightStep:5,...opts});
+
+
+const PLAN={
+ day1:{
+   short:"Day 1",tier:"Core",name:"Upper Body Foundation",
+   desc:"Balanced pressing and pulling to build your chest, back, shoulders, and arms without unnecessary complexity.",
+   exercises:[
+     ex("warmup-walk","Treadmill Incline Walk","Warm-up",1,6,6,0,"Treadmill-running.gif",
+        "Walk for about 6 minutes at an easy-to-moderate pace. Start around 2.8–3.3 mph and 2–5% incline.",
+        ["Stand tall and use the rails only if needed for balance.","Finish warmer—not tired.","You should still be able to speak in short sentences."],{repUnit:"min",hideLoad:true}),
+     ex("chest-press","Machine Chest Press","Chest",3,10,10,35,"SmithMachineBenchPress.gif",
+        "Adjust the seat so the handles line up around mid-chest. Keep feet flat and shoulder blades gently back.",
+        ["Press without locking your elbows.","Lower under control for about two seconds.","Stop if you feel sharp shoulder pain."]),
+     ex("lat-pulldown","Lat Pulldown","Back",3,10,10,50,"Wide-grip-lat-pull-down-1.gif",
+        "Secure your thighs under the pad. Use a comfortable grip slightly wider than shoulder width.",
+        ["Pull toward the upper chest.","Keep your torso mostly upright.","Never pull the bar behind your neck."]),
+     ex("cable-row","Seated Cable Row","Back",2,10,8,45,"Seated-cable-row-1.gif",
+        "Sit tall with knees slightly bent. Begin with arms long and chest lifted.",
+        ["Drive elbows toward your back pockets.","Avoid rocking backward.","Pause briefly when the handle reaches your body."]),
+     ex("shoulder-press","Machine Shoulder Press","Shoulders",2,10,8,25,"Shoulder-press-1.gif",
+        "Set the seat so the handles start near ear level. Keep your back supported.",
+        ["Press smoothly overhead.","Keep ribs down.","Use only a pain-free range."]),
+     ex("lateral-raise","Dumbbell Lateral Raise","Shoulders",2,15,7,8,"Dumbbell-lateral-raise-1.gif",
+        "Use light dumbbells and keep a soft bend in your elbows.",
+        ["Raise to about shoulder height.","Lead with your elbows.","Avoid shrugging."]),
+     ex("triceps-pushdown","Rope Triceps Pushdown","Triceps",2,12,7,25,"Triceps-pushdown-with-rope-1.gif",
+        "Stand tall with elbows tucked by your sides.",
+        ["Move mainly at the elbows.","Separate the rope slightly at the bottom.","Do not swing your body."]),
+     ex("cable-curl","Cable or Dumbbell Curl","Biceps",2,12,7,15,"Standing-biceps-curl-1.gif",
+        "Stand tall with your upper arms near your sides.",
+        ["Keep elbows still.","Avoid swinging.","Lower fully under control."])
+   ]
+ },
+ day2:{
+   short:"Day 2",tier:"Core",name:"Lower Body Foundation",
+   desc:"Build your legs, hips, calves, and core with stable beginner-friendly movements.",
+   exercises:[
+     ex("warmup-bike","Stationary Bike Warm-up","Warm-up",1,6,6,0,"Stationary_bicycle.gif",
+        "Pedal easily for about 6 minutes, gradually increasing resistance.",
+        ["Keep knees tracking forward.","Use a smooth cadence.","Warm up without exhausting your legs."],{repUnit:"min",hideLoad:true}),
+     ex("leg-press","Leg Press","Quads + Glutes",3,10,11,90,"Leg_press.jpg",
+        "Place feet around shoulder width on the platform and begin with a comfortable range.",
+        ["Keep your lower back against the pad.","Track knees over toes.","Do not lock your knees."]),
+     ex("rdl-day2","Dumbbell Romanian Deadlift","Hamstrings + Glutes",3,10,10,15,"Romanian-deadlift-2.png",
+        "Hold light dumbbells by your thighs. Soften your knees and push your hips backward.",
+        ["Keep weights close to your legs.","Stop before your back rounds.","Stand by driving your hips forward."]),
+     ex("leg-curl","Seated Leg Curl","Hamstrings",2,12,8,40,"Seated-leg-curl.gif",
+        "Align your knee joint with the machine pivot and secure the thigh pad.",
+        ["Curl without lifting your hips.","Pause briefly in the shortened position.","Return slowly."]),
+     ex("leg-extension","Leg Extension","Quads",2,12,8,35,"Leg_extension.gif",
+        "Align your knees with the machine pivot and position the shin pad above your ankles.",
+        ["Lift without kicking.","Use a pain-free range.","Lower for two to three seconds."]),
+     ex("calf-raise","Standing or Seated Calf Raise","Calves",3,12,7,40,"Standing-calf-raise-1.gif",
+        "Keep the ball of your foot stable on the platform and use a comfortable range.",
+        ["Rise through the big toe.","Pause at the top.","Lower until you feel a gentle calf stretch."]),
+     ex("plank","Front Plank","Core",3,25,6,0,"Plank_exercise.gif",
+        "Place forearms under shoulders and extend your legs.",
+        ["Brace as if preparing for a light punch.","Keep hips level.","End the set when your lower back begins to sag."],{repUnit:"sec",hideLoad:true})
+   ]
+ },
+ day3:{
+   short:"Day 3",tier:"Core",name:"Full Body Progression",
+   desc:"A second exposure for the major muscle groups, using different angles to build skill and muscle.",
+   exercises:[
+     ex("warmup-row","Rowing or Brisk Walk","Warm-up",1,6,6,0,"Indoor_rower.gif",
+        "Row or walk easily for about 6 minutes and gradually increase pace.",
+        ["Keep the effort moderate.","Do not sprint.","Use this to prepare—not test your fitness."],{repUnit:"min",hideLoad:true}),
+     ex("hack-squat","Hack Squat or Leg Press","Legs",3,10,10,70,"Leg_press.jpg",
+        "Use whichever machine feels more stable and comfortable.",
+        ["Control the descent.","Track knees with toes.","Stop before your lower back rounds."]),
+     ex("incline-press","Incline Dumbbell Press","Chest",3,10,10,20,"Dumbbell-bench-press-1.gif",
+        "Set the bench to a low incline and start with the dumbbells near your upper chest.",
+        ["Keep shoulder blades supported.","Press up and slightly inward.","Use a spotter or lighter weight while learning."]),
+     ex("machine-row","Chest-Supported Row","Back",3,10,9,40,"Seated-cable-row-1.gif",
+        "Set the chest pad so you can reach the handles without rounding.",
+        ["Keep your chest on the pad.","Pull elbows back.","Lower slowly until arms are long."]),
+     ex("hip-thrust","Machine or Bench Hip Thrust","Glutes",2,10,9,40,"Hip-thrust-1.gif",
+        "Position the pad across your hips and keep your upper back supported.",
+        ["Finish with ribs down.","Squeeze your glutes at the top.","Do not overarch your lower back."]),
+     ex("neutral-pulldown","Neutral-Grip Lat Pulldown","Back",2,10,8,45,"Wide-grip-lat-pull-down-1.gif",
+        "Use a neutral or comfortable handle and secure your thighs.",
+        ["Pull elbows down toward your sides.","Keep your neck relaxed.","Control the return."]),
+     ex("curl-day3","Cable Curl","Biceps",2,12,7,20,"Standing-biceps-curl-1.gif",
+        "Stand tall and hold the cable with your elbows near your sides.",
+        ["Curl without leaning back.","Pause briefly.","Lower with control."]),
+     ex("pushdown-day3","Cable Triceps Pressdown","Triceps",2,12,7,25,"Triceps-pushdown-with-rope-1.gif",
+        "Keep elbows close to your ribs and shoulders relaxed.",
+        ["Straighten your elbows fully without forcing them.","Keep torso still.","Return slowly."])
+   ]
+ },
+ day4:{
+   short:"Day 4",tier:"Bonus",name:"Upper Volume & Arms",
+   desc:"Optional lower-fatigue upper-body volume for users recovering well after the three core sessions.",
+   exercises:[
+     ex("warmup-elliptical","Elliptical Warm-up","Warm-up",1,5,5,0,"Elliptical-trainer.gif",
+        "Move easily for about 5 minutes and gradually increase your pace.",
+        ["Keep the effort comfortable.","Maintain an upright posture.","Do not turn the warm-up into a hard cardio session."],{repUnit:"min",hideLoad:true}),
+     ex("incline-machine","Incline Machine Press","Upper Chest",2,12,8,30,"SmithMachineBenchPress.gif",
+        "Adjust the seat so the handles start around upper-chest level.",
+        ["Keep shoulder blades back.","Use a smooth press.","Stop one to three reps before failure."]),
+     ex("assisted-pullup","Assisted Pull-up or Pulldown","Back",2,12,8,45,"Wide-grip-lat-pull-down-1.gif",
+        "Choose the version that lets you move through a comfortable range.",
+        ["Pull elbows toward your sides.","Avoid swinging.","Control the lowering phase."]),
+     ex("cable-fly","Cable or Pec-Deck Fly","Chest",2,15,7,20,"Cable-crossover-1.gif",
+        "Use a light load and keep a gentle bend in your elbows.",
+        ["Bring arms together without shrugging.","Do not overstretch your shoulders.","Move slowly."]),
+     ex("rear-delt","Reverse Pec Deck","Rear Shoulders",2,15,7,25,"Rear-delt-fly-1.gif",
+        "Set the handles around shoulder height and keep your chest against the pad.",
+        ["Lead with elbows.","Avoid arching.","Use a light controlled load."]),
+     ex("lateral-day4","Cable or Dumbbell Lateral Raise","Side Shoulders",2,15,7,8,"Dumbbell-lateral-raise-1.gif",
+        "Keep the load light and your torso still.",
+        ["Raise to shoulder height or slightly below.","Avoid momentum.","Keep traps relaxed."]),
+     ex("preacher-curl","Preacher Curl","Biceps",2,12,7,20,"Preacher-curl-1.gif",
+        "Support the upper arms on the pad and begin with a comfortable elbow angle.",
+        ["Do not snap the elbows straight.","Curl smoothly.","Lower slowly."]),
+     ex("overhead-triceps","Cable Overhead Triceps Extension","Triceps",2,12,7,20,"Triceps-extension-1.gif",
+        "Face away from the cable and keep your elbows pointing forward.",
+        ["Keep ribs down.","Move only at the elbows.","Use a pain-free range."])
+   ]
+ },
+ day5:{
+   short:"Day 5",tier:"Bonus",name:"Lower Volume & Core",
+   desc:"Optional leg and core volume using moderate loads and controlled technique.",
+   exercises:[
+     ex("warmup-bike-day5","Bike or Incline Walk","Warm-up",1,5,5,0,"Stationary_bicycle.gif",
+        "Warm up easily for about 5 minutes.",
+        ["Increase pace gradually.","Keep the effort easy.","Save your energy for the working sets."],{repUnit:"min",hideLoad:true}),
+     ex("goblet-day5","Goblet Squat or Hack Squat","Quads + Glutes",2,12,8,20,"Goblet_squat.gif",
+        "Choose the variation that feels most stable and comfortable.",
+        ["Keep the full foot planted.","Sit between your hips.","Stop before form changes."]),
+     ex("hip-thrust-day5","Hip Thrust","Glutes",3,10,9,40,"Hip-thrust-1.gif",
+        "Set the pad securely across your hips and brace your trunk.",
+        ["Drive through your whole foot.","Pause at the top.","Avoid overextending your lower back."]),
+     ex("leg-curl-day5","Seated or Lying Leg Curl","Hamstrings",2,15,8,35,"Seated-leg-curl.gif",
+        "Align your knee with the machine pivot.",
+        ["Keep hips still.","Curl smoothly.","Control the return."]),
+     ex("leg-extension-day5","Leg Extension","Quads",2,15,8,30,"Leg_extension.gif",
+        "Position the pad above your ankles and align the machine pivot with your knees.",
+        ["Lift without kicking.","Use a comfortable range.","Lower slowly."]),
+     ex("calf-day5","Calf Raise","Calves",3,15,7,35,"Standing-calf-raise-1.gif",
+        "Use a full but comfortable range.",
+        ["Pause at the top.","Lower under control.","Avoid bouncing."]),
+     ex("dead-bug","Dead Bug","Core",3,8,7,0,"Dead-bug-exercise.gif",
+        "Lie on your back with hips and knees bent and arms pointing upward.",
+        ["Keep your lower back gently against the floor.","Move opposite arm and leg slowly.","Use fewer reps if your back lifts."],{repUnit:"each side",hideLoad:true})
+   ]
+ },
+ day6:{
+   short:"Day 6",tier:"Recovery",name:"Recovery, Cardio & Mobility",
+   desc:"An optional recovery session that supports fitness and movement quality without becoming a sixth hard lifting day.",
+   exercises:[
+     ex("zone2","Zone 2 Walk, Bike, or Elliptical","Conditioning",1,25,25,0,"Treadmill-running.gif",
+        "Choose a pace you can maintain while speaking in short sentences.",
+        ["Keep intensity steady.","Do not turn it into intervals.","Finish feeling better than when you started."],{repUnit:"min",hideLoad:true}),
+     ex("mobility-flow","Full-Body Mobility Flow","Mobility",1,10,10,0,"Stretching-exercise.gif",
+        "Move through comfortable shoulder, hip, ankle, and upper-back mobility drills.",
+        ["Never force a stretch.","Breathe slowly.","Use pain-free ranges only."],{repUnit:"min",hideLoad:true}),
+     ex("dead-bug-day6","Dead Bug","Core Control",2,8,6,0,"Dead-bug-exercise.gif",
+        "Lie on your back with hips and knees bent.",
+        ["Keep your lower back controlled.","Move slowly.","Stop before your trunk position changes."],{repUnit:"each side",hideLoad:true}),
+     ex("bird-dog","Bird Dog","Core + Balance",2,8,6,0,"Bird-dog-exercise.gif",
+        "Start on hands and knees with your spine neutral.",
+        ["Reach opposite arm and leg long.","Keep hips level.","Pause briefly without twisting."],{repUnit:"each side",hideLoad:true}),
+     ex("farmer-carry","Light Farmer Carry","Grip + Posture",4,30,7,20,"Farmers-walk.gif",
+        "Hold light dumbbells at your sides and walk with a tall posture.",
+        ["Keep shoulders relaxed.","Take controlled steps.","Stop if your grip or posture breaks down."],{repUnit:"sec"})
+   ]
+ }
+};
+
+const ALL_DAYS=["day1","day2","day3","day4","day5","day6"];
+const KEY="banglamuscle-elite-v5",LEGACY_KEY="banglamuscle-rotation-v4";
+const defaults=()=>({
+  selected:"day1",nextDay:"day1",cycle:1,workoutNumber:1,frequency:3,
+  weight:151,rest:90,days:{},last:{},history:[],baselines:{},progression:{},autoProgression:true
+});
+let state;
+try{
+  const raw=localStorage.getItem(KEY)||localStorage.getItem(LEGACY_KEY)||"{}";
+  const saved=JSON.parse(raw);
+  state={...defaults(),...saved};
+  state.days=state.days||{};state.last=state.last||{};state.history=state.history||[];state.baselines=state.baselines||{};state.progression=state.progression||{};state.autoProgression=state.autoProgression!==false;
+  state.frequency=Math.max(3,Math.min(6,Number(state.frequency)||3));
+}catch(e){state=defaults()}
+
+const activeDays=()=>ALL_DAYS.slice(0,state.frequency);
+const trainingWeek=()=>Math.max(1,Number(state.cycle)||1);
+const dayNumber=d=>Math.max(1,ALL_DAYS.indexOf(d)+1);
+const dayLabel=d=>`Week ${trainingWeek()} · Day ${dayNumber(d)}`;
+function normalizeRotation(){
+  const days=activeDays();
+  if(!days.includes(state.selected)) state.selected=days[0];
+  if(!days.includes(state.nextDay)) state.nextDay=days[0];
+}
+normalizeRotation();
+
+const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
+const dayState=d=>state.days[d]||(state.days[d]={});
+const machineExercises=()=>{
+  const map=new Map();
+  activeDays().forEach(day=>PLAN[day].exercises.forEach(e=>{if(!e.hideLoad&&!map.has(e.id))map.set(e.id,e)}));
+  return [...map.values()];
+};
+const historyFor=e=>state.history.filter(h=>(h.exerciseId===e.id||(!h.exerciseId&&h.exercise===e.name))&&Number(h.weight)>0);
+const latestFor=e=>historyFor(e).slice().sort((a,b)=>new Date(b.date)-new Date(a.date))[0]||null;
+const bestFor=e=>historyFor(e).reduce((best,h)=>Math.max(best,Number(h.weight)||0),0);
+const stackRound=(value,step)=>Math.max(step,Math.round(value/step)*step);
+const mondayOf=value=>{
+  const d=value?new Date(value):new Date();d.setHours(0,0,0,0);
+  d.setDate(d.getDate()-((d.getDay()+6)%7));return d;
+};
+const progressionDateKey=value=>{const d=value?new Date(value):new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
+const weekKey=value=>progressionDateKey(mondayOf(value));
+const isLowerCompound=e=>/leg-press|hack-squat|goblet|hip-thrust|rdl|romanian/i.test(e.id);
+const isSmallMuscle=e=>/curl|triceps|lateral|rear-delt|calf|extension|fly/i.test(e.id);
+const progressionCap=e=>isLowerCompound(e)?.10:isSmallMuscle(e)?.05:.075;
+const successfulRecord=(h,e,extra=0)=>Number(h.sets)>=e.sets&&Number(h.reps)>=e.reps+extra;
+const clearlyHeavyRecord=(h,e)=>Number(h.sets)<Math.max(1,e.sets-1)||Number(h.reps)<Math.ceil(e.reps*.8);
+
+function ensureWeeklyProgression(e){
+  if(e.hideLoad)return {week:weekKey(),target:0,repBonus:0,note:"Timed movement",trend:"hold",successStreak:0,missStreak:0};
+  const currentWeek=weekKey(),step=e.weightStep||5,base=state.baselines[e.id]?.weight??e.weight;
+  let p=state.progression[e.id]||{
+    week:currentWeek,target:stackRound(base,step),repBonus:0,
+    note:"Starting target from your Day 1 baseline.",trend:"hold",successStreak:0,missStreak:0
+  };
+  if(!state.autoProgression){
+    p.week=currentWeek;p.note="Automatic progression is paused.";p.trend="hold";
+    return state.progression[e.id]=p;
+  }
+  if(p.week!==currentWeek){
+    const start=mondayOf(),priorStart=new Date(start);priorStart.setDate(start.getDate()-7);
+    const prior=historyFor(e).filter(h=>{const t=new Date(h.date);return t>=priorStart&&t<start});
+    const successes=prior.filter(h=>successfulRecord(h,e,p.repBonus));
+    const hard=prior.filter(h=>clearlyHeavyRecord(h,e));
+    const actual=prior.length?Number(prior.slice().sort((a,b)=>new Date(b.date)-new Date(a.date))[0].weight):p.target;
+    if(successes.length){
+      p.successStreak=(p.successStreak||0)+1;p.missStreak=0;
+      const candidate=stackRound(Math.max(actual,p.target)+step,step);
+      const jump=(candidate-Math.max(actual,p.target))/Math.max(actual,p.target,1);
+      if(jump<=progressionCap(e)||p.successStreak>=2){
+        p.target=candidate;p.repBonus=0;p.successStreak=0;p.trend="up";
+        p.note=`Successful week: automatically increased one machine step to ${candidate} lb.`;
+      }else{
+        p.repBonus=Math.min(2,(p.repBonus||0)+1);p.trend="hold";
+        p.note=`The next stack step is a large jump. Hold ${p.target} lb and aim for ${e.reps+p.repBonus} reps first.`;
+      }
+    }else if(hard.length){
+      p.missStreak=(p.missStreak||0)+1;p.successStreak=0;
+      if(p.missStreak>=2){
+        p.target=stackRound(Math.max(step,Math.min(actual,p.target)-step),step);
+        p.repBonus=0;p.missStreak=0;p.trend="down";
+        p.note=`Two difficult weeks: reduced one step to ${p.target} lb to rebuild clean reps.`;
+      }else{
+        p.trend="hold";p.note=`Target was difficult. Hold ${p.target} lb this week before making a change.`;
+      }
+    }else{
+      p.trend="hold";p.note=prior.length
+        ?`No full target completion last week. Keep ${p.target} lb and build reps.`
+        :`No completed set last week. Keep ${p.target} lb.`;
+    }
+    p.week=currentWeek;
+  }
+  state.progression[e.id]=p;return p;
+}
+const idealFor=e=>ensureWeeklyProgression(e).target;
+const targetRepsFor=e=>e.reps+(ensureWeeklyProgression(e).repBonus||0);
+const exState=(d,e)=>{
+  const ds=dayState(d),wk=weekKey();
+  if(!ds[e.id]){
+    const last=state.last[e.id]||{};
+    ds[e.id]={
+      completed:false,editing:false,showDemo:false,targetWeek:wk,
+      weight:state.autoProgression?idealFor(e):(last.weight??e.weight),
+      reps:state.autoProgression?targetRepsFor(e):(last.reps??e.reps),sets:last.sets??e.sets
+    };
+  }else if(ds[e.id].targetWeek!==wk&&!ds[e.id].completed){
+    ds[e.id].targetWeek=wk;
+    if(state.autoProgression){
+      ds[e.id].weight=idealFor(e);ds[e.id].reps=targetRepsFor(e);ds[e.id].sets=e.sets;
+    }
+  }
+  return ds[e.id];
+};
+const met=completed=>completed>=6?6:completed>=3?4.8:3.8;
+const calc=d=>{
+  const p=PLAN[d],items=p.exercises.map(e=>({e,s:exState(d,e)})),
+    done=items.filter(x=>x.s.completed),
+    mins=done.reduce((a,x)=>a+x.e.min,0),
+    volume=done.reduce((a,x)=>a+(x.e.hideLoad?0:x.s.sets*x.s.reps*x.s.weight),0),
+    kg=state.weight*.453592,
+    kcal=Math.round(met(done.length)*3.5*kg/200*mins);
+  return{items,done,mins,volume,kcal};
+};
+const esc=s=>String(s).replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const nextOf=d=>{
+  const days=activeDays(),idx=days.indexOf(d);
+  return days[(idx+1)%days.length];
+};
+
+
+const localDateKey=value=>{
+  const d=value?new Date(value):new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+};
+const weekStart=()=>{
+  const d=new Date();d.setHours(0,0,0,0);
+  const day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return d;
+};
+const volumeOf=h=>(Number(h.weight)||0)*(Number(h.reps)||0)*(Number(h.sets)||0);
+const recordsForPeriod=(e,start,end=null)=>historyFor(e).filter(h=>{
+  const t=new Date(h.date);return t>=start&&(!end||t<end);
+});
+function renderStrengthProgress(){
+  const machines=machineExercises(),todayKey=localDateKey(),start=weekStart();
+  let todayTotal=0,weekTotal=0,wins=0;
+  const rows=machines.map(e=>{
+    const all=historyFor(e),today=all.filter(h=>localDateKey(h.date)===todayKey),
+      week=recordsForPeriod(e,start),todayVol=today.reduce((n,h)=>n+volumeOf(h),0),
+      weekVol=week.reduce((n,h)=>n+volumeOf(h),0),base=state.baselines[e.id]?.weight??null,
+      best=bestFor(e),ideal=idealFor(e),delta=base&&best?((best-base)/base*100):null;
+    todayTotal+=todayVol;weekTotal+=weekVol;if(delta>0)wins++;
+    const trend=delta===null?"—":`${delta>0?"+":""}${delta.toFixed(0)}%`;
+    const trendClass=delta>0?"trend-up":delta<0?"trend-down":"trend-flat";
+    return `<tr>
+      <td class="machine-name"><strong>${esc(e.name)}</strong><small>${esc(e.muscle)}</small></td>
+      <td>${e.weight} lb</td>
+      <td>${base?`<span class="baseline-badge">${base} lb</span>`:"Not set"}</td>
+      <td><strong>${ideal} lb</strong></td>
+      <td>${best?best+" lb":"—"}</td>
+      <td>${Math.round(todayVol).toLocaleString()} lb</td>
+      <td>${Math.round(weekVol).toLocaleString()} lb</td>
+      <td class="${trendClass}">${trend}</td>
+    </tr>`;
+  });
+  document.getElementById("todayLifted").textContent=Math.round(todayTotal).toLocaleString()+" lb";
+  document.getElementById("weekLifted").textContent=Math.round(weekTotal).toLocaleString()+" lb";
+  document.getElementById("machinesTracked").textContent=machines.filter(e=>historyFor(e).length||state.baselines[e.id]).length;
+  document.getElementById("baselineWins").textContent=wins;
+  document.getElementById("machineProgressBody").innerHTML=rows.join("")||'<tr><td colspan="8" class="empty-strength">Complete a loaded exercise to begin tracking.</td></tr>';
+}
+
+function finishDay(d){
+  const next=nextOf(d);
+  if(next==="day1") state.cycle=(state.cycle||1)+1;
+  state.workoutNumber=(state.workoutNumber||1)+1;
+  state.nextDay=next;
+  state.selected=next;
+  const nextState=dayState(next);
+  PLAN[next].exercises.forEach(e=>{
+    const s=nextState[e.id]||{};
+    s.completed=false;s.editing=false;s.targetWeek=weekKey();
+    if(state.autoProgression){s.weight=idealFor(e);s.reps=targetRepsFor(e);s.sets=e.sets}
+    nextState[e.id]=s;
+  });
+}
+
+function completeExercise(d,e,s){
+  s.completed=!s.completed;
+  if(s.completed){
+    state.last[e.id]={weight:s.weight,reps:s.reps,sets:s.sets};
+    state.history.unshift({date:new Date().toISOString(),day:d,name:PLAN[d].name,exerciseId:e.id,exercise:e.name,weight:s.weight,reps:s.reps,sets:s.sets});
+    state.history=state.history.slice(0,500);
+  }
+  const all=PLAN[d].exercises.every(x=>exState(d,x).completed);
+  if(all && state.nextDay===d) finishDay(d);
+  save();render();
+  if(all && s.completed){
+    if(typeof window.startPostWorkoutCascade==="function") window.startPostWorkoutCascade();
+    if(typeof window.challengeWorkoutCompleted==="function") window.challengeWorkoutCompleted(d);
+  }
+}
+
+function render(){
+ try{
+  const d=state.selected,p=PLAN[d],c=calc(d);
+  document.getElementById("heroTitle").textContent=`Week ${trainingWeek()} · ${p.short}: ${p.name}`;
+  document.getElementById("heroSub").textContent=p.desc;
+  document.getElementById("heroMins").textContent=p.exercises.reduce((a,e)=>a+e.min,0);
+  document.getElementById("heroCount").textContent=p.exercises.length;
+  document.getElementById("heroKcal").textContent=c.kcal;
+  document.getElementById("workoutLabel").textContent=`WEEK ${trainingWeek()} · DAY ${dayNumber(d)} · SESSION ${state.workoutNumber||1}`;
+  document.getElementById("workoutName").textContent=p.name;
+  document.getElementById("workoutDesc").textContent=p.desc;
+  document.getElementById("weightOut").textContent=state.weight+" lb";
+  document.getElementById("restOut").textContent=state.rest+" sec";
+  document.getElementById("kcal").textContent=c.kcal;
+  document.getElementById("doneCount").textContent=c.done.length+" / "+p.exercises.length;
+  document.getElementById("duration").textContent=c.mins+" min";
+  document.getElementById("volume").textContent=Math.round(c.volume).toLocaleString()+" lb";
+  document.getElementById("ring").style.setProperty("--p",Math.min(100,c.done.length/p.exercises.length*100)+"%");
+  document.getElementById("weekChip").textContent=`Week ${trainingWeek()} · Next: Day ${dayNumber(state.nextDay)} of ${state.frequency}`;
+  document.getElementById("autoProgressionToggle").textContent=state.autoProgression?"AUTO ON":"AUTO OFF";
+  document.getElementById("autoProgressionToggle").classList.toggle("off",!state.autoProgression);
+  document.getElementById("progressionWeekLabel").textContent=`Week of ${new Date(mondayOf()).toLocaleDateString([], {month:"short",day:"numeric"})}: targets use last week's completed performance.`;
+  document.getElementById("programStatus").textContent=`${state.frequency}-day ${state.frequency===3?"foundation":"adaptive plan"}`;
+  const advice={
+    3:"Recommended for beginners: three complete sessions, with recovery days between workouts whenever possible.",
+    4:"Day 4 adds upper-body volume. Use it only when soreness is manageable and performance on Days 1–3 remains stable.",
+    5:"Day 5 adds lower-body volume. Keep at least one full rest day in the cycle and reduce bonus work if recovery declines.",
+    6:"Day 6 is intentionally recovery-focused. This is five lifting sessions plus conditioning—not six hard lifting days."
+  };
+  document.getElementById("frequencyAdvice").textContent=advice[state.frequency];
+  document.querySelectorAll("[data-frequency]").forEach(btn=>btn.classList.toggle("active",Number(btn.dataset.frequency)===state.frequency));
+  const active=activeDays();
+  document.getElementById("days").style.setProperty("--day-count",6);
+  document.getElementById("days").innerHTML=ALL_DAYS.map((x,index)=>{
+    const q=PLAN[x],unlocked=index<state.frequency;
+    const all=unlocked&&q.exercises.every(e=>exState(x,e).completed),current=x===state.nextDay;
+    const tierClass=q.tier==="Bonus"?"bonus optional":q.tier==="Recovery"?"recovery optional":"core";
+    return `<button class="day ${tierClass} ${unlocked?"":"locked"} ${x===d?"active":""} ${all?"done":""}" data-day="${x}" data-required-frequency="${index+1}">
+      <small class="week-day-label">W${trainingWeek()} · D${index+1}</small>
+      <span>Day ${index+1}${current&&unlocked?'<em class="current-badge">NEXT</em>':""}</span>
+      <small>${q.name} ${all?"✓":""}</small>
+      <small class="day-tier">${unlocked?q.tier:"Optional"}</small>
+    </button>`;
+  }).join("");
+
+  document.getElementById("currentWeekNumber").textContent=trainingWeek();
+  document.getElementById("weekRoadmapTitle").textContent=`Week ${trainingWeek()} · Day ${dayNumber(d)}`;
+  document.getElementById("weekRoadmapSubtitle").textContent=
+    d===state.nextDay
+      ?`This is your next scheduled workout: ${p.name}.`
+      :`You manually selected ${p.short}: ${p.name}.`;
+  document.getElementById("weekPath").innerHTML=ALL_DAYS.map((x,index)=>{
+    const q=PLAN[x],unlocked=index<state.frequency,completed=unlocked&&q.exercises.every(e=>exState(x,e).completed);
+    const status=completed?"Complete":x===state.nextDay&&unlocked?"Next":unlocked?"Available":"Optional · Locked";
+    return `<div class="week-path-step ${completed?"complete":""} ${x===state.nextDay&&unlocked?"current":""} ${index>=3?"optional":""} ${unlocked?"":"locked"}">
+      <strong>Week ${trainingWeek()} · Day ${index+1}</strong>
+      <small>${q.name}<br>${status}</small>
+    </div>`;
+  }).join("");
+  document.getElementById("weekExplanation").textContent=
+    state.frequency===3
+      ?"Your current plan is Week "+trainingWeek()+" with Days 1–3. Days 4–6 are visible below as optional sessions; tap one to unlock it."
+      :"Your current Week "+trainingWeek()+" plan includes Days 1–"+state.frequency+". Complete them in order, or manually choose a different available day.";
+  document.getElementById("completeAll").classList.remove("hidden");
+  document.getElementById("rest").classList.add("hidden");
+
+  document.getElementById("exerciseList").innerHTML=p.exercises.map(e=>{
+    const s=exState(d,e),last=state.last[e.id];
+    return `<article class="exercise ${s.completed?"completed":""} ${s.editing?"editing":""} ${s.showDemo?"show-demo":""}" data-id="${e.id}">
+      <button class="complete" data-action="complete" aria-label="Mark ${esc(e.name)} complete">✓</button>
+      <div class="exercise-main">
+        <div class="row-head"><div><p class="muscle">${esc(e.muscle)}</p><h3>${esc(e.name)}</h3></div><button class="text-btn" data-action="edit">${s.editing?"Done":"Edit"}</button></div>
+        <div class="targets">
+          <span>${e.sets} ${e.sets===1?"set":"sets"}</span>
+          <span>${e.reps} ${e.repUnit||"reps"}</span>
+          <span>${e.min} min</span>
+        </div>
+        <button class="demo-toggle" data-action="demo">${s.showDemo?"Hide demo":"▶ Show demo"}</button>
+        ${e.hideLoad?"":`<div class="load-coach">
+          <div class="load-metric"><small>Coach start</small><strong>${e.weight} lb</strong></div>
+          <div class="load-metric"><small>Day 1 actual</small><strong>${state.baselines[e.id]?.weight?state.baselines[e.id].weight+" lb":"Not set"}</strong></div>
+          <div class="load-metric ideal"><small>Auto target this week</small><strong>${idealFor(e)} lb</strong></div>
+        </div>
+        <div class="load-actions">
+          <button class="primary-mini" data-action="baseline">Save current as Day 1 weight</button>
+          <button class="too-heavy" data-action="tooHeavy">Target is too heavy</button>
+          <button data-action="useIdeal">Load ${idealFor(e)} lb</button>
+        </div>
+        <div class="week-target-note ${ensureWeeklyProgression(e).trend}">${esc(ensureWeeklyProgression(e).note)}</div>
+        <p class="load-note">The weekly target changes from completed performance—not just because a new week started. Good form and 2–3 clean reps in reserve come first.</p>`}
+        <div class="controls">
+          ${e.hideLoad?"":step("weight",s.weight,"lb",e.weightStep||5)}
+          ${step("reps",s.reps,e.repUnit||"reps",1)}
+          ${step("sets",s.sets,"sets",1)}
+        </div>
+        <p class="last">${last
+          ?(e.hideLoad
+            ?`Last completed: ${last.sets} × ${last.reps} ${e.repUnit||"reps"}`
+            :`Last completed: ${last.sets} × ${last.reps} at ${last.weight} lb`)
+          :(e.hideLoad
+            ?"First session: use an easy, controlled effort."
+            :"First session: start light and keep 2–3 clean reps in reserve.")}</p>
+        <div class="exercise-demo">
+          <div class="demo-media">
+            <img src="${e.gif}" alt="Animated demonstration of ${esc(e.name)}" loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+            <div class="demo-fallback"><div><div class="motion"></div><strong>Demo unavailable</strong><p>Use the setup and coaching cues beside this guide.</p></div></div>
+          </div>
+          <div class="demo-copy">
+            <h4>Beginner setup</h4><p class="muted">${esc(e.setup)}</p>
+            <h4>Form cues</h4><ul>${e.cues.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+            <p class="demo-credit">Demo media: Wikimedia Commons. Always follow the machine instructions and ask gym staff for help when uncertain.</p>
+          </div>
+        </div>
+      </div>
+    </article>`;
+  }).join("");
+  renderHistory();
+  renderStrengthProgress();
+  document.getElementById("errorBox").classList.remove("show");
+ }catch(err){
+  const box=document.getElementById("errorBox");box.textContent="Dashboard error: "+err.message;box.classList.add("show");console.error(err);
+ }
+}
+
+function step(field,val,label,delta){return `<div><span class="label">${field}</span><div class="stepper"><button data-action="step" data-field="${field}" data-delta="-${delta}">−</button><output>${val} ${label}</output><button data-action="step" data-field="${field}" data-delta="${delta}">+</button></div></div>`}
+function renderHistory(){const h=document.getElementById("history");h.innerHTML=state.history.length?state.history.slice(0,10).map(x=>`<div class="history-item"><div><strong>${esc(x.exercise)}</strong><span>${new Date(x.date).toLocaleDateString()} · ${esc(x.name)}</span></div><div><strong>${x.weight} lb</strong><span>weight</span></div><div><strong>${x.sets} × ${x.reps}</strong><span>sets × reps</span></div></div>`).join(""):`<div class="empty">Complete an exercise to begin your history.</div>`}
+
+
+
+document.getElementById("autoProgressionToggle").addEventListener("click",()=>{
+  state.autoProgression=!state.autoProgression;
+  if(state.autoProgression){
+    PLAN[state.selected].exercises.forEach(e=>{
+      const s=exState(state.selected,e);if(!s.completed){s.weight=idealFor(e);s.reps=targetRepsFor(e);s.targetWeek=weekKey()}
+    });
+  }
+  save();render();
+  if(typeof showFuelToast==="function")showFuelToast(`Coach Auto Progression ${state.autoProgression?"enabled":"paused"}.`);
+});
+
+document.getElementById("frequencyOptions").addEventListener("click",e=>{
+  const btn=e.target.closest("[data-frequency]");
+  if(!btn)return;
+  state.frequency=Number(btn.dataset.frequency);
+  normalizeRotation();
+  save();
+  render();
+  if(typeof showFuelToast==="function"){
+    showFuelToast(state.frequency===6
+      ?"6-day mode uses Day 6 for recovery conditioning—not another hard lifting day."
+      :`${state.frequency}-day training plan selected.`);
+  }
+});
+
+document.getElementById("days").addEventListener("click",e=>{
+  const b=e.target.closest("[data-day]");if(!b)return;
+  const required=Number(b.dataset.requiredFrequency)||3;
+  if(required>state.frequency){
+    state.frequency=required;
+    normalizeRotation();
+    if(typeof showFuelToast==="function")showFuelToast(`Day ${required} unlocked. Your plan now includes Days 1–${required}.`);
+  }
+  state.selected=b.dataset.day;save();render();
+});
+document.getElementById("exerciseList").addEventListener("click",e=>{
+ const card=e.target.closest(".exercise");if(!card)return;
+ const ex=PLAN[state.selected].exercises.find(x=>x.id===card.dataset.id),s=exState(state.selected,ex),a=e.target.closest("[data-action]");if(!a)return;
+ if(a.dataset.action==="complete")return completeExercise(state.selected,ex,s);
+ if(a.dataset.action==="edit"){s.editing=!s.editing;save();render()}
+ if(a.dataset.action==="demo"){s.showDemo=!s.showDemo;save();render()}
+ if(a.dataset.action==="baseline"){
+   state.baselines[ex.id]={weight:s.weight,date:new Date().toISOString()};
+   state.progression[ex.id]={week:weekKey(),target:s.weight,repBonus:0,note:"Day 1 baseline saved. Hold this target until performance supports an increase.",trend:"hold",successStreak:0,missStreak:0};
+   save();render();if(typeof showFuelToast==="function")showFuelToast(`${ex.name}: Day 1 baseline saved at ${s.weight} lb`);
+   if(typeof window.challengeSyncFromApp==="function")window.challengeSyncFromApp();
+ }
+ if(a.dataset.action==="tooHeavy"){
+   s.weight=Math.max(ex.weightStep||5,s.weight-(ex.weightStep||5));
+   if(!state.baselines[ex.id])state.baselines[ex.id]={weight:s.weight,date:new Date().toISOString()};
+   state.progression[ex.id]={week:weekKey(),target:s.weight,repBonus:0,note:`User marked the prior target too heavy. Reduced to ${s.weight} lb.`,trend:"down",successStreak:0,missStreak:0};
+   save();render();if(typeof showFuelToast==="function")showFuelToast(`${ex.name}: target lowered to ${s.weight} lb`);
+ }
+ if(a.dataset.action==="useIdeal"){s.weight=idealFor(ex);save();render()}
+ if(a.dataset.action==="step"){const f=a.dataset.field,delta=Number(a.dataset.delta),mins={weight:0,reps:1,sets:1};s[f]=Math.max(mins[f],s[f]+delta);save();render()}
+});
+document.getElementById("completeAll").onclick=()=>{
+ const d=state.selected,p=PLAN[d],all=p.exercises.every(e=>exState(d,e).completed);
+ p.exercises.forEach(e=>{
+   const s=exState(d,e);s.completed=!all;
+   if(!all){
+     state.last[e.id]={weight:s.weight,reps:s.reps,sets:s.sets};
+     state.history.unshift({date:new Date().toISOString(),day:d,name:p.name,exerciseId:e.id,exercise:e.name,weight:e.hideLoad?0:s.weight,reps:s.reps,sets:s.sets});
+   }
+ });
+ if(!all){
+   state.history=state.history.slice(0,500);
+   if(state.nextDay===d) finishDay(d);
+ }
+ save();render();
+ if(!all){
+   if(typeof window.startPostWorkoutCascade==="function") window.startPostWorkoutCascade();
+   if(typeof window.challengeWorkoutCompleted==="function") window.challengeWorkoutCompleted(d);
+ }
+};
+document.querySelectorAll(".setting-step").forEach(b=>b.onclick=()=>{const k=b.dataset.key,delta=Number(b.dataset.delta);state[k]=Math.max(k==="weight"?80:30,Math.min(k==="weight"?500:300,state[k]+delta));save();render()});
+document.getElementById("resetBtn").onclick=()=>{state.days[state.selected]={};save();render()};
+document.getElementById("clearHistory").onclick=()=>{if(confirm("Clear all session history?")){state.history=[];save();render()}};
+document.getElementById("exportBtn").onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="banglamuscle-export-"+new Date().toISOString().slice(0,10)+".json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),100)};
+state.selected=state.selected||state.nextDay||"day1";render();
+})();
+
+
+// ---------- Daily coach + reminder waterfall ----------
+const COACH_KEY="banglamuscleDailyCoachV2";
+const COACH_DEFAULTS={
+ targets:{calories:2400,proteinLow:110,proteinHigh:125,proteinWorking:120,postLow:25,postHigh:40},
+ settings:{gymPromptTime:"09:00",plannedWorkoutTime:"18:00"},
+ days:{},cascade:[]
+};
+let coachState;
+try{
+ const saved=JSON.parse(localStorage.getItem(COACH_KEY)||"{}");
+ coachState={...COACH_DEFAULTS,...saved,targets:{...COACH_DEFAULTS.targets,...(saved.targets||{})},settings:{...COACH_DEFAULTS.settings,...(saved.settings||{})},days:saved.days||{},cascade:saved.cascade||[]};
+}catch(e){coachState=JSON.parse(JSON.stringify(COACH_DEFAULTS))}
+const coachTimers={};
+const dayKey=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
+const todayCoach=()=>coachState.days[dayKey()]||(coachState.days[dayKey()]={gymDecision:null,calories:0,protein:0,postDone:false,workoutDone:false});
+const saveCoach=()=>localStorage.setItem(COACH_KEY,JSON.stringify(coachState));
+function coachNotify(title,body){
+ if(typeof sendFuelNotification==="function")sendFuelNotification(title,body);
+ else{
+   if("Notification" in window&&Notification.permission==="granted"){try{new Notification(title,{body})}catch(e){}}
+   if(typeof showFuelToast==="function")showFuelToast(`${title}: ${body}`);
+ }
+}
+function clearCoachTimer(id){if(coachTimers[id])clearTimeout(coachTimers[id]);delete coachTimers[id]}
+function scheduleStep(id,delay,title,body){
+ clearCoachTimer(id);
+ const when=Date.now()+Math.max(1000,delay);
+ coachState.cascade=coachState.cascade.filter(x=>x.id!==id);
+ coachState.cascade.push({id,title,body,when,status:"scheduled"});
+ saveCoach();renderCoach();
+ coachTimers[id]=setTimeout(()=>{
+   const x=coachState.cascade.find(s=>s.id===id);if(x)x.status="active";
+   saveCoach();renderCoach();coachNotify(title,body);
+ },Math.max(1000,delay));
+}
+function markStepDone(id){const x=coachState.cascade.find(s=>s.id===id);if(x)x.status="done";clearCoachTimer(id);saveCoach()}
+function untilClock(value,tomorrow=true){
+ if(!value)return null;
+ const [h,m]=value.split(":").map(Number),now=new Date(),target=new Date();
+ target.setHours(h,m,0,0);if(target<=now&&tomorrow)target.setDate(target.getDate()+1);
+ return target-now;
+}
+function resetCascade(){Object.keys(coachTimers).forEach(clearCoachTimer);coachState.cascade=[];saveCoach()}
+
+function gymYes(){
+ resetCascade();const t=todayCoach();t.gymDecision="yes";
+ const wait=untilClock(coachState.settings.plannedWorkoutTime,false);
+ if(wait!==null&&wait>75*60*1000)scheduleStep("preFuel",wait-75*60*1000,"Pre-workout fuel","Have a light meal or shake and drink water.");
+ else scheduleStep("preFuel",3000,"Pre-workout preparation","Drink water now and eat if you have not eaten recently.");
+ if(wait!==null&&wait>0){
+   scheduleStep("gymStart",wait,"Gym time",`Your ${typeof state!=="undefined"&&PLAN[state.nextDay]?PLAN[state.nextDay].short:"next"} workout is ready.`);
+   scheduleStep("workoutWater",wait+25*60*1000,"Hydration check","Take a few sips of water during your workout.");
+ }else{
+   scheduleStep("workoutWater",25*60*1000,"Hydration check","Take a few sips of water during your workout.");
+ }
+ saveCoach();renderCoach();
+}
+function gymLater(){
+ const t=todayCoach();t.gymDecision="later";
+ scheduleStep("gymQuestion",2*60*60*1000,"Gym check-in","Are you going to the gym today?");
+ saveCoach();renderCoach();
+}
+function gymRest(){
+ resetCascade();const t=todayCoach();t.gymDecision="rest";
+ scheduleStep("restWater",3000,"Rest-day hydration","Drink water and keep normal hydration today.");
+ scheduleStep("restMove",60*60*1000,"Active recovery","Take a comfortable 10–20 minute walk or do light mobility.");
+ scheduleStep("restFuel",4*60*60*1000,"Recovery nutrition","Stay near your normal protein and calorie targets; muscle recovery continues today.");
+ const now=new Date(),bed=new Date();bed.setHours(21,30,0,0);if(bed<=now)bed.setDate(bed.getDate()+1);
+ scheduleStep("restSleep",bed-now,"Recovery tonight","Aim for a consistent bedtime and enough sleep.");
+ saveCoach();renderCoach();
+}
+
+window.startPostWorkoutCascade=function(){
+ const t=todayCoach();
+ if(t.workoutDone&&coachState.cascade.some(x=>x.id==="postProtein"&&x.status!=="done"))return;
+ t.workoutDone=true;t.gymDecision="yes";
+ ["preFuel","gymStart","gymQuestion","workoutWater"].forEach(markStepDone);
+ scheduleStep("postProtein",2000,"Post-workout protein",`Have ${coachState.targets.postLow}–${coachState.targets.postHigh} g protein from food or a shake.`);
+ scheduleStep("postWater",15*60*1000,"Rehydrate","Drink water after training and with your next meal.");
+ scheduleStep("postFollowup",45*60*1000,"Protein check","Have you eaten your post-workout protein meal or shake?");
+ scheduleStep("postRest",3*60*60*1000,"Recovery mode","Training is done. Eat normally, avoid another hard workout today, and prioritize sleep.");
+ saveCoach();renderCoach();coachNotify("Workout complete","Your post-workout protein and recovery reminders are now automatic.");
+};
+
+
+function restoreCascadeTimers(){
+  coachState.cascade.forEach(step=>{
+    if(step.status!=="scheduled")return;
+    const remaining=step.when-Date.now();
+    if(remaining<=0){
+      step.status="active";
+      setTimeout(()=>coachNotify(step.title,step.body),800);
+    }else{
+      clearCoachTimer(step.id);
+      coachTimers[step.id]=setTimeout(()=>{
+        const live=coachState.cascade.find(x=>x.id===step.id);
+        if(live)live.status="active";
+        saveCoach();renderCoach();coachNotify(step.title,step.body);
+      },remaining);
+    }
+  });
+  saveCoach();
+}
+
+function scheduleDailyQuestion(){
+ clearCoachTimer("daily");
+ const delay=untilClock(coachState.settings.gymPromptTime,true);if(delay===null)return;
+ coachTimers.daily=setTimeout(()=>{
+   if(!todayCoach().gymDecision){coachNotify("BanglaMuscle check-in","Are you going to the gym today?");document.getElementById("dailyCoach")?.scrollIntoView({behavior:"smooth"})}
+   scheduleDailyQuestion();
+ },delay);
+}
+function renderNutrition(){
+ const t=todayCoach(),g=coachState.targets,kr=Math.max(0,g.calories-t.calories),pr=Math.max(0,g.proteinWorking-t.protein);
+ calorieRemaining.textContent=kr.toLocaleString();proteinRemaining.textContent=`${pr} g`;
+ calorieConsumed.textContent=`${t.calories.toLocaleString()} kcal logged`;proteinConsumed.textContent=`${t.protein} g logged`;
+ calorieTargetBar.style.width=`${Math.min(100,t.calories/g.calories*100)}%`;proteinTargetBar.style.width=`${Math.min(100,t.protein/g.proteinWorking*100)}%`;
+ nutritionCoachText.textContent=t.protein<g.proteinLow
+   ?`Daily target: ${g.calories.toLocaleString()} kcal and ${g.proteinLow}–${g.proteinHigh} g protein. You still need about ${g.proteinLow-t.protein}–${g.proteinHigh-t.protein} g protein.`
+   :t.protein<=g.proteinHigh
+     ?`You are within the starting protein range. Calories remaining: ${kr.toLocaleString()} kcal.`
+     :`You are above the starting protein range. More protein is not automatically better. Calories remaining: ${kr.toLocaleString()} kcal.`;
+}
+function renderCascade(){
+ const t=todayCoach(),scheduled=Object.fromEntries(coachState.cascade.map(x=>[x.id,x]));
+ let rows=[
+   {id:"decision",title:"Gym decision",body:"Yes starts gym reminders; Rest starts recovery reminders.",status:t.gymDecision?"done":"active"},
+   {id:"pre",title:"Pre-workout fuel",body:"Food or shake plus water.",status:scheduled.preFuel?.status||"waiting",when:scheduled.preFuel?.when},
+   {id:"workout",title:"Workout",body:"Complete the selected training day.",status:t.workoutDone?"done":"waiting"},
+   {id:"post",title:"Post-workout protein",body:`Automatic ${coachState.targets.postLow}–${coachState.targets.postHigh} g reminder.`,status:t.postDone?"done":scheduled.postProtein?.status||"waiting",when:scheduled.postProtein?.when},
+   {id:"rest",title:"Recovery",body:"Water, normal calories, light movement, and sleep.",status:(scheduled.postRest||scheduled.restMove)?.status||"waiting",when:(scheduled.postRest||scheduled.restMove)?.when}
+ ];
+ cascadeList.innerHTML=rows.map((x,i)=>`<div class="cascade-step ${x.status}"><span class="cascade-icon">${x.status==="done"?"✓":x.status==="active"?"●":i+1}</span><div><strong>${x.title}</strong><small>${x.body}${x.when?` · ${new Date(x.when).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"})}`:""}</small></div><span class="cascade-state">${x.status}</span></div>`).join("");
+}
+function renderCoach(){
+ const t=todayCoach();gymPromptTime.value=coachState.settings.gymPromptTime;plannedWorkoutTime.value=coachState.settings.plannedWorkoutTime;
+ document.querySelectorAll("[data-gym-answer]").forEach(b=>b.classList.toggle("selected",b.dataset.gymAnswer===t.gymDecision));
+ const msg={yes:"Gym day selected. The pre-workout chain is scheduled.",later:"The gym question will return in two hours.",rest:"Rest day selected. Recovery reminders are scheduled."};
+ gymDecisionMessage.textContent=msg[t.gymDecision]||"Choose once. The app handles the reminders that follow.";
+ todayCoachStatus.textContent=t.gymDecision==="yes"?"Gym day":t.gymDecision==="rest"?"Recovery day":t.gymDecision==="later"?"Snoozed":"Waiting for check-in";
+ renderNutrition();renderCascade();
+}
+dailyCoach.addEventListener("click",e=>{
+ const answer=e.target.closest("[data-gym-answer]")?.dataset.gymAnswer;
+ if(answer==="yes")gymYes();if(answer==="later")gymLater();if(answer==="rest")gymRest();
+ const n=e.target.closest("[data-nutrition]");if(n){const t=todayCoach(),f=n.dataset.nutrition;t[f]=Math.max(0,t[f]+Number(n.dataset.delta));saveCoach();renderCoach()}
+ if(typeof window.challengeSyncFromApp==="function")window.challengeSyncFromApp();
+});
+gymPromptTime.addEventListener("change",e=>{coachState.settings.gymPromptTime=e.target.value;saveCoach();scheduleDailyQuestion();renderCoach()});
+plannedWorkoutTime.addEventListener("change",e=>{coachState.settings.plannedWorkoutTime=e.target.value;saveCoach();if(todayCoach().gymDecision==="yes")gymYes();else renderCoach()});
+renderCoach();restoreCascadeTimers();scheduleDailyQuestion();
+(()=>{
+ const t=todayCoach(),[h,m]=coachState.settings.gymPromptTime.split(":").map(Number),now=new Date(),prompt=new Date();prompt.setHours(h,m,0,0);
+ if(!t.gymDecision&&now>=prompt)setTimeout(()=>coachNotify("BanglaMuscle check-in","Are you going to the gym today?"),1200);
+})();
+
+// ---------- Fuel & hydration reminders ----------
+const FUEL_STORE_KEY = "banglamuscleFuelRemindersV1";
+const fuelState = JSON.parse(localStorage.getItem(FUEL_STORE_KEY) || '{"done":{},"times":{}}');
+const scheduledFuelTimers = {};
+
+function saveFuelState(){
+  localStorage.setItem(FUEL_STORE_KEY, JSON.stringify(fuelState));
+}
+
+function showFuelToast(message){
+  const toast = document.getElementById("reminderToast");
+  if(!toast) return;
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(showFuelToast.timer);
+  showFuelToast.timer = setTimeout(()=>toast.classList.remove("show"), 4200);
+}
+
+function sendFuelNotification(title, body){
+  showFuelToast(`${title}: ${body}`);
+  if("Notification" in window && Notification.permission === "granted"){
+    try{ new Notification(title, {body}); }catch(e){}
+  }
+  if(navigator.vibrate) navigator.vibrate([180,90,180]);
+}
+
+function fuelMessage(id){
+  return {
+    pre:["Pre-workout fuel","Have a light meal or shake and some water before training."],
+    water:["Hydration check","Take a few sips of water now."],
+    post:["Post-workout recovery","Have 25–40 g protein from food or a shake when convenient."],
+    creatine:["Creatine reminder","Take your usual daily creatine dose if it is part of your plan."]
+  }[id];
+}
+
+function setFuelDone(id, done=true){
+  const day = new Date().toISOString().slice(0,10);
+  fuelState.done[`${day}:${id}`] = done;
+  saveFuelState();
+  renderFuelState();
+  if(done) showFuelToast(`${fuelMessage(id)[0]} marked complete`);
+  if(typeof window.challengeSyncFromApp==="function")window.challengeSyncFromApp();
+}
+
+function renderFuelState(){
+  const day = new Date().toISOString().slice(0,10);
+  document.querySelectorAll(".fuel-card").forEach(card=>{
+    const id = card.dataset.fuelId;
+    card.classList.toggle("done", !!fuelState.done[`${day}:${id}`]);
+  });
+  const pre = document.getElementById("preReminderTime");
+  const cr = document.getElementById("creatineReminderTime");
+  if(pre && fuelState.times.pre) pre.value = fuelState.times.pre;
+  if(cr && fuelState.times.creatine) cr.value = fuelState.times.creatine;
+
+  const btn = document.getElementById("enableNotificationsBtn");
+  if(btn && "Notification" in window && Notification.permission === "granted"){
+    btn.textContent = "Notifications enabled";
+    btn.classList.add("enabled");
+  }
+}
+
+function scheduleAtClockTime(id, timeValue){
+  if(!timeValue){ showFuelToast("Choose a reminder time first."); return; }
+  fuelState.times[id] = timeValue;
+  saveFuelState();
+
+  const [h,m] = timeValue.split(":").map(Number);
+  const now = new Date();
+  const target = new Date();
+  target.setHours(h,m,0,0);
+  if(target <= now) target.setDate(target.getDate()+1);
+
+  clearTimeout(scheduledFuelTimers[id]);
+  scheduledFuelTimers[id] = setTimeout(()=>{
+    const [title,body] = fuelMessage(id);
+    sendFuelNotification(title,body);
+  }, target-now);
+
+  showFuelToast(`${fuelMessage(id)[0]} reminder set for ${timeValue}`);
+}
+
+document.getElementById("enableNotificationsBtn")?.addEventListener("click", async ()=>{
+  if(!("Notification" in window)){
+    showFuelToast("Browser notifications are not supported here. In-page reminders will still work.");
+    return;
+  }
+  const result = await Notification.requestPermission();
+  renderFuelState();
+  showFuelToast(result === "granted" ? "Notifications enabled." : "Notifications were not enabled.");
+});
+
+document.getElementById("fuelPanel")?.addEventListener("click", e=>{
+  const btn = e.target.closest("[data-fuel-action]");
+  if(!btn) return;
+  const id = btn.dataset.fuelId;
+  const action = btn.dataset.fuelAction;
+
+  if(action === "done"){
+    setFuelDone(id,true);
+    if(id==="post"){
+      const t=todayCoach();t.postDone=true;["postProtein","postFollowup"].forEach(markStepDone);saveCoach();renderCoach();
+    }
+  }
+  if(action === "schedule"){
+    const input = id === "pre" ? document.getElementById("preReminderTime") : document.getElementById("creatineReminderTime");
+    scheduleAtClockTime(id, input?.value);
+  }
+  if(action === "startWater"){
+    clearTimeout(scheduledFuelTimers.water);
+    scheduledFuelTimers.water = setTimeout(()=>{
+      const [title,body] = fuelMessage("water");
+      sendFuelNotification(title,body);
+    }, 25*60*1000);
+    showFuelToast("Water reminder started for 25 minutes from now.");
+  }
+  if(action === "testPost" || action === "startPost"){
+    sendFuelNotification("Post-workout recovery","Have 25–40 g protein from food or a shake when convenient.");
+  }
+});
+
+// Restore saved daily clock reminders while the page is open.
+renderFuelState();
+if(fuelState.times.pre) scheduleAtClockTime("pre", fuelState.times.pre);
+if(fuelState.times.creatine) scheduleAtClockTime("creatine", fuelState.times.creatine);
+
+
+// ---------- BanglaMuscle 90 gamification ----------
+const CHALLENGE_KEY="banglamuscle90ChallengeV1";
+const CHALLENGE_LENGTH=90;
+const LEVELS=[
+  {name:"Recruit",min:0,next:300},
+  {name:"Starter",min:300,next:900},
+  {name:"Builder",min:900,next:1800},
+  {name:"Warrior",min:1800,next:3000},
+  {name:"Titan",min:3000,next:4500},
+  {name:"Elite",min:4500,next:6000},
+  {name:"Legend",min:6000,next:null}
+];
+const BADGES=[
+  {id:"first_workout",icon:"🏁",name:"First Workout",desc:"Complete one workout"},
+  {id:"baseline",icon:"🎯",name:"Baseline Builder",desc:"Save 3 Day 1 weights"},
+  {id:"week_complete",icon:"🔥",name:"Full Week",desc:"Complete your weekly target"},
+  {id:"ten_workouts",icon:"💪",name:"Ten Strong",desc:"Complete 10 workouts"},
+  {id:"protein_week",icon:"🥚",name:"Protein Perfect",desc:"7 protein-goal days"},
+  {id:"volume_100k",icon:"🏗️",name:"100K Club",desc:"Lift 100,000 lb total"},
+  {id:"day30",icon:"🌱",name:"Foundation",desc:"Reach Day 30"},
+  {id:"day60",icon:"⚔️",name:"Strength Builder",desc:"Reach Day 60"},
+  {id:"day90",icon:"🏆",name:"Mission Complete",desc:"Finish 90 days"}
+];
+function challengeDateKey(value){
+  const d=value?new Date(value):new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function parseChallengeDate(key){
+  const [y,m,d]=key.split("-").map(Number);
+  return new Date(y,m-1,d,12,0,0,0);
+}
+function challengeDefaults(){
+  const today=challengeDateKey();
+  return {startDate:today,xp:0,recoveryTokens:3,days:{},awards:{},badges:{},workouts:[],version:1};
+}
+let challengeState;
+try{
+  const saved=JSON.parse(localStorage.getItem(CHALLENGE_KEY)||"{}");
+  challengeState={...challengeDefaults(),...saved,days:saved.days||{},awards:saved.awards||{},badges:saved.badges||{},workouts:saved.workouts||[]};
+}catch(e){challengeState=challengeDefaults()}
+const saveChallenge=()=>localStorage.setItem(CHALLENGE_KEY,JSON.stringify(challengeState));
+function challengeDayNumber(date=new Date()){
+  const start=parseChallengeDate(challengeState.startDate),current=new Date(date);current.setHours(12,0,0,0);
+  return Math.max(1,Math.min(CHALLENGE_LENGTH,Math.floor((current-start)/86400000)+1));
+}
+function challengePhase(day=challengeDayNumber()){
+  if(day<=30)return {name:"Foundation",range:"Days 1–30",desc:"Learn technique and establish consistency."};
+  if(day<=60)return {name:"Build",range:"Days 31–60",desc:"Progress reps and machine weights intelligently."};
+  return {name:"Transform",range:"Days 61–90",desc:"Beat Day 1 performance and finish strong."};
+}
+function dayChallengeRecord(key=challengeDateKey()){
+  return challengeState.days[key]||(challengeState.days[key]={missions:{},protected:false,xp:0,gymDecision:null});
+}
+function showChallengeToast(title,body){
+  const box=document.getElementById("challengeToast");
+  if(!box)return;
+  challengeToastTitle.textContent=title;challengeToastBody.textContent=body;
+  box.classList.add("show");clearTimeout(showChallengeToast.timer);
+  showChallengeToast.timer=setTimeout(()=>box.classList.remove("show"),4000);
+}
+function challengeAwardOnce(key,amount,title,quiet=false){
+  if(challengeState.awards[key])return false;
+  challengeState.awards[key]={amount,date:new Date().toISOString(),title};
+  challengeState.xp+=amount;
+  const rec=dayChallengeRecord();rec.xp=(rec.xp||0)+amount;
+  saveChallenge();
+  if(!quiet)showChallengeToast(`+${amount} XP · ${title}`,"Progress saved to your 90-day mission.");
+  return true;
+}
+function currentLevel(){
+  let index=0;
+  LEVELS.forEach((l,i)=>{if(challengeState.xp>=l.min)index=i});
+  return {...LEVELS[index],index};
+}
+function totalChallengeVolume(){
+  return state.history.reduce((sum,h)=>sum+(Number(h.weight)||0)*(Number(h.reps)||0)*(Number(h.sets)||0),0);
+}
+function challengeWorkoutCount(){
+  return new Set(challengeState.workouts.map(w=>`${w.date}:${w.day}`)).size;
+}
+function proteinGoalDays(){
+  return Object.values(challengeState.days).filter(d=>d.missions?.protein).length;
+}
+function challengeWeekWorkoutCount(){
+  const nowDay=challengeDayNumber(),week=Math.floor((nowDay-1)/7);
+  return new Set(challengeState.workouts.filter(w=>Math.floor((w.challengeDay-1)/7)===week).map(w=>w.day)).size;
+}
+function isConsistencyComplete(record){
+  return !!(record.protected||record.missions?.workout||(record.gymDecision==="rest"&&record.missions?.recovery));
+}
+function consistencyStreak(){
+  let streak=0,d=new Date();d.setHours(12,0,0,0);
+  for(let i=0;i<CHALLENGE_LENGTH;i++){
+    const key=challengeDateKey(d),record=challengeState.days[key];
+    if(record&&isConsistencyComplete(record)){streak++;d.setDate(d.getDate()-1)}
+    else if(i===0){d.setDate(d.getDate()-1)}
+    else break;
+  }
+  return streak;
+}
+function unlockChallengeBadges(){
+  const day=challengeDayNumber(),workouts=challengeWorkoutCount(),protein=proteinGoalDays(),volume=totalChallengeVolume();
+  const conditions={
+    first_workout:workouts>=1,
+    baseline:Object.keys(state.baselines||{}).length>=3,
+    week_complete:challengeWeekWorkoutCount()>=state.frequency,
+    ten_workouts:workouts>=10,
+    protein_week:protein>=7,
+    volume_100k:volume>=100000,
+    day30:day>=30,
+    day60:day>=60,
+    day90:day>=90
+  };
+  BADGES.forEach(b=>{
+    if(conditions[b.id]&&!challengeState.badges[b.id]){
+      challengeState.badges[b.id]={date:new Date().toISOString()};
+      challengeAwardOnce(`badge:${b.id}`,25,`Badge unlocked: ${b.name}`);
+    }
+  });
+  saveChallenge();
+}
+function syncChallengeMissions(){
+  const key=challengeDateKey(),rec=dayChallengeRecord(key);
+  const coach=typeof todayCoach==="function"?todayCoach():null;
+  const fuelDay=typeof fuelState!=="undefined"?fuelState.done||{}:{};
+  if(coach?.gymDecision)rec.gymDecision=coach.gymDecision;
+  const updates={
+    checkin:!!(coach?.gymDecision==="yes"||coach?.gymDecision==="rest"),
+    pre:!!fuelDay[`${key}:pre`],
+    water:!!fuelDay[`${key}:water`],
+    post:!!fuelDay[`${key}:post`]||!!coach?.postDone,
+    protein:Number(coach?.protein||0)>=Number(coachState?.targets?.proteinWorking||120),
+    calories:Number(coach?.calories||0)>=Number(coachState?.targets?.calories||2400)*.9&&Number(coach?.calories||0)<=Number(coachState?.targets?.calories||2400)*1.1,
+    workout:!!coach?.workoutDone||!!rec.missions.workout
+  };
+  const rewards={checkin:10,pre:10,water:15,post:25,protein:40,calories:25};
+  Object.entries(updates).forEach(([id,val])=>{
+    if(val){
+      rec.missions[id]=true;
+      if(rewards[id])challengeAwardOnce(`${key}:mission:${id}`,rewards[id],id==="post"?"Post-workout recovery":id.charAt(0).toUpperCase()+id.slice(1));
+    }
+  });
+  saveChallenge();unlockChallengeBadges();renderChallenge();
+}
+window.challengeSyncFromApp=syncChallengeMissions;
+
+window.challengeWorkoutCompleted=function(day){
+  const key=challengeDateKey(),rec=dayChallengeRecord(key),plan=PLAN[day];
+  rec.missions.workout=true;rec.gymDecision="yes";
+  const unique=`${key}:${day}`;
+  if(!challengeState.workouts.some(w=>`${w.date}:${w.day}`===unique)){
+    challengeState.workouts.push({date:key,day,challengeDay:challengeDayNumber(),name:plan.name});
+    const amount=plan.tier==="Recovery"?50:plan.tier==="Bonus"?70:100;
+    challengeAwardOnce(`${key}:workout:${day}`,amount,`${plan.short} completed`);
+  }
+  saveChallenge();syncChallengeMissions();
+};
+
+function missionDefinitions(){
+  const rec=dayChallengeRecord(),rest=rec.gymDecision==="rest";
+  if(rest){
+    return [
+      {id:"checkin",title:"Confirm recovery day",desc:"Choose Rest Day in Daily Coach.",xp:10,auto:true},
+      {id:"water",title:"Hydration",desc:"Mark water complete.",xp:15,auto:true},
+      {id:"recovery",title:"10–20 minute walk or mobility",desc:"Tap when your recovery movement is complete.",xp:50,manual:true},
+      {id:"protein",title:"Reach protein target",desc:"Log at least 120 g protein.",xp:40,auto:true},
+      {id:"sleep",title:"Prepare for sleep",desc:"Tap after setting your recovery bedtime.",xp:20,manual:true}
+    ];
+  }
+  return [
+    {id:"checkin",title:"Confirm gym attendance",desc:"Choose Yes, gym today.",xp:10,auto:true},
+    {id:"pre",title:"Pre-workout fuel",desc:"Mark your food or shake complete.",xp:10,auto:true},
+    {id:"workout",title:`Complete ${PLAN[state.nextDay]?.short||"today's workout"}`,desc:"Finish all exercises in the selected session.",xp:100,auto:true},
+    {id:"water",title:"Hydrate during training",desc:"Mark water complete.",xp:15,auto:true},
+    {id:"post",title:"Post-workout protein",desc:"Have 25–40 g protein and mark it complete.",xp:25,auto:true},
+    {id:"protein",title:"Reach daily protein",desc:"Log the 120 g working target.",xp:40,auto:true}
+  ];
+}
+function renderChallenge(){
+  const day=challengeDayNumber(),phase=challengePhase(day),progress=Math.min(100,day/CHALLENGE_LENGTH*100),level=currentLevel(),rec=dayChallengeRecord();
+  challengeDay.textContent=day;challengePhase.textContent=phase.name.toUpperCase();
+  challengeDayOrb.style.setProperty("--challenge-p",`${progress}%`);
+  challengeProgressFill.style.width=`${progress}%`;
+  challengeStartLabel.textContent=`Started ${parseChallengeDate(challengeState.startDate).toLocaleDateString([], {month:"short",day:"numeric"})}`;
+  const end=parseChallengeDate(challengeState.startDate);end.setDate(end.getDate()+89);
+  challengeEndLabel.textContent=`Ends ${end.toLocaleDateString([], {month:"short",day:"numeric"})}`;
+  challengeHeroText.textContent=day>=90
+    ?"Mission complete. Review your Day 1 baselines, strength gains, consistency, and next-phase plan."
+    :`${phase.range}: ${phase.desc}`;
+  levelChip.textContent=`LEVEL ${level.index+1} · ${level.name.toUpperCase()}`;
+  challengeXP.textContent=challengeState.xp.toLocaleString();
+  challengeStreak.textContent=consistencyStreak();
+  challengeWorkouts.textContent=challengeWorkoutCount();
+  recoveryTokens.textContent=challengeState.recoveryTokens;
+  const levelStart=level.min,next=level.next||level.min,xpWithin=challengeState.xp-levelStart,needed=Math.max(1,next-levelStart);
+  xpFill.style.width=level.next?`${Math.min(100,xpWithin/needed*100)}%`:"100%";
+  xpNextLevel.textContent=level.next?`${Math.max(0,level.next-challengeState.xp)} XP to ${LEVELS[level.index+1].name}`:"Maximum level reached";
+
+  const defs=missionDefinitions();
+  missionIntro.textContent=rec.gymDecision==="rest"
+    ?"Rest days preserve your challenge when recovery actions are completed."
+    :"Complete the controllable actions below. You do not need a perfect day.";
+  missionList.innerHTML=defs.map(m=>{
+    const done=!!rec.missions[m.id],clickable=!!m.manual;
+    return `<div class="mission ${done?"done":""} ${clickable?"":"disabled"}" data-mission="${m.id}" data-manual="${clickable}">
+      <span class="mission-check">${done?"✓":"○"}</span>
+      <div><strong>${m.title}</strong><small>${m.desc}</small></div>
+      <span class="mission-xp">+${m.xp} XP</span>
+    </div>`;
+  }).join("");
+
+  const phases=[
+    {name:"Foundation",range:"Days 1–30",active:day<=30,complete:day>30},
+    {name:"Build",range:"Days 31–60",active:day>30&&day<=60,complete:day>60},
+    {name:"Transform",range:"Days 61–90",active:day>60,complete:day>=90}
+  ];
+  phaseRoadmap.innerHTML=phases.map(p=>`<div class="phase ${p.active?"active":""} ${p.complete?"complete":""}"><small>${p.range}</small><strong>${p.complete?"✓ ":p.active?"● ":""}${p.name}</strong></div>`).join("");
+  badgeGrid.innerHTML=BADGES.map(b=>`<div class="badge ${challengeState.badges[b.id]?"unlocked":""}"><div class="badge-icon">${b.icon}</div><strong>${b.name}</strong><small>${challengeState.badges[b.id]?"Unlocked":b.desc}</small></div>`).join("");
+}
+function toggleManualMission(id){
+  const rec=dayChallengeRecord(),amount=id==="recovery"?50:id==="sleep"?20:0;
+  if(rec.missions[id])return;
+  rec.missions[id]=true;
+  challengeAwardOnce(`${challengeDateKey()}:mission:${id}`,amount,id==="recovery"?"Recovery mission":"Sleep preparation");
+  saveChallenge();unlockChallengeBadges();renderChallenge();
+}
+function useRecoveryToken(){
+  if(challengeState.recoveryTokens<=0){showChallengeToast("No recovery tokens","Complete another milestone before relying on a token.");return}
+  const start=parseChallengeDate(challengeState.startDate),today=new Date();today.setHours(12,0,0,0);
+  let target=null;
+  for(let i=1;i<=14;i++){
+    const d=new Date(today);d.setDate(d.getDate()-i);
+    if(d<start)break;
+    const key=challengeDateKey(d),rec=challengeState.days[key];
+    if(!rec||!isConsistencyComplete(rec)){target=key;break}
+  }
+  if(!target){showChallengeToast("No missed day found","Your recent challenge streak does not need protection.");return}
+  const rec=dayChallengeRecord(target);rec.protected=true;challengeState.recoveryTokens--;
+  challengeAwardOnce(`token:${target}`,0,"Recovery token used",true);
+  saveChallenge();renderChallenge();showChallengeToast("Streak protected",`${parseChallengeDate(target).toLocaleDateString([], {month:"short",day:"numeric"})} is protected.`);
+}
+document.getElementById("challenge90")?.addEventListener("click",e=>{
+  const mission=e.target.closest("[data-mission]");
+  if(mission&&mission.dataset.manual==="true")toggleManualMission(mission.dataset.mission);
+});
+document.getElementById("useRecoveryToken")?.addEventListener("click",useRecoveryToken);
+document.getElementById("restartChallenge")?.addEventListener("click",()=>{
+  if(!confirm("Restart the 90-day challenge from today? Workout history and machine baselines will stay saved."))return;
+  challengeState=challengeDefaults();saveChallenge();renderChallenge();showChallengeToast("Challenge restarted","Today is Day 1 of your new 90-day mission.");
+});
+syncChallengeMissions();
+
+</script>
+</body></html>
