@@ -27,11 +27,14 @@ def rsi(c,p=14):
         ag=(ag*(p-1)+g[i])/p; al=(al*(p-1)+l[i])/p; out[i+1]=f(ag,al)
     return out
 
-def trade(s,i,entry_mode="close"):
+def trade(s,i,entry_mode="close",chase=0.03):
+    """close: enter at the signal-day close. open: next open, always. live: next open, SKIP if it opens
+    above the band (close*(1+chase)) -- the rule the live engine actually trades (G7)."""
     if entry_mode=="close": e=s["c"][i]
     else:
         if i+1>=len(s["c"]): return None
         e=s["o"][i+1]
+        if entry_mode=="live" and e>s["c"][i]*(1+chase): return None
     stop,tgt=levels(e,s["l"][i])
     last=min(i+5,len(s["c"])-1)
     if last<=i: return None
@@ -61,6 +64,10 @@ def run(name,S,bench,theme):
             if bk is None: continue
             c["ret"]=r; c["alpha"]=r-(B["c"][bk]/B["c"][b0]-1)
             t2=trade(s,i,"open"); c["ret_open"]=None if t2 is None else t2[0]
+            c["gap"]=s["o"][i+1]/s["c"][i]-1
+            t3=trade(s,i,"live"); b1=bi.get(s["d"][i+1])            # G7: what the live engine trades
+            if t3 is not None and b1 is not None and bi.get(s["d"][t3[1]]) is not None:
+                c["alpha_live"]=t3[0]-(B["c"][bi[s["d"][t3[1]]]]/B["o"][b1]-1)
             obs.append(c)
             if pct>0.05: bydate[s["d"][i]].append(c)
     picks=[]; gated=[]
@@ -68,15 +75,24 @@ def run(name,S,bench,theme):
         p,_=select(cs,3); picks+=[c for _,c,_ in p]
         gated+=[c for c in cs if not gates(c)]
     allbo=[c for cs in bydate.values() for c in cs]
-    pool=defaultdict(list)
-    for c in obs: pool[c["sym"]].append(c["alpha"])
-    def perm(sel,n=4000):
-        m=st.mean(c["alpha"] for c in sel); need=Counter(c["sym"] for c in sel); hit=0
+    pool=defaultdict(list); lpool=defaultdict(list)
+    for c in obs:
+        pool[c["sym"]].append(c["alpha"])
+        if "alpha_live" in c: lpool[c["sym"]].append(c["alpha_live"])
+    def perm(sel,n=4000,key="alpha",P=None):
+        P=P or pool
+        m=st.mean(c[key] for c in sel); need=Counter(c["sym"] for c in sel); hit=0
         for _ in range(n):
             dr=[]
-            for s_,k in need.items(): dr+=random.choices(pool[s_],k=k)
+            for s_,k in need.items(): dr+=random.choices(P[s_],k=k)
             if st.mean(dr)>=m: hit+=1
         return hit/n
+    def lrow(lab,sel):
+        tr=[c for c in sel if "alpha_live" in c]
+        if not tr: print(f"  {lab:<34} n=0"); return
+        a=st.mean(c["alpha_live"] for c in tr); hit=sum(c["alpha_live"]>0 for c in tr)/len(tr)
+        print(f"  {lab:<34} n={len(tr):<5} alpha {a*100:+6.2f}%  hit {hit*100:4.0f}%  skipped(gap>band) {len(sel)-len(tr):<4}"
+              f" p={perm(tr,key='alpha_live',P=lpool):.3f}  names={len(set(c['sym'] for c in tr))}")
     def row(lab,sel):
         if not sel: print(f"  {lab:<34} n=0"); return
         a=st.mean(c["alpha"] for c in sel); r=st.mean(c["ret"] for c in sel)
@@ -93,6 +109,10 @@ def run(name,S,bench,theme):
         from rank import score
         gs=sorted(gated,key=lambda c:score(c)["score"]); t=len(gs)//3
         row("  gated, bottom-third score",gs[:t]); row("  gated, top-third score",gs[-t:])
+    print("  -- LIVE PARITY: next open, skip above band, levels from fill, alpha vs bench open->exit --")
+    lrow("BASELINE",obs); lrow("breakouts passing v2 gates",gated); lrow("ENGINE v2 TOP-3 PICKS",picks)
+    lrow("  picks that gapped DOWN at open",[c for c in picks if c["gap"]<0])
+    lrow("  picks that opened flat/up",[c for c in picks if c["gap"]>=0])
     fails=Counter()
     for c in allbo:
         for w in gates(c): fails[w.split()[0]]+=1

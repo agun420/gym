@@ -40,14 +40,19 @@ def levels(entry, day_low):
     return math.ceil(stop * 100) / 100, math.ceil(entry * 1.12 * 100) / 100
 
 def plan(close, day_low, chase=0.03):
-    """Open-entry plan: limit band [close, close*(1+chase)]. Levels computed at the TOP of the band,
-    so the worst possible fill still keeps the stop within R1 and the target at/above R17."""
+    """Open-entry plan: limit band [close, close*(1+chase)]. The stop/target shown are for a fill at the
+    TOP of the band. They are a preview only: once filled, the live levels are fill_levels(fill, day_low)."""
     limit = round(close * (1 + chase), 2)
     stop, tgt = levels(limit, day_low)
     sh = int(POSITION_CAP // limit)
-    return dict(limit=limit, stop=stop, target=tgt, shares=sh, cost=round(sh*limit,2),
+    return dict(limit=limit, stop=stop, target=tgt, shares=sh, cost=round(sh*limit,2), signal_low=day_low,
                 risk=round(sh*(limit-stop),2), stop_from_limit=stop/limit-1, stop_from_close=stop/close-1,
                 tgt_from_limit=tgt/limit-1, tgt_from_close=tgt/close-1)
+
+def fill_levels(fill, signal_low):
+    """G6: levels re-anchored to the ACTUAL fill, exactly as the backtest computes them. A gap-down open
+    fills below the band; band-top levels then left THM (fill 2.811, stop 2.80) a -0.4% stop, breaking R26."""
+    return levels(fill, signal_low)
 
 def size(entry, stop):
     sh = int(POSITION_CAP // entry)
