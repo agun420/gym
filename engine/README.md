@@ -15,6 +15,12 @@ One pipeline for every pick: **gates → rank → diversify → levels.** Nothin
 
 Once an order fills, the live levels are `fill_levels(fill, day_low)` (R29): stop = min(max(signal-day low × 0.995, fill × 0.92), fill × 0.97), target = fill × 1.12, both rounded **up** to the cent. This is exactly what the backtest measures. Band-top levels alone break down on a gap-down open: on 2026-09-23 THM filled at $2.811, below its $2.95–3.04 band, and the band-top stop of $2.80 sat 0.4% under the fill. An open position's stop is never loosened to meet the new rule.
 
+## Volume and insider gates
+
+**Volume (R30).** Relative volume is `official_relvol(day_volume, prior_daily_volumes)`: the day's official volume, taken from the scan's Volume column, divided by the mean of the prior 20 daily-bar volumes. That is the same basis the backtest uses. Do not sum 5-minute bars to get a day's volume. On 2026-09-23 those sums captured only 38–59% of official volume (EGHT 2.78M vs 4.70M, ADCT 0.84M vs 1.97M), so every reading was biased low by a different amount. ADCT failed the 1x floor at 0.48x when it had really traded 1.12x. FSLY made the 9/23 list only because of this error. It stays in the paper log as published.
+
+**Insider selling (R5).** A cluster is two or more *different* insiders selling on the open market within 30 days, or one insider selling three or more times. A cluster vetoes the pick; set `insider_cluster` on the candidate. Evidence comes from insider-sale items in the news feed, because Form 4 content cannot be read through the MCP (404). A filing count alone never vetoes. On 2026-09-24 this removed ADPT (two insiders, $6.4M in 30 days) and TEM (four executives, $12.9M on 8/18).
+
 ## What the backtest says (2026-09-23)
 
 **Live parity** is the way the engine actually trades: enter at the next open, skip anything that opens above the band, take levels from the fill, and measure alpha against the benchmark from its open on the entry day.
@@ -41,4 +47,4 @@ The volume gate (R11) flips sign by universe (small caps −1.10 spread, crypto 
 
 ## Running it
 
-`backtest_v2.py` reads daily-bar JSON exported from the Robinhood MCP `get_equity_historicals` tool; the `TR` path at the top points at wherever those exports live. Live picks are produced by feeding scan candidates (price, % change, RSI, pace-adjusted relative volume, % off high, 52-week-low age) into `engine.select()`.
+`backtest_v2.py` reads daily-bar JSON exported from the Robinhood MCP `get_equity_historicals` tool; the `TR` path at the top points at wherever those exports live. Live picks are produced by feeding scan candidates (price, % change on the regular-session close, RSI, relative volume from `official_relvol()`, % off high, 52-week-low age, `insider_cluster`) into `engine.select()`. Run `python3 test_engine.py` after any change to levels or gates.

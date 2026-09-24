@@ -54,6 +54,16 @@ def fill_levels(fill, signal_low):
     fills below the band; band-top levels then left THM (fill 2.811, stop 2.80) a -0.4% stop, breaking R26."""
     return levels(fill, signal_low)
 
+def official_relvol(day_volume, prior_daily_volumes, n=20):
+    """R30 / G9: relative volume on the backtest's basis -- the day's OFFICIAL volume (the scan's Volume column)
+    over the mean of the prior n daily-bar volumes. Never pass a sum of 5-minute bars: on 2026-09-23 those held
+    only 38-59% of official volume (ADCT 0.84M vs 1.97M), which failed R11 on a name that truly traded 1.12x."""
+    prior = [v for v in prior_daily_volumes[-n:] if v is not None]
+    if day_volume is None or len(prior) < n:
+        return None                       # gates() rejects None: no volume reading, no trade
+    avg = sum(prior) / n
+    return day_volume / avg if avg > 0 else None
+
 def size(entry, stop):
     sh = int(POSITION_CAP // entry)
     return sh, round(sh * entry, 2), round(sh * (entry - stop), 2)

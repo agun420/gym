@@ -1,5 +1,5 @@
 """Invariants the live levels must hold. Run: python3 test_engine.py (or pytest)."""
-from engine import levels, fill_levels, plan
+from engine import levels, fill_levels, plan, gates, official_relvol
 
 
 def test_band_top_preview_matches_published_levels():
@@ -21,6 +21,21 @@ def test_stop_always_between_3_and_8_percent_of_fill():
             stop, tgt = levels(fill, fill * low_frac)
             assert fill * 0.92 - 1e-9 <= stop <= fill * 0.97 + 0.01, (fill, low_frac, stop)  # R1 / R26
             assert tgt >= fill * 1.12 - 1e-9                                                   # R17
+
+
+def test_relvol_uses_official_volume_not_5min_sum():
+    # ADCT 2026-09-23: official volume 1.97M, summed 5-minute bars 0.84M, 20-day daily-bar mean 1.757M (R30)
+    prior = [1756902.55] * 20
+    assert round(official_relvol(1.97e6, prior), 2) == 1.12
+    assert not [w for w in gates(dict(price=5.0, paced_relvol=official_relvol(1.97e6, prior))) if w.startswith("R11")]
+    assert round(official_relvol(843538, prior), 2) == 0.48          # what the 9/23 screen wrongly used
+    assert official_relvol(1e6, [1e6] * 19) is None                   # short history: no reading, gate rejects
+    assert [w for w in gates(dict(price=5.0, paced_relvol=None)) if w.startswith("R11")]
+
+
+def test_insider_cluster_vetoes():
+    # R5: ADPT and TEM, 2026-09-24 -- clean technicals, vetoed on clustered insider selling
+    assert "R5 insider selling cluster" in gates(dict(price=29.57, paced_relvol=1.66, insider_cluster=True))
 
 
 if __name__ == "__main__":
